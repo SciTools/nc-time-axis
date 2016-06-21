@@ -1,6 +1,6 @@
 # nc-time-axis
 
-Support for netcdftime axes in matplotlib.
+Support for netcdftime axis in matplotlib.
 
 
 ## See also

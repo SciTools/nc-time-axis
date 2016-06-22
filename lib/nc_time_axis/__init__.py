@@ -1,23 +1,10 @@
-# (C) British Crown Copyright 2016, Met Office
-#
-# This file is part of nc-time-axis.
-#
-# nc-time-axis is free software: you can redistribute it and/or modify it under
-# the terms of the GNU Lesser General Public License as published by the
-# Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# nc-time-axis is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Lesser General Public License for more details.
-#
-# You should have received a copy of the GNU Lesser General Public License
-# along with nc-time-axis. If not, see <http://www.gnu.org/licenses/>.
 """
 Support for netcdftime axis in matplotlib.
 
 """
+
+from __future__ import (absolute_import, division, print_function)
+from six.moves import (filter, input, map, range, zip)  # noqa
 
 from collections import namedtuple
 import datetime
@@ -65,7 +52,7 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
         return dt.strftime(format_string)
 
 
-class NetCDFtimeDateLocator(mticker.Locator):
+class NetCDFTimeDateLocator(mticker.Locator):
     def __init__(self, max_n_ticks, calendar, date_unit, min_n_ticks=3):
         # The date unit must be in the form of days since ...
 
@@ -158,7 +145,7 @@ class NetCDFtimeDateLocator(mticker.Locator):
         return netcdftime.date2num(ticks, self.date_unit, self.calendar)
 
 
-class NetCDFtimeConverter(mdates.DateConverter):
+class NetCDFTimeConverter(mdates.DateConverter):
     standard_unit = 'days since 2000-01-01'
 
     @staticmethod
@@ -171,7 +158,7 @@ class NetCDFtimeConverter(mdates.DateConverter):
         """
         calendar, date_unit = unit
 
-        majloc = NetCDFtimeDateLocator(4, calendar=calendar, date_unit=date_unit)
+        majloc = NetCDFTimeDateLocator(4, calendar=calendar, date_unit=date_unit)
         majfmt = NetCDFTimeDateFormatter(majloc, calendar=calendar, time_units=date_unit)
         datemin = netcdftime.datetime(2000, 1, 1)
         datemax = netcdftime.datetime(2010, 1, 1)
@@ -211,3 +198,8 @@ class NetCDFtimeConverter(mdates.DateConverter):
             raise ValueError('A "calendar" attribute must be attached to '
                              'netcdftime object to understand them properly.')
         return netcdftime.date2num(value, cls.standard_unit, calendar=first_value.calendar)
+
+
+# Automatically register NetCDFTimeConverter with matplotlib.unit's converter dictionary. 
+if netcdftime.datetime not in munits.registry:
+    munits.registry[netcdftime.datetime] = NetCDFTimeConverter()

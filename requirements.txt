@@ -1,0 +1,4 @@
+matplotlib
+mock
+netcdf4=1.0.2
+numpy

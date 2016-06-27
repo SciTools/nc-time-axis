@@ -21,27 +21,26 @@ class Test_compute_resolution(unittest.TestCase):
         locator = NetCDFTimeDateLocator(max_n_ticks=max_n_ticks,
                                         calendar=self.calendar,
                                         date_unit=self.date_unit)
-        return locator.compute_resolution(
-            num1, num2,
-            netcdftime.num2date(num1, self.date_unit, self.calendar),
-            netcdftime.num2date(num2, self.date_unit, self.calendar))
+        utime = netcdftime.utime(self.date_unit, self.calendar)
+        return locator.compute_resolution(num1, num2, utime.num2date(num1),
+                                          utime.num2date(num2))
 
     def test_one_minute(self):
         self.assertEqual(self.check(20, 0, 0.0003),
-                         ('SECONDLY', mdates.SECONDS_PER_DAY))
+                         ('SECONDLY', mdates.SEC_PER_DAY))
         self.assertEqual(self.check(10, 0.0003, 0),
-                         ('SECONDLY', mdates.SECONDS_PER_DAY))
+                         ('SECONDLY', mdates.SEC_PER_DAY))
 
     def test_one_hour(self):
         self.assertEqual(self.check(1, 0, 0.02), ('MINUTELY', 0))
         self.assertEqual(self.check(0.02*86400, 0, 0.02),
-                         ('SECONDLY', mdates.SECONDS_PER_DAY))
+                         ('SECONDLY', mdates.SEC_PER_DAY))
 
     def test_one_day(self):
         self.assertEqual(self.check(1, 0, 1), ('HOURLY', 0))
         self.assertEqual(self.check(24, 0, 1), ('MINUTELY', 0))
         self.assertEqual(self.check(86400, 0, 1),
-                         ('SECONDLY', mdates.SECONDS_PER_DAY))
+                         ('SECONDLY', mdates.SEC_PER_DAY))
 
     def test_30_days(self):
         self.assertEqual(self.check(1, 0, 30), ('DAILY', 30))
@@ -49,7 +48,7 @@ class Test_compute_resolution(unittest.TestCase):
         self.assertEqual(self.check(30*24, 0, 30),
                          ('MINUTELY', 0))
         self.assertEqual(self.check(30*86400, 0, 30),
-                         ('SECONDLY', mdates.SECONDS_PER_DAY))
+                         ('SECONDLY', mdates.SEC_PER_DAY))
 
     def test_365_days(self):
         self.assertEqual(self.check(1, 0, 365), ('MONTHLY', 12))
@@ -58,7 +57,7 @@ class Test_compute_resolution(unittest.TestCase):
         self.assertEqual(self.check(365*24, 0, 365),
                          ('MINUTELY', 0))
         self.assertEqual(self.check(365*86400, 0, 365),
-                         ('SECONDLY', mdates.SECONDS_PER_DAY))
+                         ('SECONDLY', mdates.SEC_PER_DAY))
 
     def test_10_years(self):
         self.assertEqual(self.check(1, 0, 10*365),
@@ -72,7 +71,7 @@ class Test_compute_resolution(unittest.TestCase):
         self.assertEqual(self.check(10*365*24, 0, 10*365),
                          ('MINUTELY', 2))
         self.assertEqual(self.check(10*365*86400, 0, 10*365),
-                         ('SECONDLY', mdates.SECONDS_PER_DAY))
+                         ('SECONDLY', mdates.SEC_PER_DAY))
 
 
 class Test_tick_values(unittest.TestCase):
@@ -88,15 +87,16 @@ class Test_tick_values(unittest.TestCase):
 
     def test_secondly(self):
         np.testing.assert_array_almost_equal(
-            self.check(3, 0, 0.0004), [0., 0.00023148, 0.00046296])
+            self.check(4, 0, 0.0004),
+            [0., 0.00015046, 0.00030093, 0.00045139])
 
     def test_minutely(self):
         np.testing.assert_array_almost_equal(
-            self.check(4, 1, 1.07), [1., 1.02777778, 1.05555556, 1.08333333])
+            self.check(4, 1, 1.07), [1., 1.02, 1.04, 1.06, 1.08])
 
     def test_hourly(self):
         np.testing.assert_array_almost_equal(
-            self.check(4, 2, 3), [2., 2.33333333, 2.66666667, 3.])
+            self.check(4, 2, 3), [2., 2.25, 2.5, 2.75, 3.])
 
     def test_daily(self):
         np.testing.assert_array_equal(
@@ -108,7 +108,7 @@ class Test_tick_values(unittest.TestCase):
 
     def test_yearly(self):
         np.testing.assert_array_equal(
-            self.check(5, 0, 5*365), [31., 638., 1246., 1856.])
+            self.check(5, 0, 5*365), [31., 485., 942., 1399., 1856.])
 
 
 if __name__ == "__main__":

@@ -1,0 +1,27 @@
+import os
+import os.path
+from setuptools import setup
+
+import versioneer
+
+
+here = os.path.abspath(os.path.dirname(__file__))
+packages = []
+for d, _, _ in os.walk(os.path.join(here, 'nc_time_axis')):
+    if os.path.exists(os.path.join(d, '__init__.py')):
+        packages.append(d[len(here)+2:].replace(os.path.sep, '.'))
+
+setup_args = dict(
+    name='nc-time-axis',
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
+    description='netcdftime support for matplotlib axis',
+    license='BSD3',
+    author='Philip Elson',
+    url='https://github.com/scitools/nc-time-axis',
+    packages=packages,
+    test_suite='nc_time_axis.tests'
+)
+
+if __name__ == '__main__':
+    setup(**setup_args)

@@ -48,7 +48,7 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
 
     def __call__(self, x, pos=0):
         format_string = self.pick_format(ndays=self.locator.ndays)
-        dt = netcdftime.num2date(x, self.time_units, self.calendar)
+        dt = netcdftime.utime(self.time_units, self.calendar).num2date(x)
         return dt.strftime(format_string)
 
 
@@ -58,8 +58,8 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
         self.max_n_ticks = max_n_ticks
         self.min_n_ticks = min_n_ticks
-        self._max_n_locator = mticker.MaxNLocator(max_n_ticks, integer=True)
-        self._max_n_locator_days = mticker.MaxNLocator(max_n_ticks, integer=True, steps=[1, 2, 4, 7, 14])
+        self._max_n_locator = mticker.MaxNLocator(max_n_ticks, integer=False)
+        self._max_n_locator_days = mticker.MaxNLocator(max_n_ticks, integer=False, steps=[1, 2, 4, 7, 14])
         self.calendar = calendar
         self.date_unit = date_unit
         if not self.date_unit.lower().startswith('days since'):
@@ -75,7 +75,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
         """
         num_days = float(np.abs(num1 - num2))
         resolution = 'SECONDLY'
-        n = mdates.SECONDS_PER_DAY
+        n = mdates.SEC_PER_DAY
         if num_days * mdates.MINUTES_PER_DAY > self.max_n_ticks:
             resolution = 'MINUTELY'
             n = int(num_days / mdates.MINUTES_PER_DAY)
@@ -101,10 +101,9 @@ class NetCDFTimeDateLocator(mticker.Locator):
     def tick_values(self, vmin, vmax):
         vmin, vmax = mtransforms.nonsingular(vmin, vmax, expander=1e-7, tiny=1e-13)
 
-        lower = netcdftime.num2date(vmin, self.date_unit, self.calendar)
-        upper = netcdftime.num2date(vmax, self.date_unit, self.calendar)
-
-        self.ndays = abs(vmax - vmin)
+        utime = netcdftime.utime(self.date_unit, self.calendar)
+        lower = utime.num2date(vmin)
+        upper = utime.num2date(vmax)
 
         resolution, n = self.compute_resolution(vmin, vmax, lower, upper)
 
@@ -123,26 +122,26 @@ class NetCDFTimeDateLocator(mticker.Locator):
         elif resolution == 'DAILY':
             # TODO: It would be great if this favoured multiples of 7.
             days = self._max_n_locator_days.tick_values(vmin, vmax)
-            ticks = [netcdftime.num2date(dt, self.date_unit, self.calendar) for dt in days]
+            ticks = [utime.num2date(dt) for dt in days]
         elif resolution == 'HOURLY':
             hour_unit = 'hours since 2000-01-01'
-            in_hours = netcdftime.date2num([lower, upper], hour_unit, self.calendar)
+            in_hours = utime.date2num([lower, upper])
             hours = self._max_n_locator.tick_values(in_hours[0], in_hours[1])
-            ticks = [netcdftime.num2date(dt, hour_unit, self.calendar) for dt in hours]
+            ticks = [utime.num2date(dt) for dt in hours]
         elif resolution == 'MINUTELY':
             minute_unit = 'minutes since 2000-01-01'
-            in_minutes = netcdftime.date2num([lower, upper], minute_unit, self.calendar)
+            in_minutes = utime.date2num([lower, upper])
             minutes = self._max_n_locator.tick_values(in_minutes[0], in_minutes[1])
-            ticks = [netcdftime.num2date(dt, minute_unit, self.calendar) for dt in minutes]
+            ticks = [utime.num2date(dt) for dt in minutes]
         elif resolution == 'SECONDLY':
             second_unit = 'seconds since 2000-01-01'
-            in_seconds = netcdftime.date2num([lower, upper], second_unit, self.calendar)
+            in_seconds = utime.date2num([lower, upper])
             seconds = self._max_n_locator.tick_values(in_seconds[0], in_seconds[1])
-            ticks = [netcdftime.num2date(dt, second_unit, self.calendar) for dt in seconds]
+            ticks = [utime.num2date(dt) for dt in seconds]
         else:
             raise ValueError('Resolution {} not implemented yet.'.format(resolution))
 
-        return netcdftime.date2num(ticks, self.date_unit, self.calendar)
+        return utime.date2num(ticks)
 
 
 class NetCDFTimeConverter(mdates.DateConverter):

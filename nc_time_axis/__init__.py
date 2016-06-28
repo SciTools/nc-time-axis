@@ -17,6 +17,11 @@ import matplotlib.units as munits
 import netcdftime
 import numpy as np
 
+# Define __version__ based on versioneer's interpretation.
+from ._version import get_versions
+__version__ = get_versions()['version']
+del get_versions
+
 
 # Lower and upper are in number of days.
 FormatOption = namedtuple('FormatOption', ['lower', 'upper', 'format_string'])

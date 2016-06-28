@@ -58,8 +58,8 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
         self.max_n_ticks = max_n_ticks
         self.min_n_ticks = min_n_ticks
-        self._max_n_locator = mticker.MaxNLocator(max_n_ticks, integer=True)
-        self._max_n_locator_days = mticker.MaxNLocator(max_n_ticks, integer=True, steps=[1, 2, 4, 7, 14])
+        self._max_n_locator = mticker.MaxNLocator(max_n_ticks, integer=False)
+        self._max_n_locator_days = mticker.MaxNLocator(max_n_ticks, integer=False, steps=[1, 2, 4, 7, 14])
         self.calendar = calendar
         self.date_unit = date_unit
         if not self.date_unit.lower().startswith('days since'):

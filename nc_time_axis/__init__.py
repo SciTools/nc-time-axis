@@ -28,6 +28,10 @@ FormatOption = namedtuple('FormatOption', ['lower', 'upper', 'format_string'])
 
 
 class NetCDFTimeDateFormatter(mticker.Formatter):
+    """
+    Formatter for netcdftime.datetime data.
+
+    """
     # Some magic numbers. These seem to work pretty well.
     format_options = [FormatOption(0.0, 0.2, '%H:%M:%S'),
                       FormatOption(0.2, 0.8, '%H:%M'),
@@ -44,12 +48,16 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
         self.time_units = time_units
 
     def pick_format(self, ndays):
-        """Returns a format string for an interval of the given number of days."""
+        """
+        Returns a format string for an interval of the given number of days.
+
+        """
         for option in self.format_options:
             if option.lower < ndays <= option.upper:
                 return option.format_string
         else:
-            raise ValueError('No formatter found for an interval of {} days.'.format(ndays))
+            msg = 'No formatter found for an interval of {} days.'
+            raise ValueError(msg.format(ndays))
 
     def __call__(self, x, pos=0):
         format_string = self.pick_format(ndays=self.locator.ndays)
@@ -58,23 +66,29 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
 
 
 class NetCDFTimeDateLocator(mticker.Locator):
+    """
+    Determines tick locations when plotting netcdftime.datetime data.
+
+    """
     def __init__(self, max_n_ticks, calendar, date_unit, min_n_ticks=3):
         # The date unit must be in the form of days since ...
 
         self.max_n_ticks = max_n_ticks
         self.min_n_ticks = min_n_ticks
         self._max_n_locator = mticker.MaxNLocator(max_n_ticks, integer=False)
-        self._max_n_locator_days = mticker.MaxNLocator(max_n_ticks, integer=False, steps=[1, 2, 4, 7, 14])
+        self._max_n_locator_days = mticker.MaxNLocator(
+            max_n_ticks, integer=False, steps=[1, 2, 4, 7, 14])
         self.calendar = calendar
         self.date_unit = date_unit
         if not self.date_unit.lower().startswith('days since'):
-            raise ValueError('The date unit must be days since for a NetCDF time locator.')
+            msg = 'The date unit must be days since for a NetCDF time locator.'
+            raise ValueError(msg)
 
         self._cached_resolution = {}
 
     def compute_resolution(self, num1, num2, date1, date2):
         """
-        Return the resolution of the dates (hourly, minutely, yearly), and
+        Returns the resolution of the dates (hourly, minutely, yearly), and
         an **approximate** number of those units.
 
         """
@@ -104,7 +118,8 @@ class NetCDFTimeDateLocator(mticker.Locator):
         return self.tick_values(vmin, vmax)
 
     def tick_values(self, vmin, vmax):
-        vmin, vmax = mtransforms.nonsingular(vmin, vmax, expander=1e-7, tiny=1e-13)
+        vmin, vmax = mtransforms.nonsingular(vmin, vmax, expander=1e-7,
+                                             tiny=1e-13)
 
         utime = netcdftime.utime(self.date_unit, self.calendar)
         lower = utime.num2date(vmin)
@@ -113,11 +128,13 @@ class NetCDFTimeDateLocator(mticker.Locator):
         resolution, n = self.compute_resolution(vmin, vmax, lower, upper)
 
         if resolution == 'YEARLY':
-            # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as appropriate.
+            # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
+            # appropriate.
             years = self._max_n_locator.tick_values(lower.year, upper.year)
             ticks = [netcdftime.datetime(int(year), 1, 1) for year in years]
         elif resolution == 'MONTHLY':
-            # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as appropriate.
+            # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
+            # appropriate.
             months_offset = self._max_n_locator.tick_values(0, n)
             ticks = []
             for offset in months_offset:
@@ -136,34 +153,43 @@ class NetCDFTimeDateLocator(mticker.Locator):
         elif resolution == 'MINUTELY':
             minute_unit = 'minutes since 2000-01-01'
             in_minutes = utime.date2num([lower, upper])
-            minutes = self._max_n_locator.tick_values(in_minutes[0], in_minutes[1])
+            minutes = self._max_n_locator.tick_values(in_minutes[0],
+                                                      in_minutes[1])
             ticks = [utime.num2date(dt) for dt in minutes]
         elif resolution == 'SECONDLY':
             second_unit = 'seconds since 2000-01-01'
             in_seconds = utime.date2num([lower, upper])
-            seconds = self._max_n_locator.tick_values(in_seconds[0], in_seconds[1])
+            seconds = self._max_n_locator.tick_values(in_seconds[0],
+                                                      in_seconds[1])
             ticks = [utime.num2date(dt) for dt in seconds]
         else:
-            raise ValueError('Resolution {} not implemented yet.'.format(resolution))
+            msg = 'Resolution {} not implemented yet.'.format(resolution)
+            raise ValueError(msg)
 
         return utime.date2num(ticks)
 
 
 class NetCDFTimeConverter(mdates.DateConverter):
+    """
+    Converter for netcdftime.datetime data.
+
+    """
     standard_unit = 'days since 2000-01-01'
 
     @staticmethod
     def axisinfo(unit, axis):
         """
-        Return the :class:`~matplotlib.units.AxisInfo` for *unit*.
+        Returns the :class:`~matplotlib.units.AxisInfo` for *unit*.
 
         *unit* is a tzinfo instance or None.
         The *axis* argument is required but not used.
         """
         calendar, date_unit = unit
 
-        majloc = NetCDFTimeDateLocator(4, calendar=calendar, date_unit=date_unit)
-        majfmt = NetCDFTimeDateFormatter(majloc, calendar=calendar, time_units=date_unit)
+        majloc = NetCDFTimeDateLocator(4, calendar=calendar,
+                                       date_unit=date_unit)
+        majfmt = NetCDFTimeDateFormatter(majloc, calendar=calendar,
+                                         time_units=date_unit)
         datemin = netcdftime.datetime(2000, 1, 1)
         datemax = netcdftime.datetime(2010, 1, 1)
         datemin.calendar = datemax.calendar = calendar
@@ -172,7 +198,10 @@ class NetCDFTimeConverter(mdates.DateConverter):
 
     @classmethod
     def default_units(cls, sample_point, axis):
-        'Compute some units for the given data point.'
+        """
+        Computes some units for the given data point.
+
+        """
         try:
             # Try getting the first item. Otherwise we just use this item.
             sample_point = sample_point[0]
@@ -180,12 +209,18 @@ class NetCDFTimeConverter(mdates.DateConverter):
             pass
 
         if not hasattr(sample_point, 'calendar'):
-            raise ValueError('Expecting netcdftimes with an extra "calendar" attribute.')
+            msg = 'Expecting netcdftimes with an extra "calendar" attribute.'
+            raise ValueError(msg)
 
         return sample_point.calendar, cls.standard_unit
 
     @classmethod
     def convert(cls, value, unit, axis):
+        """
+        Converts v:alue, if it is not already a number or sequence of numbers,
+        with :func:`netcdftime.date2num`.
+
+        """
         if isinstance(value, np.ndarray):
             # Don't do anything with numeric types.
             if value.dtype != np.object:
@@ -201,9 +236,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
         if not hasattr(first_value, 'calendar'):
             raise ValueError('A "calendar" attribute must be attached to '
                              'netcdftime object to understand them properly.')
-        return netcdftime.date2num(value, cls.standard_unit, calendar=first_value.calendar)
+        return netcdftime.date2num(value, cls.standard_unit,
+                                   calendar=first_value.calendar)
 
 
-# Automatically register NetCDFTimeConverter with matplotlib.unit's converter dictionary. 
+# Automatically register NetCDFTimeConverter with matplotlib.unit's converter
+# dictionary.
 if netcdftime.datetime not in munits.registry:
     munits.registry[netcdftime.datetime] = NetCDFTimeConverter()

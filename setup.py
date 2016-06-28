@@ -9,7 +9,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 packages = []
 for d, _, _ in os.walk(os.path.join(here, 'nc_time_axis')):
     if os.path.exists(os.path.join(d, '__init__.py')):
-        packages.append(d[len(here)+2:].replace(os.path.sep, '.'))
+        packages.append(d[len(here)+1:].replace(os.path.sep, '.'))
 
 setup_args = dict(
     name='nc-time-axis',

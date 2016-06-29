@@ -10,7 +10,6 @@ from collections import namedtuple
 import datetime
 
 import matplotlib.dates as mdates
-import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import matplotlib.transforms as mtransforms
 import matplotlib.units as munits

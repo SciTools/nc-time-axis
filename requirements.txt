@@ -1,5 +1,5 @@
 matplotlib
 mock
-netcdf4=1.0.2
+netcdf4>=1.1
 numpy
 pep8

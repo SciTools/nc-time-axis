@@ -249,9 +249,8 @@ class NetCDFTimeConverter(mdates.DateConverter):
             first_value = value
 
         if not isinstance(first_value, CalendarDateTime):
-            msg = 'The value must be a number, a sequence of numbers or of ' \
-                  'type :class:`nc_time_axis.CalendarDateTime.'
-            raise ValueError(msg)
+            raise ValueError('The values must be numbers or instances of '
+                             '"nc_time_axis.CalendarDateTime".')
 
         if not isinstance(first_value.datetime, netcdftime.datetime):
             raise ValueError('The datetime attribute of the CalendarDateTime '

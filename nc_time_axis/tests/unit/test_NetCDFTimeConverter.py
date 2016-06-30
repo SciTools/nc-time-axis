@@ -69,6 +69,13 @@ class Test_convert(unittest.TestCase):
         with self.assertRaisesRegexp(ValueError, msg):
             result = NetCDFTimeConverter().convert(val, None, None)
 
+    def test_non_CalendarDateTime(self):
+        val = netcdftime.datetime(1988, 5, 6)
+        msg = 'The value must be a number, a sequence of numbers or of ' \
+              'type :class:`nc_time_axis.CalendarDateTime.'
+        with self.assertRaisesRegexp(ValueError, msg):
+            result = NetCDFTimeConverter().convert(val, None, None)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -6,7 +6,7 @@ Support for netcdftime axis in matplotlib.
 from __future__ import (absolute_import, division, print_function)
 from six.moves import (filter, input, map, range, zip)  # noqa
 
-from collections import namedtuple, Iterable
+from collections import namedtuple
 import datetime
 
 import matplotlib.dates as mdates
@@ -248,17 +248,21 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 return value
             first_value = value
 
+        if not isinstance(first_value, CalendarDateTime):
+            msg = 'The value must be a number, a sequence of numbers or of ' \
+                  'type :class:`nc_time_axis.CalendarDateTime.'
+            raise ValueError(msg)
+
         if not isinstance(first_value.datetime, netcdftime.datetime):
             raise ValueError('The datetime attribute of the CalendarDateTime '
                              'object must be of type `netcdftime.datetime`.')
 
         ut = netcdftime.utime(cls.standard_unit, calendar=first_value.calendar)
 
-        if isinstance(value, Iterable):
-            num = ut.date2num([v.datetime for v in value])
-        else:
-            num = ut.date2num(value.datetime)
-        return num
+        if isinstance(value, CalendarDateTime):
+            value = [value]
+
+        return ut.date2num([v.datetime for v in value])
 
 
 # Automatically register NetCDFTimeConverter with matplotlib.unit's converter

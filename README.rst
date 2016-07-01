@@ -1,7 +1,7 @@
 nc-time-axis
 ============
 
-|Travis|_
+|Travis|_ |Coveralls|_
 
 Support for netcdftime axis in matplotlib.
 
@@ -14,3 +14,6 @@ See also
 
 .. |Travis| image:: https://travis-ci.org/SciTools/nc-time-axis.svg?branch=master
 .. _Travis: https://travis-ci.org/SciTools/nc-time-axis
+
+.. |Coveralls| image:: https://coveralls.io/repos/github/SciTools/nc-time-axis/badge.svg?branch=master
+.. _Coveralls: https://coveralls.io/github/SciTools/nc-time-axis?branch=master 

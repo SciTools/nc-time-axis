@@ -1,0 +1,18 @@
+#
+# .coveragerc to control coverage.py
+#
+
+[run]
+branch = True
+omit =
+    setup.py
+    versioneer.py
+    nc_time_axis/_version.py
+    nc_time_axis/tests/*
+
+
+[report]
+exclude_lines =
+    pragma: no cover
+    def __repr__
+    if __name__ == .__main__.:

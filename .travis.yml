@@ -27,7 +27,7 @@ install:
 
   # Install coveralls for test coverage
   # ----------------------------------
-  - conda install coverage
+  - pip install coveralls
 
   # Output debug info
   # -----------------
@@ -35,8 +35,7 @@ install:
   - conda info -a
 
 script:
-  coverage run setup.py test
+  - coverage run setup.py test
 
 
-after_sucess:
-  coveralls
+after_success: coveralls

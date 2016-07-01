@@ -7,7 +7,6 @@ from __future__ import (absolute_import, division, print_function)
 from six.moves import (filter, input, map, range, zip)  # noqa
 
 from collections import namedtuple
-import datetime
 
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
@@ -96,9 +95,9 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
         self.max_n_ticks = max_n_ticks
         self.min_n_ticks = min_n_ticks
-        self._max_n_locator = mticker.MaxNLocator(max_n_ticks, integer=False)
+        self._max_n_locator = mticker.MaxNLocator(max_n_ticks, integer=True)
         self._max_n_locator_days = mticker.MaxNLocator(
-            max_n_ticks, integer=False, steps=[1, 2, 4, 7, 14])
+            max_n_ticks, integer=True, steps=[1, 2, 4, 7, 14])
         self.calendar = calendar
         self.date_unit = date_unit
         if not self.date_unit.lower().startswith('days since'):
@@ -170,21 +169,24 @@ class NetCDFTimeDateLocator(mticker.Locator):
             ticks = [utime.num2date(dt) for dt in days]
         elif resolution == 'HOURLY':
             hour_unit = 'hours since 2000-01-01'
-            in_hours = utime.date2num([lower, upper])
+            hour_utime = netcdftime.utime(hour_unit, self.calendar)
+            in_hours = hour_utime.date2num([lower, upper])
             hours = self._max_n_locator.tick_values(in_hours[0], in_hours[1])
-            ticks = [utime.num2date(dt) for dt in hours]
+            ticks = [hour_utime.num2date(dt) for dt in hours]
         elif resolution == 'MINUTELY':
             minute_unit = 'minutes since 2000-01-01'
-            in_minutes = utime.date2num([lower, upper])
+            minute_utime = netcdftime.utime(minute_unit, self.calendar)
+            in_minutes = minute_utime.date2num([lower, upper])
             minutes = self._max_n_locator.tick_values(in_minutes[0],
                                                       in_minutes[1])
-            ticks = [utime.num2date(dt) for dt in minutes]
+            ticks = [minute_utime.num2date(dt) for dt in minutes]
         elif resolution == 'SECONDLY':
             second_unit = 'seconds since 2000-01-01'
-            in_seconds = utime.date2num([lower, upper])
+            second_utime = netcdftime.utime(second_unit, self.calendar)
+            in_seconds = second_utime.date2num([lower, upper])
             seconds = self._max_n_locator.tick_values(in_seconds[0],
                                                       in_seconds[1])
-            ticks = [utime.num2date(dt) for dt in seconds]
+            ticks = [second_utime.num2date(dt) for dt in seconds]
         else:
             msg = 'Resolution {} not implemented yet.'.format(resolution)
             raise ValueError(msg)

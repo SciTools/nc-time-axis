@@ -32,9 +32,7 @@ class Test(unittest.TestCase):
                          for dt in datetimes]
         line1, = plt.plot(cal_datetimes)
         result_ydata = line1.get_ydata()
-        result_datetimes = [cdt.datetime for cdt in result_ydata]
-        np.testing.assert_array_equal(result_datetimes, datetimes)
-        self.assertIs('360_day', result_ydata[0].calendar)
+        np.testing.assert_array_equal(result_ydata, cal_datetimes)
 
 
 if __name__ == "__main__":

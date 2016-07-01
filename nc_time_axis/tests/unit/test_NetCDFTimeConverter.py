@@ -19,11 +19,8 @@ class Test_axisinfo(unittest.TestCase):
         expected_dt = [netcdftime.datetime(2000, 1, 1),
                        netcdftime.datetime(2010, 1, 1)]
         np.testing.assert_array_equal(
-            [cal_dt.datetime for cal_dt in result.default_limits],
-            expected_dt)
-        np.testing.assert_array_equal(
-            [cal_dt.calendar for cal_dt in result.default_limits],
-            [cal, cal])
+            result.default_limits,
+            [CalendarDateTime(edt, cal) for edt in expected_dt])
 
 
 class Test_default_units(unittest.TestCase):

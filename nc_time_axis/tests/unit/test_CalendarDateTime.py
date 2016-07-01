@@ -11,45 +11,47 @@ from nc_time_axis import CalendarDateTime
 
 
 class Test___eq__(unittest.TestCase):
+    def setUp(self):
+        self.cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
+                                    '360_day')
+
     def test_equal(self):
-        cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
-                               '360_day')
-        self.assertTrue(cdt == cdt)
+        self.assertTrue(self.cdt == self.cdt)
 
     def test_diff_cal(self):
-        cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
-                               '360_day')
         other_cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
                                      '365_day')
-        self.assertFalse(cdt == other_cdt)
+        self.assertFalse(self.cdt == other_cdt)
 
     def test_diff_datetime(self):
-        cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
-                               '360_day')
         other_cdt = CalendarDateTime(netcdftime.datetime(1992, 11, 23, 3, 6),
                                      '360_day')
-        self.assertFalse(cdt == other_cdt)
+        self.assertFalse(self.cdt == other_cdt)
+
+    def test_diff_type(self):
+        self.assertFalse(self.cdt == 'not a CalendarDateTime')
 
 
 class Test__ne__(unittest.TestCase):
+    def setUp(self):
+        self.cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
+                                    '360_day')
+
     def test_equal(self):
-        cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
-                               '360_day')
-        self.assertFalse(cdt != cdt)
+        self.assertFalse(self.cdt != self.cdt)
 
     def test_diff_cal(self):
-        cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
-                               '360_day')
         other_cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
                                      '365_day')
-        self.assertTrue(cdt != other_cdt)
+        self.assertTrue(self.cdt != other_cdt)
 
     def test_diff_datetime(self):
-        cdt = CalendarDateTime(netcdftime.datetime(1967, 7, 22, 3, 6),
-                               '360_day')
         other_cdt = CalendarDateTime(netcdftime.datetime(1992, 11, 23, 3, 6),
                                      '360_day')
-        self.assertTrue(cdt != other_cdt)
+        self.assertTrue(self.cdt != other_cdt)
+
+    def test_diff_type(self):
+        self.assertTrue(self.cdt != 'not a CalendarDateTime')
 
 
 if __name__ == "__main__":

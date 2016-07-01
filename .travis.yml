@@ -25,9 +25,9 @@ install:
   - conda create --quiet -n $ENV_NAME python=$TRAVIS_PYTHON_VERSION --file requirements.txt
   - source activate $ENV_NAME
 
-  # Install coverage for test coverage
+  # Install coveralls for test coverage
   # ----------------------------------
-  - pip install coverage
+  - conda install coverage
 
   # Output debug info
   # -----------------

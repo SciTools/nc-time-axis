@@ -3,3 +3,4 @@ mock
 netcdf4>=1.1
 numpy
 pep8
+pip

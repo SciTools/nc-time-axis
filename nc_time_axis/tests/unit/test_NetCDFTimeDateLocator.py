@@ -87,12 +87,12 @@ class Test_tick_values(unittest.TestCase):
 
     def test_secondly(self):
         np.testing.assert_array_almost_equal(
-            self.check(4, 0, 0.0004),
-            [0., 0.00015046, 0.00030093, 0.00045139])
+            self.check(6, 0, 0.0004),
+            [0, 0.00008, 0.00016, 0.00024, 0.00032, 0.0004])
 
     def test_minutely(self):
         np.testing.assert_array_almost_equal(
-            self.check(4, 1, 1.07), [1., 1.02, 1.04, 1.06, 1.08])
+            self.check(4, 1, 1.07), [0.975, 1., 1.025, 1.05, 1.075])
 
     def test_hourly(self):
         np.testing.assert_array_almost_equal(

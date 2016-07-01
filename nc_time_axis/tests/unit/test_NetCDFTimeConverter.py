@@ -8,32 +8,31 @@ import unittest
 import netcdftime
 import numpy as np
 
-from nc_time_axis import NetCDFTimeConverter
+from nc_time_axis import NetCDFTimeConverter, CalendarDateTime
 
 
 class Test_axisinfo(unittest.TestCase):
-    def test_default_limits(self):
-        unit = ('360_day', 'days since 2000-02-25 00:00:00')
+    def test_axis_default_limits(self):
+        cal = '360_day'
+        unit = (cal, 'days since 2000-02-25 00:00:00')
         result = NetCDFTimeConverter().axisinfo(unit, None)
-        np.testing.assert_array_equal(result.default_limits,
-                                      [netcdftime.datetime(2000, 1, 1),
-                                       netcdftime.datetime(2010, 1, 1)])
+        expected_dt = [netcdftime.datetime(2000, 1, 1),
+                       netcdftime.datetime(2010, 1, 1)]
+        np.testing.assert_array_equal(
+            [cal_dt.datetime for cal_dt in result.default_limits],
+            expected_dt)
+        np.testing.assert_array_equal(
+            [cal_dt.calendar for cal_dt in result.default_limits],
+            [cal, cal])
 
 
 class Test_default_units(unittest.TestCase):
     def test_360_day_calendar(self):
         calendar = '360_day'
         unit = 'days since 2000-01-01'
-        val = [netcdftime.datetime(2014, 8, 12)]
-        val[0].calendar = calendar
+        val = [CalendarDateTime(netcdftime.datetime(2014, 8, 12), calendar)]
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit))
-
-    def test_no_calendar_attribute(self):
-        val = [netcdftime.datetime(2014, 8, 12)]
-        msg = 'Expecting netcdftimes with an extra "calendar" attribute.'
-        with self.assertRaisesRegexp(ValueError, msg):
-            result = NetCDFTimeConverter().default_units(val, None)
 
 
 class Test_convert(unittest.TestCase):
@@ -53,21 +52,27 @@ class Test_convert(unittest.TestCase):
         np.testing.assert_array_equal(result, val)
 
     def test_netcdftime(self):
-        val = netcdftime.datetime(2014, 8, 12)
-        val.calendar = '365_day'
+        val = CalendarDateTime(netcdftime.datetime(2014, 8, 12), '365_day')
         result = NetCDFTimeConverter().convert(val, None, None)
         np.testing.assert_array_equal(result, 5333.)
 
     def test_netcdftime_np_array(self):
-        val = np.array([netcdftime.datetime(2012, 6, 4)], dtype=np.object)
-        for date in val:
-            date.calendar = '360_day'
+        val = np.array([CalendarDateTime(netcdftime.datetime(2012, 6, 4),
+                                         '360_day')], dtype=np.object)
         result = NetCDFTimeConverter().convert(val, None, None)
         self.assertEqual(result, np.array([4473.]))
 
-    def test_no_calendar_attribute(self):
-        val = netcdftime.datetime(2014, 8, 12)
-        msg = 'A "calendar" attribute must be attached'
+    def test_non_netcdftime_datetime(self):
+        val = CalendarDateTime(4, '360_day')
+        msg = 'The datetime attribute of the CalendarDateTime object must ' \
+              'be of type `netcdftime.datetime`.'
+        with self.assertRaisesRegexp(ValueError, msg):
+            result = NetCDFTimeConverter().convert(val, None, None)
+
+    def test_non_CalendarDateTime(self):
+        val = netcdftime.datetime(1988, 5, 6)
+        msg = 'The values must be numbers or instances of ' \
+              '"nc_time_axis.CalendarDateTime".'
         with self.assertRaisesRegexp(ValueError, msg):
             result = NetCDFTimeConverter().convert(val, None, None)
 

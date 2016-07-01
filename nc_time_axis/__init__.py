@@ -27,6 +27,20 @@ del get_versions
 FormatOption = namedtuple('FormatOption', ['lower', 'upper', 'format_string'])
 
 
+class CalendarDateTime(object):
+    """
+    Container for :class:`netcdftime.datetime` object and calendar.
+
+    """
+    def __init__(self, datetime, calendar):
+        self.datetime = datetime
+        self.calendar = calendar
+
+    def __repr__(self):
+        msg = '<{}: datetime={}, calendar={}>'
+        return msg.format(type(self).__name__, self.datetime, self.calendar)
+
+
 class NetCDFTimeDateFormatter(mticker.Formatter):
     """
     Formatter for netcdftime.datetime data.
@@ -121,6 +135,8 @@ class NetCDFTimeDateLocator(mticker.Locator):
         vmin, vmax = mtransforms.nonsingular(vmin, vmax, expander=1e-7,
                                              tiny=1e-13)
 
+        self.ndays = float(abs(vmax - vmin))
+
         utime = netcdftime.utime(self.date_unit, self.calendar)
         lower = utime.num2date(vmin)
         upper = utime.num2date(vmax)
@@ -190,10 +206,9 @@ class NetCDFTimeConverter(mdates.DateConverter):
                                        date_unit=date_unit)
         majfmt = NetCDFTimeDateFormatter(majloc, calendar=calendar,
                                          time_units=date_unit)
-        datemin = netcdftime.datetime(2000, 1, 1)
-        datemax = netcdftime.datetime(2010, 1, 1)
-        datemin.calendar = datemax.calendar = calendar
-        return munits.AxisInfo(majloc=majloc, majfmt=majfmt, label='Testing',
+        datemin = CalendarDateTime(netcdftime.datetime(2000, 1, 1), calendar)
+        datemax = CalendarDateTime(netcdftime.datetime(2010, 1, 1), calendar)
+        return munits.AxisInfo(majloc=majloc, majfmt=majfmt, label='',
                                default_limits=(datemin, datemax))
 
     @classmethod
@@ -217,8 +232,8 @@ class NetCDFTimeConverter(mdates.DateConverter):
     @classmethod
     def convert(cls, value, unit, axis):
         """
-        Converts v:alue, if it is not already a number or sequence of numbers,
-        with :func:`netcdftime.date2num`.
+        Converts value, if it is not already a number or sequence of numbers,
+        with :func:`netcdftime.utime().date2num`.
 
         """
         if isinstance(value, np.ndarray):
@@ -233,14 +248,23 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 return value
             first_value = value
 
-        if not hasattr(first_value, 'calendar'):
-            raise ValueError('A "calendar" attribute must be attached to '
-                             'netcdftime object to understand them properly.')
-        return netcdftime.date2num(value, cls.standard_unit,
-                                   calendar=first_value.calendar)
+        if not isinstance(first_value, CalendarDateTime):
+            raise ValueError('The values must be numbers or instances of '
+                             '"nc_time_axis.CalendarDateTime".')
+
+        if not isinstance(first_value.datetime, netcdftime.datetime):
+            raise ValueError('The datetime attribute of the CalendarDateTime '
+                             'object must be of type `netcdftime.datetime`.')
+
+        ut = netcdftime.utime(cls.standard_unit, calendar=first_value.calendar)
+
+        if isinstance(value, CalendarDateTime):
+            value = [value]
+
+        return ut.date2num([v.datetime for v in value])
 
 
 # Automatically register NetCDFTimeConverter with matplotlib.unit's converter
 # dictionary.
-if netcdftime.datetime not in munits.registry:
-    munits.registry[netcdftime.datetime] = NetCDFTimeConverter()
+if CalendarDateTime not in munits.registry:
+    munits.registry[CalendarDateTime] = NetCDFTimeConverter()

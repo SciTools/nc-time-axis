@@ -41,6 +41,9 @@ class CalendarDateTime(object):
                 self.datetime == other.datetime and
                 self.calendar == other.calendar)
 
+    def __ne__(self, other):
+        return not self.__eq__(other)
+
     def __repr__(self):
         msg = '<{}: datetime={}, calendar={}>'
         return msg.format(type(self).__name__, self.datetime, self.calendar)

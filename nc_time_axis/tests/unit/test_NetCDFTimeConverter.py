@@ -24,12 +24,40 @@ class Test_axisinfo(unittest.TestCase):
 
 
 class Test_default_units(unittest.TestCase):
-    def test_360_day_calendar(self):
+    def test_360_day_calendar_point(self):
+        calendar = '360_day'
+        unit = 'days since 2000-01-01'
+        val = CalendarDateTime(netcdftime.datetime(2014, 8, 12), calendar)
+        result = NetCDFTimeConverter().default_units(val, None)
+        self.assertEqual(result, (calendar, unit))
+
+    def test_360_day_calendar_list(self):
         calendar = '360_day'
         unit = 'days since 2000-01-01'
         val = [CalendarDateTime(netcdftime.datetime(2014, 8, 12), calendar)]
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit))
+
+    def test_360_day_calendar_nd(self):
+        # Test the case where the input is an nd-array.
+        calendar = '360_day'
+        unit = 'days since 2000-01-01'
+        val = np.array([[CalendarDateTime(netcdftime.datetime(2014, 8, 12),
+                                          calendar)],
+                       [CalendarDateTime(netcdftime.datetime(2014, 8, 13),
+                                         calendar)]])
+        result = NetCDFTimeConverter().default_units(val, None)
+        self.assertEqual(result, (calendar, unit))
+
+    def test_nonequal_calendars(self):
+        # Test that different supplied calendars causes an error.
+        calendar_1 = '360_day'
+        calendar_2 = '365_day'
+        unit = 'days since 2000-01-01'
+        val = [CalendarDateTime(netcdftime.datetime(2014, 8, 12), calendar_1),
+               CalendarDateTime(netcdftime.datetime(2014, 8, 13), calendar_2)]
+        with self.assertRaisesRegexp(ValueError, 'not all equal'):
+            NetCDFTimeConverter().default_units(val, None)
 
 
 class Test_convert(unittest.TestCase):
@@ -37,6 +65,13 @@ class Test_convert(unittest.TestCase):
         val = np.array([7])
         result = NetCDFTimeConverter().convert(val, None, None)
         np.testing.assert_array_equal(result, val)
+
+    def test_numpy_nd_array(self):
+        shape = (4, 2)
+        val = np.arange(8).reshape(shape)
+        result = NetCDFTimeConverter().convert(val, None, None)
+        np.testing.assert_array_equal(result, val)
+        self.assertEqual(result.shape, shape)
 
     def test_numeric(self):
         val = 4

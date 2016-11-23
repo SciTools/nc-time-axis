@@ -226,17 +226,24 @@ class NetCDFTimeConverter(mdates.DateConverter):
         Computes some units for the given data point.
 
         """
-        try:
-            # Try getting the first item. Otherwise we just use this item.
-            sample_point = sample_point[0]
-        except (TypeError, IndexError):
-            pass
-
-        if not hasattr(sample_point, 'calendar'):
-            msg = 'Expecting netcdftimes with an extra "calendar" attribute.'
-            raise ValueError(msg)
-
-        return sample_point.calendar, cls.standard_unit
+        if hasattr(sample_point, '__iter__'):
+            # Deal with nD `sample_point` arrays.
+            if isinstance(sample_point, np.ndarray):
+                sample_point = sample_point.reshape(-1)
+            calendars = np.array([point.calendar for point in sample_point])
+            if np.all(calendars[0] == calendars):
+                calendar = calendars[0]
+            else:
+                raise ValueError('Calendar units are not all equal.')
+        else:
+            # Deal with a single `sample_point` value.
+            if not hasattr(sample_point, 'calendar'):
+                msg = ('Expecting netcdftimes with an extra '
+                       '"calendar" attribute.')
+                raise ValueError(msg)
+            else:
+                calendar = sample_point.calendar
+        return calendar, cls.standard_unit
 
     @classmethod
     def convert(cls, value, unit, axis):
@@ -245,11 +252,13 @@ class NetCDFTimeConverter(mdates.DateConverter):
         with :func:`netcdftime.utime().date2num`.
 
         """
+        shape = None
         if isinstance(value, np.ndarray):
             # Don't do anything with numeric types.
             if value.dtype != np.object:
                 return value
-
+            shape = value.shape
+            value = value.reshape(-1)
             first_value = value[0]
         else:
             # Don't do anything with numeric types.
@@ -270,7 +279,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
         if isinstance(value, CalendarDateTime):
             value = [value]
 
-        return ut.date2num([v.datetime for v in value])
+        result = ut.date2num([v.datetime for v in value])
+        if shape is not None:
+            result = result.reshape(shape)
+
+        return result
 
 
 # Automatically register NetCDFTimeConverter with matplotlib.unit's converter

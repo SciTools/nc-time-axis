@@ -231,7 +231,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
             if isinstance(sample_point, np.ndarray):
                 sample_point = sample_point.reshape(-1)
             calendars = np.array([point.calendar for point in sample_point])
-            if np.all(calendars[0] == calendars):
+            if np.all(calendars == calendars[0]):
                 calendar = calendars[0]
             else:
                 raise ValueError('Calendar units are not all equal.')

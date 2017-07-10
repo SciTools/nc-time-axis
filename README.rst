@@ -16,6 +16,7 @@ Installation
 ------------
 
 .. code:: bash
+
 conda install -c conda-forge nc_time_axis
 
 .. |Travis| image:: https://travis-ci.org/SciTools/nc-time-axis.svg?branch=master

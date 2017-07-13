@@ -18,6 +18,30 @@ Installation
 
     conda install -c conda-forge nc_time_axis
 
+
+Example Code
+------------
+::
+
+    import nc_time_axis
+	import netcdftime
+	import matplotlib.pyplot as plt
+	import random
+	DT = [netcdftime.datetime(year=2017, month=2, day=day) for day in range(1, 31)]
+	CDT = [nc_time_axis.CalendarDateTime(item, "360_day") for item in DT]
+	TempList = []
+	for item in range(30):
+		DayTemp = round(random.uniform(0, 12), 3)
+		TempList.append(DayTemp)
+	plt.plot(CDT, TempList)
+	plt.margins(0.1)
+	plt.ylim(0, 12)
+	plt.xlabel("date")
+	plt.ylabel("temp")
+	plt.show()
+
+.. image:: graph.png
+
 .. |Travis| image:: https://travis-ci.org/SciTools/nc-time-axis.svg?branch=master
 .. _Travis: https://travis-ci.org/SciTools/nc-time-axis
 

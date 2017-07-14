@@ -25,9 +25,9 @@ Example Code
 
 	import random
 
+	import matplotlib.pyplot as plt
 	import nc_time_axis
 	import netcdftime
-	import matplotlib.pyplot as plt
 
 	d_time = [netcdftime.datetime(year=2017, month=2, day=n) for n in range(1, 31)]
 	c_d_time = [nc_time_axis.CalendarDateTime(item, "360_day") for item in d_time]

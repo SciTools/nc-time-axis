@@ -23,24 +23,24 @@ Example Code
 ------------
 ::
 
-    import nc_time_axis
+	import random
+
+	import nc_time_axis
 	import netcdftime
 	import matplotlib.pyplot as plt
-	import random
-	DT = [netcdftime.datetime(year=2017, month=2, day=day) for day in range(1, 31)]
-	CDT = [nc_time_axis.CalendarDateTime(item, "360_day") for item in DT]
-	TempList = []
-	for item in range(30):
-		DayTemp = round(random.uniform(0, 12), 3)
-		TempList.append(DayTemp)
-	plt.plot(CDT, TempList)
+
+	d_time = [netcdftime.datetime(year=2017, month=2, day=n) for n in range(1, 31)]
+	c_d_time = [nc_time_axis.CalendarDateTime(item, "360_day") for item in d_time]
+	temperatures = [round(random.uniform(0, 12), 3) for _ in range(len(c_d_time))]
+
+	plt.plot(c_d_time, temperatures)
 	plt.margins(0.1)
 	plt.ylim(0, 12)
-	plt.xlabel("date")
-	plt.ylabel("temp")
+	plt.xlabel("Date")
+	plt.ylabel("Temperature")
 	plt.show()
 
-.. image:: graph.png
+.. image:: example_plot.png
 
 .. |Travis| image:: https://travis-ci.org/SciTools/nc-time-axis.svg?branch=master
 .. _Travis: https://travis-ci.org/SciTools/nc-time-axis

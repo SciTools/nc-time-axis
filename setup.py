@@ -20,6 +20,8 @@ setup_args = dict(
     author='Laura Dreyer, Philip Elson',
     url='https://github.com/scitools/nc-time-axis',
     packages=packages,
+    install_requires = ['matplotlib<2', 'netcdf4', 'numpy', 'six'],
+    tests_require = ['mock', 'pep8'],
     test_suite='nc_time_axis.tests'
 )
 

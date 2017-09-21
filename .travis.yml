@@ -20,14 +20,17 @@ install:
   - conda config --set always_yes yes --set changeps1 no
   - conda config --set show_channel_urls True
   - conda update --quiet conda
-  - conda config --add channels scitools
   - ENV_NAME='test-environment'
-  - conda create --quiet -n $ENV_NAME python=$TRAVIS_PYTHON_VERSION --file requirements.txt
+  - conda create --quiet -n $ENV_NAME python=$TRAVIS_PYTHON_VERSION pip
   - source activate $ENV_NAME
 
   # Install coveralls for test coverage
   # ----------------------------------
   - pip install coveralls
+
+  # Install the package itself
+  # --------------------------
+  - pip install .
 
   # Output debug info
   # -----------------

@@ -3,10 +3,9 @@
 #
 
 [run]
+source = nc_time_axis
 branch = True
 omit =
-    setup.py
-    versioneer.py
     nc_time_axis/_version.py
     nc_time_axis/tests/*
 

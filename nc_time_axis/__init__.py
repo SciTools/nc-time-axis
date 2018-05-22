@@ -1,5 +1,5 @@
 """
-Support for netcdftime axis in matplotlib.
+Support for cftime axis in matplotlib.
 
 """
 
@@ -12,7 +12,7 @@ import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 import matplotlib.transforms as mtransforms
 import matplotlib.units as munits
-import netcdftime
+import cftime
 import numpy as np
 
 # Define __version__ based on versioneer's interpretation.
@@ -27,7 +27,7 @@ FormatOption = namedtuple('FormatOption', ['lower', 'upper', 'format_string'])
 
 class CalendarDateTime(object):
     """
-    Container for :class:`netcdftime.datetime` object and calendar.
+    Container for :class:`cftime.datetime` object and calendar.
 
     """
     def __init__(self, datetime, calendar):
@@ -49,7 +49,7 @@ class CalendarDateTime(object):
 
 class NetCDFTimeDateFormatter(mticker.Formatter):
     """
-    Formatter for netcdftime.datetime data.
+    Formatter for cftime.datetime data.
 
     """
     # Some magic numbers. These seem to work pretty well.
@@ -81,13 +81,13 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
 
     def __call__(self, x, pos=0):
         format_string = self.pick_format(ndays=self.locator.ndays)
-        dt = netcdftime.utime(self.time_units, self.calendar).num2date(x)
+        dt = cftime.utime(self.time_units, self.calendar).num2date(x)
         return dt.strftime(format_string)
 
 
 class NetCDFTimeDateLocator(mticker.Locator):
     """
-    Determines tick locations when plotting netcdftime.datetime data.
+    Determines tick locations when plotting cftime.datetime data.
 
     """
     def __init__(self, max_n_ticks, calendar, date_unit, min_n_ticks=3):
@@ -143,7 +143,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
         self.ndays = float(abs(vmax - vmin))
 
-        utime = netcdftime.utime(self.date_unit, self.calendar)
+        utime = cftime.utime(self.date_unit, self.calendar)
         lower = utime.num2date(vmin)
         upper = utime.num2date(vmax)
 
@@ -153,7 +153,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
             # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
             # appropriate.
             years = self._max_n_locator.tick_values(lower.year, upper.year)
-            ticks = [netcdftime.datetime(int(year), 1, 1) for year in years]
+            ticks = [cftime.datetime(int(year), 1, 1) for year in years]
         elif resolution == 'MONTHLY':
             # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
             # appropriate.
@@ -162,27 +162,27 @@ class NetCDFTimeDateLocator(mticker.Locator):
             for offset in months_offset:
                 year = lower.year + np.floor((lower.month + offset) / 12)
                 month = ((lower.month + offset) % 12) + 1
-                ticks.append(netcdftime.datetime(int(year), int(month), 1))
+                ticks.append(cftime.datetime(int(year), int(month), 1))
         elif resolution == 'DAILY':
             # TODO: It would be great if this favoured multiples of 7.
             days = self._max_n_locator_days.tick_values(vmin, vmax)
             ticks = [utime.num2date(dt) for dt in days]
         elif resolution == 'HOURLY':
             hour_unit = 'hours since 2000-01-01'
-            hour_utime = netcdftime.utime(hour_unit, self.calendar)
+            hour_utime = cftime.utime(hour_unit, self.calendar)
             in_hours = hour_utime.date2num([lower, upper])
             hours = self._max_n_locator.tick_values(in_hours[0], in_hours[1])
             ticks = [hour_utime.num2date(dt) for dt in hours]
         elif resolution == 'MINUTELY':
             minute_unit = 'minutes since 2000-01-01'
-            minute_utime = netcdftime.utime(minute_unit, self.calendar)
+            minute_utime = cftime.utime(minute_unit, self.calendar)
             in_minutes = minute_utime.date2num([lower, upper])
             minutes = self._max_n_locator.tick_values(in_minutes[0],
                                                       in_minutes[1])
             ticks = [minute_utime.num2date(dt) for dt in minutes]
         elif resolution == 'SECONDLY':
             second_unit = 'seconds since 2000-01-01'
-            second_utime = netcdftime.utime(second_unit, self.calendar)
+            second_utime = cftime.utime(second_unit, self.calendar)
             in_seconds = second_utime.date2num([lower, upper])
             seconds = self._max_n_locator.tick_values(in_seconds[0],
                                                       in_seconds[1])
@@ -196,7 +196,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
 class NetCDFTimeConverter(mdates.DateConverter):
     """
-    Converter for netcdftime.datetime data.
+    Converter for cftime.datetime data.
 
     """
     standard_unit = 'days since 2000-01-01'
@@ -215,8 +215,8 @@ class NetCDFTimeConverter(mdates.DateConverter):
                                        date_unit=date_unit)
         majfmt = NetCDFTimeDateFormatter(majloc, calendar=calendar,
                                          time_units=date_unit)
-        datemin = CalendarDateTime(netcdftime.datetime(2000, 1, 1), calendar)
-        datemax = CalendarDateTime(netcdftime.datetime(2010, 1, 1), calendar)
+        datemin = CalendarDateTime(cftime.datetime(2000, 1, 1), calendar)
+        datemax = CalendarDateTime(cftime.datetime(2010, 1, 1), calendar)
         return munits.AxisInfo(majloc=majloc, majfmt=majfmt, label='',
                                default_limits=(datemin, datemax))
 
@@ -238,7 +238,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
         else:
             # Deal with a single `sample_point` value.
             if not hasattr(sample_point, 'calendar'):
-                msg = ('Expecting netcdftimes with an extra '
+                msg = ('Expecting cftimes with an extra '
                        '"calendar" attribute.')
                 raise ValueError(msg)
             else:
@@ -249,7 +249,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
     def convert(cls, value, unit, axis):
         """
         Converts value, if it is not already a number or sequence of numbers,
-        with :func:`netcdftime.utime().date2num`.
+        with :func:`cftime.utime().date2num`.
 
         """
         shape = None
@@ -270,11 +270,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
             raise ValueError('The values must be numbers or instances of '
                              '"nc_time_axis.CalendarDateTime".')
 
-        if not isinstance(first_value.datetime, netcdftime.datetime):
+        if not isinstance(first_value.datetime, cftime.datetime):
             raise ValueError('The datetime attribute of the CalendarDateTime '
-                             'object must be of type `netcdftime.datetime`.')
+                             'object must be of type `cftime.datetime`.')
 
-        ut = netcdftime.utime(cls.standard_unit, calendar=first_value.calendar)
+        ut = cftime.utime(cls.standard_unit, calendar=first_value.calendar)
 
         if isinstance(value, CalendarDateTime):
             value = [value]

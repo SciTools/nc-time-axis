@@ -8,7 +8,7 @@ import unittest
 import matplotlib
 matplotlib.use('agg')
 import matplotlib.pyplot as plt  # nopep8
-import netcdftime  # nopep8
+import cftime  # nopep8
 import numpy as np  # nopep8
 
 import nc_time_axis  # nopep8
@@ -26,7 +26,7 @@ class Test(unittest.TestCase):
         plt.close('all')
 
     def test_360_day_calendar(self):
-        datetimes = [netcdftime.datetime(1986, month, 30)
+        datetimes = [cftime.datetime(1986, month, 30)
                      for month in range(1, 6)]
         cal_datetimes = [nc_time_axis.CalendarDateTime(dt, '360_day')
                          for dt in datetimes]

@@ -5,7 +5,7 @@ from six.moves import (filter, input, map, range, zip)  # noqa
 
 import unittest
 
-import netcdftime
+import cftime
 import numpy as np
 
 from nc_time_axis import NetCDFTimeConverter, CalendarDateTime
@@ -16,8 +16,8 @@ class Test_axisinfo(unittest.TestCase):
         cal = '360_day'
         unit = (cal, 'days since 2000-02-25 00:00:00')
         result = NetCDFTimeConverter().axisinfo(unit, None)
-        expected_dt = [netcdftime.datetime(2000, 1, 1),
-                       netcdftime.datetime(2010, 1, 1)]
+        expected_dt = [cftime.datetime(2000, 1, 1),
+                       cftime.datetime(2010, 1, 1)]
         np.testing.assert_array_equal(
             result.default_limits,
             [CalendarDateTime(edt, cal) for edt in expected_dt])
@@ -27,14 +27,14 @@ class Test_default_units(unittest.TestCase):
     def test_360_day_calendar_point(self):
         calendar = '360_day'
         unit = 'days since 2000-01-01'
-        val = CalendarDateTime(netcdftime.datetime(2014, 8, 12), calendar)
+        val = CalendarDateTime(cftime.datetime(2014, 8, 12), calendar)
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit))
 
     def test_360_day_calendar_list(self):
         calendar = '360_day'
         unit = 'days since 2000-01-01'
-        val = [CalendarDateTime(netcdftime.datetime(2014, 8, 12), calendar)]
+        val = [CalendarDateTime(cftime.datetime(2014, 8, 12), calendar)]
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit))
 
@@ -42,9 +42,9 @@ class Test_default_units(unittest.TestCase):
         # Test the case where the input is an nd-array.
         calendar = '360_day'
         unit = 'days since 2000-01-01'
-        val = np.array([[CalendarDateTime(netcdftime.datetime(2014, 8, 12),
+        val = np.array([[CalendarDateTime(cftime.datetime(2014, 8, 12),
                                           calendar)],
-                       [CalendarDateTime(netcdftime.datetime(2014, 8, 13),
+                       [CalendarDateTime(cftime.datetime(2014, 8, 13),
                                          calendar)]])
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit))
@@ -54,8 +54,8 @@ class Test_default_units(unittest.TestCase):
         calendar_1 = '360_day'
         calendar_2 = '365_day'
         unit = 'days since 2000-01-01'
-        val = [CalendarDateTime(netcdftime.datetime(2014, 8, 12), calendar_1),
-               CalendarDateTime(netcdftime.datetime(2014, 8, 13), calendar_2)]
+        val = [CalendarDateTime(cftime.datetime(2014, 8, 12), calendar_1),
+               CalendarDateTime(cftime.datetime(2014, 8, 13), calendar_2)]
         with self.assertRaisesRegexp(ValueError, 'not all equal'):
             NetCDFTimeConverter().default_units(val, None)
 
@@ -83,26 +83,26 @@ class Test_convert(unittest.TestCase):
         result = NetCDFTimeConverter().convert(val, None, None)
         np.testing.assert_array_equal(result, val)
 
-    def test_netcdftime(self):
-        val = CalendarDateTime(netcdftime.datetime(2014, 8, 12), '365_day')
+    def test_cftime(self):
+        val = CalendarDateTime(cftime.datetime(2014, 8, 12), '365_day')
         result = NetCDFTimeConverter().convert(val, None, None)
         np.testing.assert_array_equal(result, 5333.)
 
-    def test_netcdftime_np_array(self):
-        val = np.array([CalendarDateTime(netcdftime.datetime(2012, 6, 4),
+    def test_cftime_np_array(self):
+        val = np.array([CalendarDateTime(cftime.datetime(2012, 6, 4),
                                          '360_day')], dtype=np.object)
         result = NetCDFTimeConverter().convert(val, None, None)
         self.assertEqual(result, np.array([4473.]))
 
-    def test_non_netcdftime_datetime(self):
+    def test_non_cftime_datetime(self):
         val = CalendarDateTime(4, '360_day')
         msg = 'The datetime attribute of the CalendarDateTime object must ' \
-              'be of type `netcdftime.datetime`.'
+              'be of type `cftime.datetime`.'
         with self.assertRaisesRegexp(ValueError, msg):
             result = NetCDFTimeConverter().convert(val, None, None)
 
     def test_non_CalendarDateTime(self):
-        val = netcdftime.datetime(1988, 5, 6)
+        val = cftime.datetime(1988, 5, 6)
         msg = 'The values must be numbers or instances of ' \
               '"nc_time_axis.CalendarDateTime".'
         with self.assertRaisesRegexp(ValueError, msg):

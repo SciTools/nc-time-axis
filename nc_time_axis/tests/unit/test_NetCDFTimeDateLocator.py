@@ -6,7 +6,7 @@ from six.moves import (filter, input, map, range, zip)  # noqa
 import unittest
 
 import matplotlib.dates as mdates
-import netcdftime
+import cftime
 import numpy as np
 
 from nc_time_axis import NetCDFTimeDateLocator
@@ -21,7 +21,7 @@ class Test_compute_resolution(unittest.TestCase):
         locator = NetCDFTimeDateLocator(max_n_ticks=max_n_ticks,
                                         calendar=self.calendar,
                                         date_unit=self.date_unit)
-        utime = netcdftime.utime(self.date_unit, self.calendar)
+        utime = cftime.utime(self.date_unit, self.calendar)
         return locator.compute_resolution(num1, num2, utime.num2date(num1),
                                           utime.num2date(num2))
 

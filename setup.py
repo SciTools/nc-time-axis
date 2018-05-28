@@ -20,7 +20,7 @@ setup_args = dict(
     author='Laura Dreyer, Philip Elson',
     url='https://github.com/scitools/nc-time-axis',
     packages=packages,
-    install_requires = ['matplotlib==1.*',
+    install_requires = ['matplotlib',
                         'cftime',
                         'numpy',
                         'six'],

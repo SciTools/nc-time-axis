@@ -3,14 +3,14 @@ nc-time-axis
 
 |Travis|_ |Coveralls|_
 
-Support for netcdftime axis in matplotlib.
+Support for cftime axis in matplotlib.
 
 
 See also
 --------
 
 * `matplotlib <http://matplotlib.org/>`_
-* `netcdftime <https://github.com/Unidata/netcdf4-python/blob/master/netcdftime/netcdftime.py>`_
+* `cftime <https://github.com/Unidata/cftime>`_
 
 Installation
 ------------
@@ -27,9 +27,9 @@ Example Code
 
 	import matplotlib.pyplot as plt
 	import nc_time_axis
-	import netcdftime
+	import cftime
 
-	d_time = [netcdftime.datetime(year=2017, month=2, day=n) for n in range(1, 31)]
+	d_time = [cftime.datetime(year=2017, month=2, day=n) for n in range(1, 31)]
 	c_d_time = [nc_time_axis.CalendarDateTime(item, "360_day") for item in d_time]
 	temperatures = [round(random.uniform(0, 12), 3) for _ in range(len(c_d_time))]
 

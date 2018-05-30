@@ -2,17 +2,14 @@
 
 from __future__ import (absolute_import, division, print_function)
 from six.moves import (filter, input, map, range, zip)  # noqa
+from six import assertRaisesRegex
 
-import sys
 import unittest
 
 import cftime
 import numpy as np
 
 from nc_time_axis import NetCDFTimeConverter, CalendarDateTime
-
-if sys.version_info[:2] == (2, 7):
-    unittest.TestCase.assertRaisesRegex = unittest.TestCase.assertRaisesRegexp
 
 
 class Test_axisinfo(unittest.TestCase):
@@ -60,7 +57,7 @@ class Test_default_units(unittest.TestCase):
         unit = 'days since 2000-01-01'
         val = [CalendarDateTime(cftime.datetime(2014, 8, 12), calendar_1),
                CalendarDateTime(cftime.datetime(2014, 8, 13), calendar_2)]
-        with self.assertRaisesRegex(ValueError, 'not all equal'):
+        with assertRaisesRegex(self, ValueError, 'not all equal'):
             NetCDFTimeConverter().default_units(val, None)
 
 
@@ -102,14 +99,14 @@ class Test_convert(unittest.TestCase):
         val = CalendarDateTime(4, '360_day')
         msg = 'The datetime attribute of the CalendarDateTime object must ' \
               'be of type `cftime.datetime`.'
-        with self.assertRaisesRegex(ValueError, msg):
+        with assertRaisesRegex(self, ValueError, msg):
             result = NetCDFTimeConverter().convert(val, None, None)
 
     def test_non_CalendarDateTime(self):
         val = cftime.datetime(1988, 5, 6)
         msg = 'The values must be numbers or instances of ' \
               '"nc_time_axis.CalendarDateTime".'
-        with self.assertRaisesRegex(ValueError, msg):
+        with assertRaisesRegex(self, ValueError, msg):
             result = NetCDFTimeConverter().convert(val, None, None)
 
 

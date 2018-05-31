@@ -1,2 +1,3 @@
+include LICENSE
 include versioneer.py
 include nc_time_axis/_version.py

@@ -5,11 +5,15 @@ from six.moves import (filter, input, map, range, zip)  # noqa
 
 import unittest
 
+import matplotlib.style
 import matplotlib.dates as mdates
 import cftime
 import numpy as np
 
 from nc_time_axis import NetCDFTimeDateLocator
+
+
+matplotlib.style.use('classic')
 
 
 class Test_compute_resolution(unittest.TestCase):
@@ -108,7 +112,7 @@ class Test_tick_values(unittest.TestCase):
 
     def test_yearly(self):
         np.testing.assert_array_equal(
-            self.check(5, 0, 5*365), [31., 638., 1246., 1856.])
+            self.check(5, 0, 5*365), [31., 485., 942., 1399., 1856.])
 
 
 if __name__ == "__main__":

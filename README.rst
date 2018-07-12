@@ -16,7 +16,7 @@ Installation
 ------------
 ::
 
-    conda install -c conda-forge nc_time_axis
+    conda install -c conda-forge nc-time-axis
 
 
 Example Code

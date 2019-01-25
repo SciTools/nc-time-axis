@@ -209,14 +209,20 @@ class NetCDFTimeConverter(mdates.DateConverter):
         *unit* is a tzinfo instance or None.
         The *axis* argument is required but not used.
         """
-        calendar, date_unit = unit
+        calendar, date_unit, date_type = unit
 
         majloc = NetCDFTimeDateLocator(4, calendar=calendar,
                                        date_unit=date_unit)
         majfmt = NetCDFTimeDateFormatter(majloc, calendar=calendar,
                                          time_units=date_unit)
-        datemin = CalendarDateTime(cftime.datetime(2000, 1, 1), calendar)
-        datemax = CalendarDateTime(cftime.datetime(2010, 1, 1), calendar)
+        if date_type is CalendarDateTime:
+            datemin = CalendarDateTime(cftime.datetime(2000, 1, 1),
+                                       calendar=calendar)
+            datemax = CalendarDateTime(cftime.datetime(2010, 1, 1),
+                                       calendar=calendar)
+        else:
+            datemin = date_type(2000, 1, 1)
+            datemax = date_type(2010, 1, 1)
         return munits.AxisInfo(majloc=majloc, majfmt=majfmt, label='',
                                default_limits=(datemin, datemax))
 
@@ -235,6 +241,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 calendar = calendars[0]
             else:
                 raise ValueError('Calendar units are not all equal.')
+            date_type = type(sample_point[0])
         else:
             # Deal with a single `sample_point` value.
             if not hasattr(sample_point, 'calendar'):
@@ -243,7 +250,8 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 raise ValueError(msg)
             else:
                 calendar = sample_point.calendar
-        return calendar, cls.standard_unit
+            date_type = type(sample_point)
+        return calendar, cls.standard_unit, date_type
 
     @classmethod
     def convert(cls, value, unit, axis):
@@ -266,20 +274,27 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 return value
             first_value = value
 
-        if not isinstance(first_value, CalendarDateTime):
+        if not isinstance(first_value, (CalendarDateTime, cftime.datetime)):
             raise ValueError('The values must be numbers or instances of '
-                             '"nc_time_axis.CalendarDateTime".')
+                             '"nc_time_axis.CalendarDateTime" or '
+                             '"cftime.datetime".')
 
-        if not isinstance(first_value.datetime, cftime.datetime):
-            raise ValueError('The datetime attribute of the CalendarDateTime '
-                             'object must be of type `cftime.datetime`.')
+        if isinstance(first_value, CalendarDateTime):
+            if not isinstance(first_value.datetime, cftime.datetime):
+                raise ValueError('The datetime attribute of the '
+                                 'CalendarDateTime object must be of type '
+                                 '`cftime.datetime`.')
 
         ut = cftime.utime(cls.standard_unit, calendar=first_value.calendar)
 
-        if isinstance(value, CalendarDateTime):
+        if isinstance(value, (CalendarDateTime, cftime.datetime)):
             value = [value]
 
-        result = ut.date2num([v.datetime for v in value])
+        if isinstance(first_value, CalendarDateTime):
+            result = ut.date2num([v.datetime for v in value])
+        else:
+            result = ut.date2num(value)
+
         if shape is not None:
             result = result.reshape(shape)
 
@@ -290,3 +305,10 @@ class NetCDFTimeConverter(mdates.DateConverter):
 # dictionary.
 if CalendarDateTime not in munits.registry:
     munits.registry[CalendarDateTime] = NetCDFTimeConverter()
+
+CFTIME_TYPES = [cftime.DatetimeNoLeap, cftime.DatetimeAllLeap,
+                cftime.DatetimeProlepticGregorian, cftime.DatetimeGregorian,
+                cftime.Datetime360Day, cftime.DatetimeJulian]
+for date_type in CFTIME_TYPES:
+    if date_type not in munits.registry:
+        munits.registry[date_type] = NetCDFTimeConverter()

@@ -287,11 +287,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
 
         ut = cftime.utime(cls.standard_unit, calendar=first_value.calendar)
 
-        if isinstance(value, (CalendarDateTime, cftime.datetime)):
-            value = [value]
-
         if isinstance(first_value, CalendarDateTime):
-            result = ut.date2num([v.datetime for v in value])
+            if isinstance(value, np.ndarray):
+                result = ut.date2num([v.datetime for v in value])
+            else:
+                result = ut.date2num(value.datetime)
         else:
             result = ut.date2num(value)
 

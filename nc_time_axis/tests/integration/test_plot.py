@@ -11,6 +11,11 @@ import matplotlib.pyplot as plt  # nopep8
 import cftime  # nopep8
 import numpy as np  # nopep8
 
+try:
+    from cftime import datetime_base as cftime_datetime
+except ImportError:
+    from cftime import datetime as cftime_datetime
+
 import nc_time_axis  # nopep8
 
 
@@ -26,7 +31,7 @@ class Test(unittest.TestCase):
         plt.close('all')
 
     def test_360_day_calendar_CalendarDateTime(self):
-        datetimes = [cftime.datetime(1986, month, 30)
+        datetimes = [cftime_datetime(1986, month, 30)
                      for month in range(1, 6)]
         cal_datetimes = [nc_time_axis.CalendarDateTime(dt, '360_day')
                          for dt in datetimes]

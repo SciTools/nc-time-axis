@@ -15,6 +15,11 @@ import matplotlib.units as munits
 import cftime
 import numpy as np
 
+try:
+    from cftime import datetime_base as cftime_datetime
+except ImportError:
+    from cftime import datetime as cftime_datetime
+
 # Define __version__ based on versioneer's interpretation.
 from ._version import get_versions
 __version__ = get_versions()['version']
@@ -27,7 +32,7 @@ FormatOption = namedtuple('FormatOption', ['lower', 'upper', 'format_string'])
 
 class CalendarDateTime(object):
     """
-    Container for :class:`cftime.datetime` object and calendar.
+    Container for ``cftime`` datetime object and calendar.
 
     """
     def __init__(self, datetime, calendar):
@@ -49,7 +54,7 @@ class CalendarDateTime(object):
 
 class NetCDFTimeDateFormatter(mticker.Formatter):
     """
-    Formatter for cftime.datetime data.
+    Formatter for cftime datetime data.
 
     """
     # Some magic numbers. These seem to work pretty well.
@@ -87,7 +92,7 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
 
 class NetCDFTimeDateLocator(mticker.Locator):
     """
-    Determines tick locations when plotting cftime.datetime data.
+    Determines tick locations when plotting cftime datetime data.
 
     """
     def __init__(self, max_n_ticks, calendar, date_unit, min_n_ticks=3):
@@ -153,7 +158,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
             # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
             # appropriate.
             years = self._max_n_locator.tick_values(lower.year, upper.year)
-            ticks = [cftime.datetime(int(year), 1, 1) for year in years]
+            ticks = [cftime_datetime(int(year), 1, 1) for year in years]
         elif resolution == 'MONTHLY':
             # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
             # appropriate.
@@ -162,7 +167,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
             for offset in months_offset:
                 year = lower.year + np.floor((lower.month + offset) / 12)
                 month = ((lower.month + offset) % 12) + 1
-                ticks.append(cftime.datetime(int(year), int(month), 1))
+                ticks.append(cftime_datetime(int(year), int(month), 1))
         elif resolution == 'DAILY':
             # TODO: It would be great if this favoured multiples of 7.
             days = self._max_n_locator_days.tick_values(vmin, vmax)
@@ -196,7 +201,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
 class NetCDFTimeConverter(mdates.DateConverter):
     """
-    Converter for cftime.datetime data.
+    Converter for cftime datetime data.
 
     """
     standard_unit = 'days since 2000-01-01'
@@ -216,9 +221,9 @@ class NetCDFTimeConverter(mdates.DateConverter):
         majfmt = NetCDFTimeDateFormatter(majloc, calendar=calendar,
                                          time_units=date_unit)
         if date_type is CalendarDateTime:
-            datemin = CalendarDateTime(cftime.datetime(2000, 1, 1),
+            datemin = CalendarDateTime(cftime_datetime(2000, 1, 1),
                                        calendar=calendar)
-            datemax = CalendarDateTime(cftime.datetime(2010, 1, 1),
+            datemax = CalendarDateTime(cftime_datetime(2010, 1, 1),
                                        calendar=calendar)
         else:
             datemin = date_type(2000, 1, 1)
@@ -274,20 +279,20 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 return value
             first_value = value
 
-        if not isinstance(first_value, (CalendarDateTime, cftime.datetime)):
+        if not isinstance(first_value, (CalendarDateTime, cftime_datetime)):
             raise ValueError('The values must be numbers or instances of '
                              '"nc_time_axis.CalendarDateTime" or '
-                             '"cftime.datetime".')
+                             '"cftime datetime".')
 
         if isinstance(first_value, CalendarDateTime):
-            if not isinstance(first_value.datetime, cftime.datetime):
+            if not isinstance(first_value.datetime, cftime_datetime):
                 raise ValueError('The datetime attribute of the '
                                  'CalendarDateTime object must be of type '
-                                 '`cftime.datetime`.')
+                                 '`cftime.datetime_base`.')
 
         ut = cftime.utime(cls.standard_unit, calendar=first_value.calendar)
 
-        if isinstance(value, (CalendarDateTime, cftime.datetime)):
+        if isinstance(value, (CalendarDateTime, cftime_datetime)):
             value = [value]
 
         if isinstance(first_value, CalendarDateTime):

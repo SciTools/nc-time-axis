@@ -125,7 +125,12 @@ class Test_tick_values_yr0(unittest.TestCase):
         return locator.tick_values(num1, num2)
     
     def test_yearly_yr0_remove(self):
-            yr0_remove_calendars = ["proleptic_gregorian", "gregorian", "julian", "standard"]
+            yr0_remove_calendars = [
+                "proleptic_gregorian",
+                "gregorian",
+                "julian",
+                "standard"
+                ]
 
             for calendar in [
                 'standard',

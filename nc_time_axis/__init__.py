@@ -197,7 +197,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
             "gregorian",
             "julian",
             "standard",
-            ]:
+                ]:
             ticks = [t for t in ticks if t.year != 0]
         return utime.date2num(ticks)
 

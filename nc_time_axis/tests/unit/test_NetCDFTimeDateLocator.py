@@ -114,6 +114,7 @@ class Test_tick_values(unittest.TestCase):
         np.testing.assert_array_equal(
             self.check(5, 0, 5*365), [31., 485., 942., 1399., 1856.])
 
+
 class Test_tick_values_yr0(unittest.TestCase):
     def setUp(self):
         self.date_unit = 'days since 0001-01-01 00:00'
@@ -123,14 +124,14 @@ class Test_tick_values_yr0(unittest.TestCase):
                                         calendar=calendar,
                                         date_unit=self.date_unit)
         return locator.tick_values(num1, num2)
-    
+
     def test_yearly_yr0_remove(self):
             yr0_remove_calendars = [
                 "proleptic_gregorian",
                 "gregorian",
                 "julian",
                 "standard"
-                ]
+                    ]
 
             for calendar in [
                 'standard',
@@ -142,14 +143,15 @@ class Test_tick_values_yr0(unittest.TestCase):
                 'julian',
                 'all_leap',
                 '366_day',
-                ]:
+                    ]:
 
-
-                # convert values back to dates and check that none of them has year 0
+                # convert values to dates, check that none of them has year 0
                 ticks = self.check(5, 0, 100*365, calendar)
                 if calendar in yr0_remove_calendars:
                     for t in ticks:
-                        assert cftime.utime(self.date_unit, calendar).num2date(t).year !=0
+                        assert cftime.utime(
+                            self.date_unit,
+                            calendar).num2date(t).year != 0
 
 if __name__ == "__main__":
     unittest.main()

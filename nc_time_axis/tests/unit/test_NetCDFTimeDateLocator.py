@@ -138,7 +138,8 @@ class Test_tick_values_yr0(unittest.TestCase):
 
     def check(self, max_n_ticks, num1, num2, calendar):
         locator = NetCDFTimeDateLocator(
-            max_n_ticks=max_n_ticks, calendar=calendar, date_unit=self.date_unit
+            max_n_ticks=max_n_ticks, calendar=calendar,
+            date_unit=self.date_unit
         )
         return locator.tick_values(num1, num2)
 

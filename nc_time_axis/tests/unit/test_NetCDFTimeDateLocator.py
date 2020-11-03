@@ -23,11 +23,11 @@ class Test_compute_resolution(unittest.TestCase):
 
     def check(self, max_n_ticks, num1, num2):
         locator = NetCDFTimeDateLocator(max_n_ticks=max_n_ticks,
-                                         calendar=self.calendar,
-                                         date_unit=self.date_unit)
+                                        calendar=self.calendar,
+                                        date_unit=self.date_unit)
         utime = cftime.utime(self.date_unit, self.calendar)
         return locator.compute_resolution(num1, num2, utime.num2date(num1),
-                                           utime.num2date(num2))
+                                          utime.num2date(num2))
 
     def test_one_minute(self):
         self.assertEqual(self.check(20, 0, 0.0003),
@@ -93,7 +93,6 @@ class Test_tick_values(unittest.TestCase):
         np.testing.assert_array_almost_equal(
             self.check(4, 0, 0.0004),
             [0., 0.000116, 0.000231, 0.000347, 0.000463])
-        )
 
     def test_minutely(self):
         np.testing.assert_array_almost_equal(
@@ -101,19 +100,19 @@ class Test_tick_values(unittest.TestCase):
 
     def test_hourly(self):
         np.testing.assert_array_almost_equal(
-            self.check(4, 2, 3), [2.0, 2.333333, 2.666667, 3.0])
+            self.check(4, 2, 3), [2.0, 2.333333, 2.666667, 3.])
 
     def test_daily(self):
         np.testing.assert_array_equal(
-            self.check(5, 0, 30), [0.0, 7.0, 14.0, 21.0, 28.0, 35.0])
+            self.check(5, 0, 30), [0., 7., 14., 21., 28., 35.])
 
     def test_monthly(self):
         np.testing.assert_array_equal(
-            self.check(4, 0, 365), [31.0, 120.0, 212.0, 304.0, 396.0])
+            self.check(4, 0, 365), [31., 120., 212., 304., 396.])
 
     def test_yearly(self):
         np.testing.assert_array_equal(
-            self.check(5, 0, 5 * 365), [31.0, 485.0, 942.0, 1399.0, 1856.0])
+            self.check(5, 0, 5 * 365), [31., 485., 942., 1399., 1856.])
 
 
 class Test_tick_values_yr0(unittest.TestCase):

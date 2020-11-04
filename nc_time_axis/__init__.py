@@ -190,7 +190,15 @@ class NetCDFTimeDateLocator(mticker.Locator):
         else:
             msg = 'Resolution {} not implemented yet.'.format(resolution)
             raise ValueError(msg)
-
+        # Some calenders do not allow a year 0.
+        # Remove ticks to avoid raising an error.
+        if self.calendar in [
+            "proleptic_gregorian",
+            "gregorian",
+            "julian",
+            "standard",
+                ]:
+            ticks = [t for t in ticks if t.year != 0]
         return utime.date2num(ticks)
 
 

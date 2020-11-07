@@ -115,5 +115,45 @@ class Test_tick_values(unittest.TestCase):
             self.check(5, 0, 5*365), [31., 485., 942., 1399., 1856.])
 
 
+class Test_tick_values_yr0(unittest.TestCase):
+    def setUp(self):
+        self.date_unit = 'days since 0001-01-01 00:00'
+        self.all_calendars = [
+            'standard',
+            'gregorian',
+            'proleptic_gregorian',
+            'noleap',
+            '365_day',
+            '360_day',
+            'julian',
+            'all_leap',
+            '366_day',
+        ]
+        self.yr0_remove_calendars = [
+            'proleptic_gregorian',
+            'gregorian',
+            'julian',
+            'standard',
+        ]
+
+    def check(self, max_n_ticks, num1, num2, calendar):
+        locator = NetCDFTimeDateLocator(
+            max_n_ticks=max_n_ticks, calendar=calendar,
+            date_unit=self.date_unit
+        )
+        return locator.tick_values(num1, num2)
+
+    def test_yearly_yr0_remove(self):
+        for calendar in self.all_calendars:
+            # convert values to dates, check that none of them has year 0
+            num2date = cftime.utime(self.date_unit, calendar).num2date
+            ticks = self.check(5, 0, 100 * 365, calendar)
+            year_ticks = [num2date(t).year for t in ticks]
+            if calendar in self.yr0_remove_calendars:
+                self.assertNotIn(0, year_ticks)
+            else:
+                self.assertIn(0, year_ticks)
+
+
 if __name__ == "__main__":
     unittest.main()

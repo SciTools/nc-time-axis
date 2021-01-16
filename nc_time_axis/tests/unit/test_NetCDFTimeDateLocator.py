@@ -155,6 +155,5 @@ class Test_tick_values_yr0(unittest.TestCase):
                 self.assertIn(0, year_ticks)
 
 
-
 if __name__ == "__main__":
     unittest.main()

@@ -26,7 +26,7 @@ class Test(unittest.TestCase):
         plt.close('all')
 
     def test_360_day_calendar_CalendarDateTime(self):
-        datetimes = [cftime.datetime(1986, month, 30, calendar='360_day')
+        datetimes = [cftime.datetime(1986, month, 30, calendar=None)
                      for month in range(1, 6)]
         cal_datetimes = [nc_time_axis.CalendarDateTime(dt, '360_day')
                          for dt in datetimes]
@@ -35,7 +35,7 @@ class Test(unittest.TestCase):
         np.testing.assert_array_equal(result_ydata, cal_datetimes)
 
     def test_360_day_calendar_raw_dates(self):
-        datetimes = [cftime.Datetime360Day(1986, month, 30, calendar='360_day')
+        datetimes = [cftime.Datetime360Day(1986, month, 30)
                      for month in range(1, 6)]
         line1, = plt.plot(datetimes)
         result_ydata = line1.get_ydata()

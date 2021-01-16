@@ -143,7 +143,7 @@ class Test_tick_values_yr0(unittest.TestCase):
         )
         return locator.tick_values(num1, num2)
 
-"""  def test_yearly_yr0_remove(self):
+    def test_yearly_yr0_remove(self):
          for calendar in self.all_calendars:
              # convert values to dates, check that none of them has year 0
              num2date = cftime.utime(self.date_unit, calendar).num2date
@@ -153,7 +153,7 @@ class Test_tick_values_yr0(unittest.TestCase):
                  self.assertNotIn(0, year_ticks)
              else:
                  self.assertIn(0, year_ticks)
-"""
+
 
 
 if __name__ == "__main__":

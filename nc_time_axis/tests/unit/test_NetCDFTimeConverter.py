@@ -119,12 +119,12 @@ class Test_convert(unittest.TestCase):
 
     def test_cftime_np_array_CalendarDateTime(self):
         val = np.array([CalendarDateTime(cftime.datetime(2012, 6, 4),
-                                         '360_day')], dtype=np.object)
+                                         '360_day')], dtype=object)
         result = NetCDFTimeConverter().convert(val, None, None)
         self.assertEqual(result, np.array([4473.]))
 
     def test_cftime_np_array_raw_date(self):
-        val = np.array([cftime.Datetime360Day(2012, 6, 4)], dtype=np.object)
+        val = np.array([cftime.Datetime360Day(2012, 6, 4)], dtype=object)
         result = NetCDFTimeConverter().convert(val, None, None)
         self.assertEqual(result, np.array([4473.]))
 

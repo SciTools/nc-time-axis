@@ -271,7 +271,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
         shape = None
         if isinstance(value, np.ndarray):
             # Don't do anything with numeric types.
-            if value.dtype != np.object:
+            if value.dtype != object:
                 return value
             shape = value.shape
             value = value.reshape(-1)

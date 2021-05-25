@@ -26,7 +26,7 @@ class Test(unittest.TestCase):
         plt.close('all')
 
     def test_360_day_calendar_CalendarDateTime(self):
-        datetimes = [cftime.datetime(1986, month, 30)
+        datetimes = [cftime.datetime(1986, month, 30, calendar='360_day')
                      for month in range(1, 6)]
         cal_datetimes = [nc_time_axis.CalendarDateTime(dt, '360_day')
                          for dt in datetimes]

@@ -30,6 +30,7 @@ class CalendarDateTime(object):
     Container for :class:`cftime.datetime` object and calendar.
 
     """
+
     def __init__(self, datetime, calendar):
         self.datetime = datetime
         self.calendar = calendar
@@ -81,7 +82,7 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
 
     def __call__(self, x, pos=0):
         format_string = self.pick_format(ndays=self.locator.ndays)
-        dt = cftime.utime(self.time_units, self.calendar).num2date(x)
+        dt = cftime.num2date(x, self.time_units, self.calendar)
         return dt.strftime(format_string)
 
 
@@ -90,6 +91,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
     Determines tick locations when plotting cftime.datetime data.
 
     """
+
     def __init__(self, max_n_ticks, calendar, date_unit, min_n_ticks=3):
         # The date unit must be in the form of days since ...
 
@@ -143,9 +145,8 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
         self.ndays = float(abs(vmax - vmin))
 
-        utime = cftime.utime(self.date_unit, self.calendar)
-        lower = utime.num2date(vmin)
-        upper = utime.num2date(vmax)
+        lower = cftime.num2date(vmin, self.date_unit, self.calendar)
+        upper = cftime.num2date(vmax, self.date_unit, self.calendar)
 
         resolution, n = self.compute_resolution(vmin, vmax, lower, upper)
 
@@ -153,7 +154,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
             # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
             # appropriate.
             years = self._max_n_locator.tick_values(lower.year, upper.year)
-            ticks = [cftime.datetime(int(year), 1, 1) for year in years]
+            ticks = [cftime.datetime(int(year), 1, 1, calendar=self.calendar) for year in years]
         elif resolution == 'MONTHLY':
             # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
             # appropriate.
@@ -162,31 +163,38 @@ class NetCDFTimeDateLocator(mticker.Locator):
             for offset in months_offset:
                 year = lower.year + np.floor((lower.month + offset) / 12)
                 month = ((lower.month + offset) % 12) + 1
-                ticks.append(cftime.datetime(int(year), int(month), 1))
+                ticks.append(cftime.datetime(int(year), int(month), 1, calendar=self.calendar))
         elif resolution == 'DAILY':
             # TODO: It would be great if this favoured multiples of 7.
             days = self._max_n_locator_days.tick_values(vmin, vmax)
-            ticks = [utime.num2date(dt) for dt in days]
+            ticks = [cftime.num2date(dt, self.date_unit, self.calendar)
+                     for dt in days]
         elif resolution == 'HOURLY':
             hour_unit = 'hours since 2000-01-01'
-            hour_utime = cftime.utime(hour_unit, self.calendar)
-            in_hours = hour_utime.date2num([lower, upper])
+            in_hours = cftime.date2num(
+                [lower, upper], hour_unit, self.calendar
+            )
             hours = self._max_n_locator.tick_values(in_hours[0], in_hours[1])
-            ticks = [hour_utime.num2date(dt) for dt in hours]
+            ticks = [cftime.num2date(dt, hour_unit, self.calendar)
+                     for dt in hours]
         elif resolution == 'MINUTELY':
             minute_unit = 'minutes since 2000-01-01'
-            minute_utime = cftime.utime(minute_unit, self.calendar)
-            in_minutes = minute_utime.date2num([lower, upper])
+            in_minutes = cftime.date2num(
+                [lower, upper], minute_unit, self.calendar
+            )
             minutes = self._max_n_locator.tick_values(in_minutes[0],
                                                       in_minutes[1])
-            ticks = [minute_utime.num2date(dt) for dt in minutes]
+            ticks = [cftime.num2date(dt, minute_unit, self.calendar)
+                     for dt in minutes]
         elif resolution == 'SECONDLY':
             second_unit = 'seconds since 2000-01-01'
-            second_utime = cftime.utime(second_unit, self.calendar)
-            in_seconds = second_utime.date2num([lower, upper])
+            in_seconds = cftime.date2num(
+                [lower, upper], second_unit, self.calendar
+            )
             seconds = self._max_n_locator.tick_values(in_seconds[0],
                                                       in_seconds[1])
-            ticks = [second_utime.num2date(dt) for dt in seconds]
+            ticks = [cftime.num2date(dt, second_unit, self.calendar)
+                     for dt in seconds]
         else:
             msg = 'Resolution {} not implemented yet.'.format(resolution)
             raise ValueError(msg)
@@ -197,9 +205,9 @@ class NetCDFTimeDateLocator(mticker.Locator):
             "gregorian",
             "julian",
             "standard",
-                ]:
+        ]:
             ticks = [t for t in ticks if t.year != 0]
-        return utime.date2num(ticks)
+        return cftime.date2num(ticks, self.date_unit, self.calendar)
 
 
 class NetCDFTimeConverter(mdates.DateConverter):
@@ -265,7 +273,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
     def convert(cls, value, unit, axis):
         """
         Converts value, if it is not already a number or sequence of numbers,
-        with :func:`cftime.utime().date2num`.
+        with :func:`cftime.date2num`.
 
         """
         shape = None
@@ -293,15 +301,19 @@ class NetCDFTimeConverter(mdates.DateConverter):
                                  'CalendarDateTime object must be of type '
                                  '`cftime.datetime`.')
 
-        ut = cftime.utime(cls.standard_unit, calendar=first_value.calendar)
-
         if isinstance(value, (CalendarDateTime, cftime.datetime)):
             value = [value]
 
         if isinstance(first_value, CalendarDateTime):
-            result = ut.date2num([v.datetime for v in value])
+            result = cftime.date2num(
+                [v.datetime for v in value],
+                cls.standard_unit,
+                first_value.calendar
+            )
         else:
-            result = ut.date2num(value)
+            result = cftime.date2num(
+                value, cls.standard_unit, first_value.calendar
+            )
 
         if shape is not None:
             result = result.reshape(shape)

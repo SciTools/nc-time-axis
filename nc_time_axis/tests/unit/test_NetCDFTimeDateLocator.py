@@ -25,9 +25,12 @@ class Test_compute_resolution(unittest.TestCase):
         locator = NetCDFTimeDateLocator(max_n_ticks=max_n_ticks,
                                         calendar=self.calendar,
                                         date_unit=self.date_unit)
-        utime = cftime.utime(self.date_unit, self.calendar)
-        return locator.compute_resolution(num1, num2, utime.num2date(num1),
-                                          utime.num2date(num2))
+        return locator.compute_resolution(
+            num1,
+            num2,
+            cftime.num2date(num1, self.date_unit, self.calendar),
+            cftime.num2date(num2, self.date_unit, self.calendar)
+        )
 
     def test_one_minute(self):
         self.assertEqual(self.check(20, 0, 0.0003),
@@ -146,9 +149,9 @@ class Test_tick_values_yr0(unittest.TestCase):
     def test_yearly_yr0_remove(self):
         for calendar in self.all_calendars:
             # convert values to dates, check that none of them has year 0
-            num2date = cftime.utime(self.date_unit, calendar).num2date
             ticks = self.check(5, 0, 100 * 365, calendar)
-            year_ticks = [num2date(t).year for t in ticks]
+            year_ticks = [cftime.num2date(t, self.date_unit, calendar).year
+                          for t in ticks]
             if calendar in self.yr0_remove_calendars:
                 self.assertNotIn(0, year_ticks)
             else:

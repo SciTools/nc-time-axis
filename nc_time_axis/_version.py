@@ -243,7 +243,9 @@ def git_pieces_from_vcs(tag_prefix, root, verbose, run_command=run_command):
             # Pick the first branch that is returned. Good or bad.
             branch_name = branches[0]
 
-    branch_name = branch_name.replace(' ', '.').replace('(', '').replace(')', '')
+    branch_name = branch_name.replace(
+        ' ', '.'
+    ).replace('(', '').replace(')', '')
 
     pieces['branch'] = branch_name
 

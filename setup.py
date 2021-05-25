@@ -9,7 +9,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 packages = []
 for d, _, _ in os.walk(os.path.join(here, 'nc_time_axis')):
     if os.path.exists(os.path.join(d, '__init__.py')):
-        packages.append(d[len(here)+1:].replace(os.path.sep, '.'))
+        packages.append(d[len(here) + 1:].replace(os.path.sep, '.'))
 
 setup_args = dict(
     name='nc-time-axis',
@@ -20,11 +20,11 @@ setup_args = dict(
     author='Laura Dreyer, Philip Elson',
     url='https://github.com/scitools/nc-time-axis',
     packages=packages,
-    install_requires = ['cftime',
-                        'matplotlib',
-                        'numpy',
-                        'six'],
-    tests_require = ['mock', 'pep8'],
+    install_requires=['cftime',
+                      'matplotlib',
+                      'numpy',
+                      'six'],
+    tests_require=['mock', 'pep8'],
     test_suite='nc_time_axis.tests'
 )
 

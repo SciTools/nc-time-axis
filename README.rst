@@ -3,7 +3,7 @@ nc-time-axis
 
 |Travis|_ |Coveralls|_
 
-Support for cftime axis in matplotlib.
+Support for a cftime axis in matplotlib.
 
 
 See also

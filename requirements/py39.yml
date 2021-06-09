@@ -1,0 +1,25 @@
+name: ncta-dev
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python 3.9
+
+# setup dependencies
+  - setuptools
+  - setuptools-scm
+
+# core dependencies
+  - cftime
+  - matplotlib
+  - numpy
+
+# test dependencies
+  - codecov
+  - pytest>=6.0
+  - pytest-cov
+
+# dev dependencies
+  - pip
+  - pre-commit

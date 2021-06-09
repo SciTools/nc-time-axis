@@ -1,3 +1,4 @@
 include LICENSE
-include versioneer.py
-include nc_time_axis/_version.py
+
+recursive-include nc_time_axis/tests *.py
+graft requirements

@@ -3,12 +3,12 @@
 #
 
 [run]
-source = nc_time_axis
 branch = True
+source = nc_time_axis
 omit =
     nc_time_axis/_version.py
     nc_time_axis/tests/*
-
+    setup.py
 
 [report]
 exclude_lines =

@@ -25,17 +25,8 @@ exclude = '''
     | _build
     | buck-out
     | build
-    | compiled_krb
     | dist
-    | etc
-    | iris_image_test_output
-    | sphinxext
-    | tools
   )/
-  | gitwash_dumper.py
-  | _ff_cross_references.py  # auto-generated files
-  | std_names.py
-  | um_cf_map.py
 )
 '''
 

@@ -360,16 +360,15 @@ class NetCDFTimeConverter(mdates.DateConverter):
                     "`cftime.datetime`."
                 )
 
-        if isinstance(value, (CalendarDateTime, cftime.datetime)):
-            value = [value]
-
         if isinstance(first_value, CalendarDateTime):
-            value = [v.datetime for v in value]
+            if isinstance(value, np.ndarray):
+                value = [v.datetime for v in value]
+            else:
+                value = value.datetime
 
         result = cftime.date2num(
             value, cls.standard_unit, calendar=first_value.calendar
         )
-        print(result)
 
         if shape is not None:
             result = result.reshape(shape)

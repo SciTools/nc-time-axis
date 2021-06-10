@@ -116,12 +116,16 @@ class Test_convert(unittest.TestCase):
     def test_cftime_CalendarDateTime(self):
         val = CalendarDateTime(cftime.datetime(2014, 8, 12), "365_day")
         result = NetCDFTimeConverter().convert(val, None, None)
-        np.testing.assert_array_equal(result, 5333.0)
+        expected = 5333.0
+        assert result == expected
+        assert np.isscalar(result)
 
     def test_cftime_raw_date(self):
         val = cftime.DatetimeNoLeap(2014, 8, 12)
         result = NetCDFTimeConverter().convert(val, None, None)
-        np.testing.assert_array_equal(result, 5333.0)
+        expected = 5333.0
+        assert result == expected
+        assert np.isscalar(result)
 
     def test_cftime_np_array_CalendarDateTime(self):
         val = np.array(

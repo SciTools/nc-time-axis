@@ -86,7 +86,7 @@ linux_task:
     folder: ${HOME}/mambaforge/envs/py${PY_VER}
     fingerprint_script:
       - echo "${CIRRUS_OS} py${PY_VER} tests"
-      - echo "$(date +%Y).$(expr $(date +%U) / ${CACHE_PERIOD}):${MINT_CACHE_BUILD}"
+      - echo "$(date +%Y).$(expr $(date +%U) / ${CACHE_PERIOD}):${NCTA_CACHE_BUILD}"
       - cat ${CIRRUS_WORKING_DIR}/requirements/py$(echo ${PY_VER} | tr -d ".").yml
     populate_script:
       - conda-lock --mamba --platform linux-64 --file ${CIRRUS_WORKING_DIR}/requirements/py$(echo ${PY_VER} | tr -d ".").yml

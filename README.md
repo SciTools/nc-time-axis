@@ -7,15 +7,15 @@
 <p align="center">
 
 <a href="https://cirrus-ci.com/github/SciTools-/nc-time-axis">
-  <img src="https://api.cirrus-ci.com/github/SciTools/nc-time-axis.svg?branch=master"
+  <img src="https://api.cirrus-ci.com/github/SciTools/nc-time-axis.svg?branch=main"
        alt="cirrus-ci">
 </a>
 <a href="https://codecov.io/gh/SciTools/nc-time-axis">
-  <img src="https://codecov.io/gh/SciTools/nc-time-axis/branch/master/graph/badge.svg?token=JicwCCHwLd"
+  <img src="https://codecov.io/gh/SciTools/nc-time-axis/branch/main/graph/badge.svg?token=JicwCCHwLd"
        alt="codecov">
 </a>
-<a href="https://results.pre-commit.ci/latest/github/SciTools/nc-time-axis/master">
-  <img src="https://results.pre-commit.ci/badge/github/SciTools/nc-time-axis/master.svg"
+<a href="https://results.pre-commit.ci/latest/github/SciTools/nc-time-axis/main">
+  <img src="https://results.pre-commit.ci/badge/github/SciTools/nc-time-axis/main.svg"
        alt="pre-commit.ci">
 </a>
 <a href="https://anaconda.org/conda-forge/nc-time-axis">
@@ -30,7 +30,7 @@
   <img src="https://img.shields.io/badge/code%20style-black-000000.svg"
        alt="black">
 </a>
-<a href="https://github.com/SciTools/nc-time-axis/blob/master/LICENSE">
+<a href="https://github.com/SciTools/nc-time-axis/blob/main/LICENSE">
   <img src="https://img.shields.io/github/license/SciTools/nc-time-axis?style=plastic"
        alt="license">
 </a>
@@ -76,7 +76,7 @@ Or `pip`:
     plt.ylabel("Temperature")
     plt.show()
 
-![alt text](https://github.com/SciTools/nc-time-axis/raw/master/example_plot.png "Example plot with cftime axis")
+![alt text](https://github.com/SciTools/nc-time-axis/raw/main/example_plot.png "Example plot with cftime axis")
 
 
 ## Reference

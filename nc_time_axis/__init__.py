@@ -173,6 +173,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
             # appropriate.
 
             years = self._max_n_locator.tick_values(lower.year, upper.year)
+            years = [1 if x == 0 else x for x in years]
             ticks = [
                 cftime.datetime(
                     int(year),
@@ -190,6 +191,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
             ticks = []
             for offset in months_offset:
                 year = lower.year + np.floor((lower.month + offset) / 12)
+                year = 1 if year == 0 else year
                 month = ((lower.month + offset) % 12) + 1
                 dt = cftime.datetime(
                     int(year),

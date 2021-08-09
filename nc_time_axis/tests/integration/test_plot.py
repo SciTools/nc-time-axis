@@ -44,6 +44,17 @@ class Test(unittest.TestCase):
         result_ydata = line1.get_ydata()
         np.testing.assert_array_equal(result_ydata, datetimes)
 
+    def test_fill_between(self):
+        calendar = "360_day"
+        dt = [
+            cftime.datetime(year=2017, month=2, day=day, calendar=calendar)
+            for day in range(1, 31)
+        ]
+        cdt = [nc_time_axis.CalendarDateTime(item, calendar) for item in dt]
+        temperatures = [np.round(np.random.uniform(0, 12), 3) for _ in range(len(cdt))]
+
+        plt.fill_between(cdt, temperatures, 0)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -343,7 +343,12 @@ class NetCDFTimeConverter(mdates.DateConverter):
             # Don't do anything with numeric types.
             if munits.ConversionInterface.is_numlike(value):
                 return value
-            first_value = value
+            # Not an array but a list of non-numerical types (thus assuming datetime types)
+            elif isinstance(value, (list, tuple)):
+                first_value = value[0]
+            else:
+                # Neither numerical, list or ndarray : must be a datetime scalar.
+                first_value = value
 
         if not isinstance(first_value, (CalendarDateTime, cftime.datetime)):
             raise ValueError(
@@ -361,7 +366,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 )
 
         if isinstance(first_value, CalendarDateTime):
-            if isinstance(value, np.ndarray):
+            if isinstance(value, (np.ndarray, list, tuple)):
                 value = [v.datetime for v in value]
             else:
                 value = value.datetime

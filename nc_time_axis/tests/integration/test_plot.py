@@ -51,7 +51,9 @@ class Test(unittest.TestCase):
             for day in range(1, 31)
         ]
         cdt = [nc_time_axis.CalendarDateTime(item, calendar) for item in dt]
-        temperatures = [np.round(np.random.uniform(0, 12), 3) for _ in range(len(cdt))]
+        temperatures = [
+            np.round(np.random.uniform(0, 12), 3) for _ in range(len(cdt))
+        ]
 
         plt.fill_between(cdt, temperatures, 0)
 

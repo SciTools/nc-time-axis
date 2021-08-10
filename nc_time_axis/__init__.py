@@ -45,22 +45,21 @@ class CalendarDateTime:
         )
 
 
+_RESOLUTION_TO_FORMAT = {
+    "SECONDLY": "%H:%M:%S",
+    "MINUTELY": "%H:%M",
+    "HOURLY": "%Y-%m-%d %H:%M",
+    "DAILY": "%Y-%m-%d",
+    "MONTHLY": "%Y-%m",
+    "YEARLY": "%Y"
+}
+
+
 class NetCDFTimeDateFormatter(mticker.Formatter):
     """
     Formatter for cftime.datetime data.
 
     """
-
-    # Some magic numbers. These seem to work pretty well.
-    format_options = [
-        FormatOption(0.0, 0.2, "%H:%M:%S"),
-        FormatOption(0.2, 0.8, "%H:%M"),
-        FormatOption(0.8, 15, "%Y-%m-%d %H:%M"),
-        FormatOption(15, 90, "%Y-%m-%d"),
-        FormatOption(90, 900, "%Y-%m"),
-        FormatOption(900, 6000000, "%Y"),
-    ]
-
     def __init__(self, locator, calendar, time_units):
         #: The locator associated with this formatter. This is used to get hold
         #: of the scaling information.
@@ -68,20 +67,14 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
         self.calendar = calendar
         self.time_units = time_units
 
-    def pick_format(self, ndays):
-        """
-        Returns a format string for an interval of the given number of days.
-
-        """
-        for option in self.format_options:
-            if option.lower < ndays <= option.upper:
-                return option.format_string
-        else:
-            emsg = f"No formatter found for an interval of {ndays} days."
-            raise ValueError(emsg)
+    def pick_format(self, resolution):
+        return _RESOLUTION_TO_FORMAT[resolution]
 
     def __call__(self, x, pos=0):
-        format_string = self.pick_format(ndays=self.locator.ndays)
+        # Note that self.locator.tick_values must be called
+        # before calling this method; otherwise the locator's
+        # resolution attribute will not be defined.
+        format_string = self.pick_format(self.locator.resolution)
         dt = cftime.num2date(x, self.time_units, calendar=self.calendar)
         return dt.strftime(format_string)
 
@@ -143,7 +136,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
         if num_days > 365 * self.max_n_ticks:
             resolution = "YEARLY"
             n = abs(date1.year - date2.year)
-
+        self.resolution = resolution
         return resolution, n
 
     def __call__(self):
@@ -154,9 +147,6 @@ class NetCDFTimeDateLocator(mticker.Locator):
         vmin, vmax = mtransforms.nonsingular(
             vmin, vmax, expander=1e-7, tiny=1e-13
         )
-
-        self.ndays = float(abs(vmax - vmin))
-
         lower = cftime.num2date(vmin, self.date_unit, calendar=self.calendar)
         upper = cftime.num2date(vmax, self.date_unit, calendar=self.calendar)
 

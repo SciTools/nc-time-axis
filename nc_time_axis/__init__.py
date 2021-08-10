@@ -51,7 +51,7 @@ _RESOLUTION_TO_FORMAT = {
     "HOURLY": "%Y-%m-%d %H:%M",
     "DAILY": "%Y-%m-%d",
     "MONTHLY": "%Y-%m",
-    "YEARLY": "%Y"
+    "YEARLY": "%Y",
 }
 
 
@@ -60,6 +60,7 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
     Formatter for cftime.datetime data.
 
     """
+
     def __init__(self, locator, calendar, time_units):
         #: The locator associated with this formatter. This is used to get hold
         #: of the scaling information.

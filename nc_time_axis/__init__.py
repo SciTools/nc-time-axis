@@ -3,8 +3,6 @@ Support for cftime axis in matplotlib.
 
 """
 
-from collections import namedtuple
-
 import cftime
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
@@ -13,9 +11,6 @@ import matplotlib.units as munits
 import numpy as np
 
 from ._version import version as __version__  # noqa: F401
-
-# Lower and upper are in number of days.
-FormatOption = namedtuple("FormatOption", ["lower", "upper", "format_string"])
 
 
 class CalendarDateTime:

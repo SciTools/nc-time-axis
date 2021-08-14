@@ -44,6 +44,23 @@ class Test(unittest.TestCase):
         result_ydata = line1.get_ydata()
         np.testing.assert_array_equal(result_ydata, datetimes)
 
+    def test_360_day_calendar_raw_universal_dates(self):
+        datetimes = [
+            cftime.datetime(1986, month, 30, calendar="360_day")
+            for month in range(1, 6)
+        ]
+        (line1,) = plt.plot(datetimes)
+        result_ydata = line1.get_ydata()
+        np.testing.assert_array_equal(result_ydata, datetimes)
+
+    def test_no_calendar_raw_universal_dates(self):
+        datetimes = [
+            cftime.datetime(1986, month, 30, calendar=None)
+            for month in range(1, 6)
+        ]
+        with self.assertRaisesRegex(ValueError, "defined"):
+            plt.plot(datetimes)
+
     def test_fill_between(self):
         calendar = "360_day"
         dt = [

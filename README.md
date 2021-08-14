@@ -58,18 +58,16 @@ Or `pip`:
 
     import cftime
     import matplotlib.pyplot as plt
-
-    from nc_time_axis import CalendarDateTime
+    import nc_time_axis
 
     calendar = "360_day"
     dt = [
         cftime.datetime(year=2017, month=2, day=day, calendar=calendar)
         for day in range(1, 31)
     ]
-    cdt = [CalendarDateTime(item, calendar) for item in dt]
-    temperatures = [round(random.uniform(0, 12), 3) for _ in range(len(cdt))]
+    temperatures = [round(random.uniform(0, 12), 3) for _ in range(len(dt))]
 
-    plt.plot(cdt, temperatures)
+    plt.plot(dt, temperatures)
     plt.margins(0.1)
     plt.ylim(0, 12)
     plt.xlabel("Date")

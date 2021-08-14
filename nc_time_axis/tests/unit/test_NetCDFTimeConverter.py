@@ -78,6 +78,33 @@ class Test_default_units(unittest.TestCase):
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit, cftime.Datetime360Day))
 
+    def test_360_day_calendar_point_raw_universal_date(self):
+        calendar = "360_day"
+        unit = "days since 2000-01-01"
+        val = cftime.datetime(2014, 8, 12, calendar=calendar)
+        result = NetCDFTimeConverter().default_units(val, None)
+        self.assertEqual(result, (calendar, unit, cftime.datetime))
+
+    def test_360_day_calendar_list_raw_universal_date(self):
+        calendar = "360_day"
+        unit = "days since 2000-01-01"
+        val = [cftime.datetime(2014, 8, 12, calendar=calendar)]
+        result = NetCDFTimeConverter().default_units(val, None)
+        self.assertEqual(result, (calendar, unit, cftime.datetime))
+
+    def test_360_day_calendar_nd_raw_universal_date(self):
+        # Test the case where the input is an nd-array.
+        calendar = "360_day"
+        unit = "days since 2000-01-01"
+        val = np.array(
+            [
+                [cftime.datetime(2014, 8, 12, calendar=calendar)],
+                [cftime.datetime(2014, 8, 13, calendar=calendar)],
+            ]
+        )
+        result = NetCDFTimeConverter().default_units(val, None)
+        self.assertEqual(result, (calendar, unit, cftime.datetime))
+
     def test_nonequal_calendars(self):
         # Test that different supplied calendars causes an error.
         calendar_1 = "360_day"
@@ -87,6 +114,12 @@ class Test_default_units(unittest.TestCase):
             CalendarDateTime(cftime.datetime(2014, 8, 13), calendar_2),
         ]
         with self.assertRaisesRegex(ValueError, "not all equal"):
+            NetCDFTimeConverter().default_units(val, None)
+
+    def test_no_calendar_point_raw_universal_date(self):
+        calendar = None
+        val = cftime.datetime(2014, 8, 12, calendar=calendar)
+        with self.assertRaisesRegex(ValueError, "defined"):
             NetCDFTimeConverter().default_units(val, None)
 
 
@@ -141,6 +174,27 @@ class Test_convert(unittest.TestCase):
         assert result == expected
         assert len(result) == 1
 
+    def test_cftime_raw_universal_date(self):
+        val = cftime.datetime(2014, 8, 12, calendar="noleap")
+        result = NetCDFTimeConverter().convert(val, None, None)
+        expected = 5333.0
+        assert result == expected
+        assert np.isscalar(result)
+
+    def test_cftime_list_universal_date(self):
+        val = [cftime.datetime(2014, 8, 12, calendar="noleap")]
+        result = NetCDFTimeConverter().convert(val, None, None)
+        expected = 5333.0
+        assert result == expected
+        assert len(result) == 1
+
+    def test_cftime_tuple_univeral_date(self):
+        val = (cftime.datetime(2014, 8, 12, calendar="noleap"),)
+        result = NetCDFTimeConverter().convert(val, None, None)
+        expected = 5333.0
+        assert result == expected
+        assert len(result) == 1
+
     def test_cftime_np_array_CalendarDateTime(self):
         val = np.array(
             [CalendarDateTime(cftime.datetime(2012, 6, 4), "360_day")],
@@ -151,6 +205,13 @@ class Test_convert(unittest.TestCase):
 
     def test_cftime_np_array_raw_date(self):
         val = np.array([cftime.Datetime360Day(2012, 6, 4)], dtype=object)
+        result = NetCDFTimeConverter().convert(val, None, None)
+        self.assertEqual(result, np.array([4473.0]))
+
+    def test_cftime_np_array_raw_universal_date(self):
+        val = np.array(
+            [cftime.datetime(2012, 6, 4, calendar="360_day")], dtype=object
+        )
         result = NetCDFTimeConverter().convert(val, None, None)
         self.assertEqual(result, np.array([4473.0]))
 

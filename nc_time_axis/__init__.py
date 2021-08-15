@@ -59,9 +59,7 @@ class AutoCFTimeFormatter(mticker.Formatter):
 
     """
 
-    def __init__(
-        self, locator, calendar, time_units
-    ):
+    def __init__(self, locator, calendar, time_units):
         #: The locator associated with this formatter. This is used to get hold
         #: of the scaling information.
         self.locator = locator

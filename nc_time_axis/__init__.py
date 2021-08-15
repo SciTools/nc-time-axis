@@ -2,6 +2,7 @@
 Support for cftime axis in matplotlib.
 
 """
+import warnings
 
 import cftime
 import matplotlib.dates as mdates
@@ -11,6 +12,8 @@ import matplotlib.units as munits
 import numpy as np
 
 from ._version import version as __version__  # noqa: F401
+
+_DEFAULT_RESOLUTION = "DAILY"
 
 
 class CalendarDateTime:
@@ -50,13 +53,15 @@ _RESOLUTION_TO_FORMAT = {
 }
 
 
-class NetCDFTimeDateFormatter(mticker.Formatter):
+class AutoCFTimeFormatter(mticker.Formatter):
     """
     Formatter for cftime.datetime data.
 
     """
 
-    def __init__(self, locator, calendar, time_units):
+    def __init__(
+        self, locator, calendar, time_units
+    ):
         #: The locator associated with this formatter. This is used to get hold
         #: of the scaling information.
         self.locator = locator
@@ -67,12 +72,41 @@ class NetCDFTimeDateFormatter(mticker.Formatter):
         return _RESOLUTION_TO_FORMAT[resolution]
 
     def __call__(self, x, pos=0):
-        # Note that self.locator.tick_values must be called
-        # before calling this method; otherwise the locator's
-        # resolution attribute will not be defined.
         format_string = self.pick_format(self.locator.resolution)
         dt = cftime.num2date(x, self.time_units, calendar=self.calendar)
         return dt.strftime(format_string)
+
+
+class NetCDFTimeDateFormatter(AutoCFTimeFormatter):
+    def __init__(self, *args, **kwargs):
+        warnings.warn(
+            "NetCDFTimeDateFormatter will be named AutoCFTimeFormatter "
+            "in nc_time_axis version 1.5",
+            FutureWarning,
+        )
+        super(NetCDFTimeDateFormatter, self).__init__(*args, **kwargs)
+
+
+class CFTimeFormatter(mticker.Formatter):
+    """
+    A formatter for explicitly setting the format of a cftime.datetime axis.
+
+    Parameters
+    ----------
+    format : str
+        Format string that can be passed to cftime.datetime.strftime, e.g. "%Y-%m-%d"
+    calendar : str
+        Calendar type of the datetime axis
+    """
+
+    def __init__(self, format, calendar):
+        self.format = format
+        self.time_units = "days since 2000-01-01"
+        self.calendar = calendar
+
+    def __call__(self, x, pos=0):
+        dt = cftime.num2date(x, self.time_units, calendar=self.calendar)
+        return dt.strftime(self.format)
 
 
 class NetCDFTimeDateLocator(mticker.Locator):
@@ -105,7 +139,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
                 "time locator."
             )
             raise ValueError(emsg)
-
+        self.resolution = _DEFAULT_RESOLUTION
         self._cached_resolution = {}
 
     def compute_resolution(self, num1, num2, date1, date2):
@@ -262,7 +296,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
         majloc = NetCDFTimeDateLocator(
             4, calendar=calendar, date_unit=date_unit
         )
-        majfmt = NetCDFTimeDateFormatter(
+        majfmt = AutoCFTimeFormatter(
             majloc, calendar=calendar, time_units=date_unit
         )
         if date_type is CalendarDateTime:

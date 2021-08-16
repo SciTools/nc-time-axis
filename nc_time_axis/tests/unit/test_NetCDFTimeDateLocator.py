@@ -83,6 +83,23 @@ class Test_compute_resolution(unittest.TestCase):
         )
 
 
+class Test_compute_resolution_universal_datetime(unittest.TestCase):
+    def check(self, max_n_ticks, num1, num2):
+        locator = NetCDFTimeDateLocator(
+            max_n_ticks=max_n_ticks,
+            calendar=self.calendar,
+            date_unit=self.date_unit,
+        )
+        date1 = cftime.num2date(num1, self.date_unit, calendar=self.calendar)
+        date2 = cftime.num2date(num2, self.date_unit, calendar=self.calendar)
+        return locator.compute_resolution(
+            num1,
+            num2,
+            cftime.datetime(*date1.timetuple(), calendar=self.calendar),
+            cftime.datetime(*date2.timetuple(), calendar=self.calendar),
+        )
+
+
 class Test_tick_values(unittest.TestCase):
     def setUp(self):
         self.date_unit = "days since 2004-01-01 00:00"

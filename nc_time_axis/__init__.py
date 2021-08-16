@@ -308,6 +308,10 @@ class NetCDFTimeConverter(mdates.DateConverter):
             else:
                 calendar = sample_point.calendar
             date_type = type(sample_point)
+        if calendar == "":
+            raise ValueError(
+                "A calendar must be defined to plot dates using a cftime axis."
+            )
         return calendar, cls.standard_unit, date_type
 
     @classmethod
@@ -373,6 +377,7 @@ if CalendarDateTime not in munits.registry:
     munits.registry[CalendarDateTime] = NetCDFTimeConverter()
 
 CFTIME_TYPES = [
+    cftime.datetime,
     cftime.DatetimeNoLeap,
     cftime.DatetimeAllLeap,
     cftime.DatetimeProlepticGregorian,

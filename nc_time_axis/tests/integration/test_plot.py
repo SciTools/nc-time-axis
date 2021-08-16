@@ -122,5 +122,25 @@ def test_set_ticks_with_CFTimeFormatter(axis, ticks):
     assert result_labels == expected_labels
 
 
+@pytest.mark.parametrize("axis", ["x", "y"])
+def test_set_format_with_CFTimeFormatter_with_default_ticks(axis):
+    times = [cftime.Datetime360Day(1986, month, 30) for month in range(1, 6)]
+    data = range(len(times))
+    fig, ax = plt.subplots(1, 1)
+    formatter = nc_time_axis.CFTimeFormatter("%Y", "360_day")
+    if axis == "x":
+        ax.plot(times, data)
+        ax.xaxis.set_major_formatter(formatter)
+        fig.canvas.draw()
+        ticklabels = ax.get_xticklabels()
+    else:
+        ax.plot(data, times)
+        ax.yaxis.set_major_formatter(formatter)
+        fig.canvas.draw()
+        ticklabels = ax.get_yticklabels()
+    result_labels = [label.get_text() for label in ticklabels]
+    expected_labels = ["1986", "1986", "1986", "1986", "1986"]
+    assert result_labels == expected_labels
+
 if __name__ == "__main__":
     unittest.main()

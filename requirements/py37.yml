@@ -11,13 +11,13 @@ dependencies:
   - setuptools-scm
 
 # core dependencies
-  - cftime
+  - cftime >=1.5
   - matplotlib
   - numpy
 
 # test dependencies
   - codecov
-  - pytest>=6.0
+  - pytest >=6.0
   - pytest-cov
 
 # dev dependencies

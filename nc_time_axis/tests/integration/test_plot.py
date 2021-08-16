@@ -142,5 +142,6 @@ def test_set_format_with_CFTimeFormatter_with_default_ticks(axis):
     expected_labels = ["1986", "1986", "1986", "1986", "1986"]
     assert result_labels == expected_labels
 
+
 if __name__ == "__main__":
     unittest.main()

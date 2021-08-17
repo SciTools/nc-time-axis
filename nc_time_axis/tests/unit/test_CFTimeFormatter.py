@@ -3,7 +3,6 @@ import pytest
 
 from nc_time_axis import CFTimeFormatter
 
-
 FORMATS = {
     "%H:%M:%S": "01:01:01",
     "%H:%M": "01:01",

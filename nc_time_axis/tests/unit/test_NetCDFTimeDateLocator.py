@@ -7,28 +7,26 @@ import cftime
 import matplotlib.dates as mdates
 import matplotlib.style
 import numpy as np
+import pytest
 
-from nc_time_axis import NetCDFTimeDateLocator
+from nc_time_axis import _TIME_UNITS, NetCDFTimeDateLocator
 
 matplotlib.style.use("classic")
 
 
 class Test_compute_resolution(unittest.TestCase):
     def setUp(self):
-        self.date_unit = "days since 2004-01-01 00:00"
         self.calendar = "365_day"
 
     def check(self, max_n_ticks, num1, num2):
         locator = NetCDFTimeDateLocator(
-            max_n_ticks=max_n_ticks,
-            calendar=self.calendar,
-            date_unit=self.date_unit,
+            max_n_ticks=max_n_ticks, calendar=self.calendar
         )
         return locator.compute_resolution(
             num1,
             num2,
-            cftime.num2date(num1, self.date_unit, calendar=self.calendar),
-            cftime.num2date(num2, self.date_unit, calendar=self.calendar),
+            cftime.num2date(num1, _TIME_UNITS, calendar=self.calendar),
+            cftime.num2date(num2, _TIME_UNITS, calendar=self.calendar),
         )
 
     def test_one_minute(self):
@@ -102,14 +100,11 @@ class Test_compute_resolution_universal_datetime(unittest.TestCase):
 
 class Test_tick_values(unittest.TestCase):
     def setUp(self):
-        self.date_unit = "days since 2004-01-01 00:00"
         self.calendar = "365_day"
 
     def check(self, max_n_ticks, num1, num2):
         locator = NetCDFTimeDateLocator(
-            max_n_ticks=max_n_ticks,
-            calendar=self.calendar,
-            date_unit=self.date_unit,
+            max_n_ticks=max_n_ticks, calendar=self.calendar
         )
         return locator.tick_values(num1, num2)
 
@@ -121,12 +116,12 @@ class Test_tick_values(unittest.TestCase):
 
     def test_minutely(self):
         np.testing.assert_array_almost_equal(
-            self.check(4, 1, 1.07), [1.0, 1.027778, 1.055556, 1.083333]
+            self.check(4, 1, 1.07), [1.0, 1.020833, 1.041667, 1.0625, 1.083333]
         )
 
     def test_hourly(self):
         np.testing.assert_array_almost_equal(
-            self.check(4, 2, 3), [2.0, 2.333333, 2.666667, 3.0]
+            self.check(4, 2, 3), [2.0, 2.25, 2.5, 2.75, 3.0]
         )
 
     def test_daily(self):
@@ -147,7 +142,6 @@ class Test_tick_values(unittest.TestCase):
 
 class Test_tick_values_yr0(unittest.TestCase):
     def setUp(self):
-        self.date_unit = "days since 0001-01-01 00:00"
         self.all_calendars = [
             "standard",
             "gregorian",
@@ -168,24 +162,27 @@ class Test_tick_values_yr0(unittest.TestCase):
 
     def check(self, max_n_ticks, num1, num2, calendar):
         locator = NetCDFTimeDateLocator(
-            max_n_ticks=max_n_ticks,
-            calendar=calendar,
-            date_unit=self.date_unit,
+            max_n_ticks=max_n_ticks, calendar=calendar
         )
         return locator.tick_values(num1, num2)
 
     def test_yearly_yr0_remove(self):
         for calendar in self.all_calendars:
             # convert values to dates, check that none of them has year 0
-            ticks = self.check(5, 0, 100 * 365, calendar)
+            ticks = self.check(5, -2001 * 365, -1901 * 365, calendar)
             year_ticks = [
-                cftime.num2date(t, self.date_unit, calendar=calendar).year
+                cftime.num2date(t, _TIME_UNITS, calendar=calendar).year
                 for t in ticks
             ]
             if calendar in self.yr0_remove_calendars:
                 self.assertNotIn(0, year_ticks)
             else:
                 self.assertIn(0, year_ticks)
+
+
+def test_NetCDFTimeDateLocator_date_unit_warning():
+    with pytest.warns(DeprecationWarning, match="date_unit"):
+        NetCDFTimeDateLocator(5, "360_day", "days since 2000-01-01")
 
 
 if __name__ == "__main__":

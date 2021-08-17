@@ -8,6 +8,7 @@ matplotlib.use("agg")
 import cftime
 import matplotlib.pyplot as plt
 import numpy as np
+import pytest
 
 import nc_time_axis
 
@@ -73,6 +74,90 @@ class Test(unittest.TestCase):
         ]
 
         plt.fill_between(cdt, temperatures, 0)
+
+
+def setup_function(function):
+    plt.close()
+
+
+def teardown_function(function):
+    plt.close()
+
+
+TICKS = {
+    "List[cftime.datetime]": [cftime.Datetime360Day(1986, 2, 1)],
+    "List[CalendarDateTime]": [
+        nc_time_axis.CalendarDateTime(
+            cftime.Datetime360Day(1986, 2, 1), "360_day"
+        )
+    ],
+}
+
+
+@pytest.mark.parametrize("axis", ["x", "y"])
+@pytest.mark.parametrize("ticks", TICKS.values(), ids=list(TICKS.keys()))
+def test_set_ticks(axis, ticks):
+    times = [cftime.Datetime360Day(1986, month, 30) for month in range(1, 6)]
+    data = range(len(times))
+    fig, ax = plt.subplots(1, 1)
+    if axis == "x":
+        ax.plot(times, data)
+        ax.set_xticks(ticks)
+        fig.canvas.draw()
+        ticklabels = ax.get_xticklabels()
+    else:
+        ax.plot(data, times)
+        ax.set_yticks(ticks)
+        fig.canvas.draw()
+        ticklabels = ax.get_yticklabels()
+    result_labels = [label.get_text() for label in ticklabels]
+    expected_labels = ["1986-02-01"]
+    assert result_labels == expected_labels
+
+
+@pytest.mark.parametrize("axis", ["x", "y"])
+@pytest.mark.parametrize("ticks", TICKS.values(), ids=list(TICKS.keys()))
+def test_set_ticks_with_CFTimeFormatter(axis, ticks):
+    times = [cftime.Datetime360Day(1986, month, 30) for month in range(1, 6)]
+    data = range(len(times))
+    fig, ax = plt.subplots(1, 1)
+    formatter = nc_time_axis.CFTimeFormatter("%Y-%m", "360_day")
+    if axis == "x":
+        ax.plot(times, data)
+        ax.set_xticks(ticks)
+        ax.xaxis.set_major_formatter(formatter)
+        fig.canvas.draw()
+        ticklabels = ax.get_xticklabels()
+    else:
+        ax.plot(data, times)
+        ax.set_yticks(ticks)
+        ax.yaxis.set_major_formatter(formatter)
+        fig.canvas.draw()
+        ticklabels = ax.get_yticklabels()
+    result_labels = [label.get_text() for label in ticklabels]
+    expected_labels = ["1986-02"]
+    assert result_labels == expected_labels
+
+
+@pytest.mark.parametrize("axis", ["x", "y"])
+def test_set_format_with_CFTimeFormatter_with_default_ticks(axis):
+    times = [cftime.Datetime360Day(1986, month, 30) for month in range(1, 6)]
+    data = range(len(times))
+    fig, ax = plt.subplots(1, 1)
+    formatter = nc_time_axis.CFTimeFormatter("%Y", "360_day")
+    if axis == "x":
+        ax.plot(times, data)
+        ax.xaxis.set_major_formatter(formatter)
+        fig.canvas.draw()
+        ticklabels = ax.get_xticklabels()
+    else:
+        ax.plot(data, times)
+        ax.yaxis.set_major_formatter(formatter)
+        fig.canvas.draw()
+        ticklabels = ax.get_yticklabels()
+    result_labels = [label.get_text() for label in ticklabels]
+    expected_labels = ["1986", "1986", "1986", "1986", "1986"]
+    assert result_labels == expected_labels
 
 
 if __name__ == "__main__":

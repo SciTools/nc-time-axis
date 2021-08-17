@@ -3,17 +3,23 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to nc-time-axis's documentation!
-========================================
+nc-time-axis
+============
+
+**nc-time-axis** is a package that enables making plots in matplotlib with axes made
+up of :py:class:`cftime.datetime` dates with any calendar type.  
+
+Contents
+--------
 
 .. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+   :maxdepth: 1
 
+   api
 
 
 Indices and tables
-==================
+------------------
 
 * :ref:`genindex`
 * :ref:`modindex`

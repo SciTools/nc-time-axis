@@ -1,6 +1,7 @@
 """Integration test for plotting data with non-gregorian calendar."""
 
 import unittest
+import warnings
 
 import matplotlib
 
@@ -24,6 +25,7 @@ class Test(unittest.TestCase):
         # in an odd state, so we make sure it's been disposed of.
         plt.close("all")
 
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_360_day_calendar_CalendarDateTime(self):
         calendar = "360_day"
         datetimes = [
@@ -62,6 +64,7 @@ class Test(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "defined"):
             plt.plot(datetimes)
 
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_fill_between(self):
         calendar = "360_day"
         dt = [
@@ -84,16 +87,19 @@ def teardown_function(function):
     plt.close()
 
 
-TICKS = {
-    "List[cftime.datetime]": [cftime.Datetime360Day(1986, 2, 1)],
-    "List[CalendarDateTime]": [
-        nc_time_axis.CalendarDateTime(
-            cftime.Datetime360Day(1986, 2, 1), "360_day"
-        )
-    ],
-}
+with warnings.catch_warnings():
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
+    TICKS = {
+        "List[cftime.datetime]": [cftime.Datetime360Day(1986, 2, 1)],
+        "List[CalendarDateTime]": [
+            nc_time_axis.CalendarDateTime(
+                cftime.Datetime360Day(1986, 2, 1), "360_day"
+            )
+        ],
+    }
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 @pytest.mark.parametrize("axis", ["x", "y"])
 @pytest.mark.parametrize("ticks", TICKS.values(), ids=list(TICKS.keys()))
 def test_set_ticks(axis, ticks):

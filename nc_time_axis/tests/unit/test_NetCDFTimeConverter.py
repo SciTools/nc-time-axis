@@ -4,10 +4,12 @@ import unittest
 
 import cftime
 import numpy as np
+import pytest
 
 from nc_time_axis import CalendarDateTime, NetCDFTimeConverter
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 class Test_axisinfo(unittest.TestCase):
     def test_axis_default_limits(self):
         cal = "360_day"
@@ -24,6 +26,7 @@ class Test_axisinfo(unittest.TestCase):
 
 
 class Test_default_units(unittest.TestCase):
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_360_day_calendar_point_CalendarDateTime(self):
         calendar = "360_day"
         unit = "days since 2000-01-01"
@@ -31,6 +34,7 @@ class Test_default_units(unittest.TestCase):
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit, CalendarDateTime))
 
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_360_day_calendar_list_CalendarDateTime(self):
         calendar = "360_day"
         unit = "days since 2000-01-01"
@@ -38,6 +42,7 @@ class Test_default_units(unittest.TestCase):
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit, CalendarDateTime))
 
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_360_day_calendar_nd_CalendarDateTime(self):
         # Test the case where the input is an nd-array.
         calendar = "360_day"
@@ -105,6 +110,7 @@ class Test_default_units(unittest.TestCase):
         result = NetCDFTimeConverter().default_units(val, None)
         self.assertEqual(result, (calendar, unit, cftime.datetime))
 
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_nonequal_calendars(self):
         # Test that different supplied calendars causes an error.
         calendar_1 = "360_day"
@@ -146,6 +152,7 @@ class Test_convert(unittest.TestCase):
         result = NetCDFTimeConverter().convert(val, None, None)
         np.testing.assert_array_equal(result, val)
 
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_cftime_CalendarDateTime(self):
         val = CalendarDateTime(cftime.datetime(2014, 8, 12), "365_day")
         result = NetCDFTimeConverter().convert(val, None, None)
@@ -195,6 +202,7 @@ class Test_convert(unittest.TestCase):
         assert result == expected
         assert len(result) == 1
 
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_cftime_np_array_CalendarDateTime(self):
         val = np.array(
             [CalendarDateTime(cftime.datetime(2012, 6, 4), "360_day")],
@@ -215,6 +223,7 @@ class Test_convert(unittest.TestCase):
         result = NetCDFTimeConverter().convert(val, None, None)
         self.assertEqual(result, np.array([4473.0]))
 
+    @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_non_cftime_datetime(self):
         val = CalendarDateTime(4, "360_day")
         msg = (

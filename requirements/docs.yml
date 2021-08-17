@@ -25,6 +25,7 @@ dependencies:
   - pre-commit
 
 # docs dependencies
+  - ipython
   - numpydoc
   - sphinx
   - sphinx_rtd_theme

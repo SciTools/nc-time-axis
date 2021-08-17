@@ -35,3 +35,4 @@ repos:
     -   id: isort
         name: isort
         args: ["--profile", "black", "--filter-files"]
+exclude: "docs/conf.py"

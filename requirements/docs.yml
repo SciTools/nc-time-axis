@@ -26,4 +26,4 @@ dependencies:
 
 # docs dependencies
   - sphinx
-  - sphinx-rtd-theme
+  - sphinx_rtd_theme

@@ -11,9 +11,7 @@ from nc_time_axis import AutoCFTimeFormatter, NetCDFTimeDateFormatter
 class Test_pick_format(unittest.TestCase):
     def check(self, resolution):
         locator = mock.MagicMock()
-        formatter = AutoCFTimeFormatter(
-            locator, "360_day", "days since 2000-01-01 00:00"
-        )
+        formatter = AutoCFTimeFormatter(locator, "360_day")
         return formatter.pick_format(resolution)
 
     def test(self):
@@ -28,6 +26,12 @@ class Test_pick_format(unittest.TestCase):
 def test_NetCDFTimeDateFormatter_warning():
     locator = mock.MagicMock()
     with pytest.warns(FutureWarning, match="AutoCFTimeFormatter"):
+        NetCDFTimeDateFormatter(locator, "360_day", "days since 2000-01-01")
+
+
+def test_NetCDFTimeDateFormatter_time_units_warning():
+    locator = mock.MagicMock()
+    with pytest.warns(DeprecationWarning, match="time_units"):
         NetCDFTimeDateFormatter(locator, "360_day", "days since 2000-01-01")
 
 

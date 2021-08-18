@@ -1,0 +1,198 @@
+.. _release_notes:
+
+.. currentmodule:: nc_time_axis
+
+Release notes
+=============
+
+v1.4.0 (unreleased)
+-------------------
+
+New features
+~~~~~~~~~~~~
+
+* Added a :py:class:`CFTimeConverter` class to enable custom formatting for
+  :py:class:`cftime.datetime` ticks (:issue:`41`, :pull:`84`).  By `Spencer
+  Clark <https://github.com/spencerkclark>`_.
+* Added ability to plot calendar-aware :py:class:`cftime.datetime` objects, e.g.
+  ``cftime.datetime(2000, 1, 1, calendar="noleap")``, available as of cftime
+  version 1.3.0 (:issue:`75`, :pull:`80`).  By `Spencer Clark
+  <https://github.com/spencerkclark>`_.
+* Added an initial start on documentation of nc-time-axis (:issue:`62`,
+  :pull:`87`).  By `Spencer Clark <https://github.com/spencerkclark>`_.
+
+Bug fixes
+~~~~~~~~~
+
+* Enabled :py:meth:`NetCDFTimeConverter.convert` to take a :py:class:`list` of
+  datetimes as an argument, allowing matplotlib methods like
+  :py:meth:`matplotlib.axes.Axes.axvspan` and
+  :py:meth:`matplotlib.axes.Axes.fill_between` to work properly with cftime
+  values (:issue:`47`, :issue:`74`, :pull:`78`).  By `Pascal Bourgault
+  <https://github.com/aulemahal>`_.
+* Fixed bug that resulted in the resolution of tick labels being inconsistent 
+  with the resolution of tick values (:issue:`48`, :pull:`79`).  By `Spencer
+  Clark <https://github.com/spencerkclark>`_.
+
+
+v1.3.1 (June 14th, 2021)
+------------------------
+
+Requirements
+~~~~~~~~~~~~
+
+* nc-time-axis now requires cftime of at least version 1.5 (:discussion:`61`,
+  :pull:`69`).  By `Bill Little <https://github.com/bjlittle>`_
+
+
+v1.3.0 (June 11th, 2021)
+------------------------
+
+Requirements
+~~~~~~~~~~~~
+
+* Support for Python 2 was dropped.
+
+Infrastructure
+~~~~~~~~~~~~~~
+
+* Migrated continuous integration from Travis CI to Cirrus CI through GitHub
+  Actions.  Added formatting and linting checks.  Updated packaging to use
+  `setuptools <https://setuptools.readthedocs.io/en/latest/>`_.  Added issue and
+  pull request templates.  Enabled GitHub discussions.  For more details see
+  :issue:`63` and :pull:`66`.  By `Bill Little <https://github.com/bjlittle>`_.
+* Changed the name of the primary branch from "master" to "main" (:pull:`68`).
+  By `Bill Little <https://github.com/bjlittle>`_.
+
+Bug fixes
+~~~~~~~~~
+
+* Removed ticks with year zero in calendars without year zero.  Previously these
+  would lead to errors in cftime, which would prevent plotting (:issue:`44`,
+  :pull:`50`).  By `Julius Busecke <https://github.com/jbusecke>`_.
+* Removed internal use of the deprecated :py:class:`cftime.utime` class
+  (:pull:`59` through :pull:`66`).  By `Pascal Bourgault
+  <https://github.com/aulemahal>`_.
+* Removed internal use of the deprecated :py:class:`numpy.object` data type
+  (:pull:`56` through :pull:`66`).  By `Mathias Hauser
+  <https://github.com/mathause>`_.
+* Updated internals for compatibility with the now calendar-aware
+  :py:class:`cftime.datetime` object (:pull:`51` through :pull:`66`).  By `Jeff
+  Whitaker <https://github.com/jswhit>`_.
+* Improved handling of scalar values passed to
+  :py:meth:`NetCDFTimeConverter.convert` (:issue:`45`, :pull:`46`).  By `Spencer
+  Clark <https://github.com/spencerkclark>`_.
+
+
+v1.2.0 (January 25th, 2019)
+---------------------------
+
+Infrastructure
+~~~~~~~~~~~~~~
+
+* Included license in package data (:pull:`37`).  By `Filipe Fernandes
+  <https://github.com/ocefpaf>`_.
+
+New features
+~~~~~~~~~~~~
+
+* Added ability to directly plot subclasses of :py:class:`cftime.datetime`, e.g.
+  :py:class:`cftime.DatetimeNoLeap`, instead of requiring
+  :py:class:`CalendarDateTime` objects (:pull:`42`).  By `Spencer
+  Clark <https://github.com/spencerkclark>`_.
+
+
+v1.1.0 (May 31st, 2018)
+-----------------------
+
+Requirements
+~~~~~~~~~~~~
+
+* nc-time-axis now requires matplotlib of at least version 2.0 (:issue:`23`,
+  :pull:`34`).  By `Filipe Fernandes <https://github.com/ocefpaf>`_.
+* nc-time-axis now uses the standalone cftime package instead of the
+  ``netcdftime`` module formerly packaged in netcdf4-python (:pull:`30`,
+  :pull:`32`). By `Filipe Fernandes <https://github.com/ocefpaf>`_.
+
+Infrastructure
+~~~~~~~~~~~~~~
+
+* Run continuous integration tests in both Python 2 and Python 3 (:pull:`33`).
+  By `Filipe Fernandes <https://github.com/ocefpaf>`_.
+* Use ``install_requires`` information to install dependencies of nc-time-axis
+  in continuous integration instead of a requirements file (:issue:`27`,
+  :pull:`28`).  By `Phil Elson <https://github.com/pelson>`_.
+* Added installation and test requirements to ``setup.py`` (:pull:`26`).  By
+  `Luke Carroll <https://github.com/LukeC92>`_.
+
+Documentation
+~~~~~~~~~~~~~
+
+* Added installation instructions and a usage example to the README for display
+  on GitHub (:pull:`24`, :pull:`25`).  By `mbeedie
+  <https://github.com/mbeedie>`_.
+
+
+v1.0.2 (March 7th, 2017)
+------------------------
+
+Requirements
+~~~~~~~~~~~~
+
+* nc-time-axis requires matplotlib less than version 2.0 (:pull:`22`).  By `Mark
+  Hedley <https://github.com/marqh>`_.
+
+Bug fixes
+~~~~~~~~~
+
+* Fixed a bug in comparing calendars (:pull:`22`).  By `Mark
+  Hedley <https://github.com/marqh>`_.
+
+
+v1.0.1 (November 23rd, 2016)
+----------------------------
+
+Bug fixes
+~~~~~~~~~
+
+* Fixed bug the prevented converting NumPy arrays of datetime objects.  This
+  enables making Hovmoller diagrams using nc-time-axis.  By `Peter Killick
+  <https://github.com/DPeterK>`_.
+
+
+v1.0.0 (July 1st, 2016)
+-----------------------
+
+New features
+~~~~~~~~~~~~
+
+* Added the fundamental objects of nc-time-axis, i.e.
+  :py:class:`NetCDFTimeDateLocator`, :py:class:`NetCDFTimeDateFormatter`, and
+  :py:class:`NetCDFTimeConverter` (:pull:`2`).  By `lbdryer
+  <https://github.com/lbdreyer>`_ and `Phil Elson <https://github.com/pelson>`_.
+* Added unit and integration tests (:pull:`3`, :pull:`13`).  By `lbdryer
+  <https://github.com/lbdreyer>`_.
+* Added a ``__version__`` attribute to nc-time-axis (:pull:`9`).  By `lbdryer
+  <https://github.com/lbdreyer>`_.
+* Added the :py:class:`CalendarDateTime` class (:pull:`12`, :pull:`15`).  By
+  `lbdryer <https://github.com/lbdreyer>`_.
+
+Infrastructure
+~~~~~~~~~~~~~~
+
+* Added initial packaging infrastructure (:pull:`4`).  By `lbdryer
+  <https://github.com/lbdreyer>`_.
+* Configured continuous integration to be run using Travis CI (:pull:`6`).  By
+  `lbdryer <https://github.com/lbdreyer>`_.
+* Added test coverage computation and reporting (:pull:`17`, :pull:`19`). By
+  `lbdryer <https://github.com/lbdreyer>`_.
+
+Documentation
+~~~~~~~~~~~~~
+
+* Added a Travis CI badge to the README and convert to reStructuredText format
+  (:pull:`11`).  By `lbdryer <https://github.com/lbdreyer>`_.
+* Added basic description to the README (:pull:`5`).  By `Peter Killick
+  <https://github.com/DPeterK>`_.
+* Added contributing guidelines to the repository (:pull:`1`).  By
+  `lbdryer <https://github.com/lbdreyer>`_.

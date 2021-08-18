@@ -19,10 +19,3 @@ Contents
    usage
    release-notes
    api
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

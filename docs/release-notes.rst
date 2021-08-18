@@ -42,7 +42,7 @@ Requirements
 ~~~~~~~~~~~~
 
 * nc-time-axis now requires cftime of at least version 1.5 (:discussion:`61`,
-  :pull:`69`).  By `Bill Little <https://github.com/bjlittle>`_
+  :pull:`69`).  By `Bill Little <https://github.com/bjlittle>`_.
 
 
 v1.3.0 (June 11th, 2021)

@@ -36,7 +36,12 @@ Setting the axes ticks and tick format
 In the first example, the ticks and tick label formats were chosen automatically
 using heuristics in nc-time-axis.  If you would like to explicitly set the tick
 positions and label format you may do so using
-:py:meth:`matplotlib.axes.Axes.set_xticks` and :py:class:`CFTimeFormatter`.
+:py:meth:`matplotlib.axes.Axes.set_xticks` and :py:class:`CFTimeFormatter`.  The
+:py:class:`CFTimeFormatter` takes in a date format string (see `the Python
+documentation
+<https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes>`_
+for acceptable format codes) and the calendar type of the axis (see
+:py:class:`cftime.datetime` documentation for valid calendar strings).
 
 .. ipython:: python
     :okwarning:

@@ -13,7 +13,7 @@ CalendarDateTime
 For historical reasons, nc-time-axis defines a :py:class:`CalendarDateTime`
 class which encapsulates a :py:class:`cftime.datetime` object and its calendar
 type.  This is no longer needed, and will be removed in nc-time-axis version
-1.5, but we document here for now.
+1.5, but we document it here for now.
 
 .. autosummary::
     :toctree: _api_generated/
@@ -24,10 +24,9 @@ Formatters
 ----------
 
 The :py:class:`AutoCFTimeFormatter` is what is used by default when plotting
-:py:class:`cftime.datetime` axis; it will automatically pick a set of ticks and
-date label format depending on the axis range.  If you would like more control
-over the format of the date labels you may use the :py:class:`CFTimeFormatter`
-class.
+:py:class:`cftime.datetime` axis; it will automatically pick a date label format
+depending on the axis range.  If you would like more control over the format of
+the date labels you may use the :py:class:`CFTimeFormatter` class.
 
 .. autosummary::
     :toctree: _api_generated/

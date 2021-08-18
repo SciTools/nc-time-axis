@@ -13,12 +13,13 @@
 # import os
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
-import nc_time_axis
+import datetime
 
 # -- Project information -----------------------------------------------------
 
 project = 'nc-time-axis'
-copyright = '2016-2021, nc-time-axis developers'
+year = datetime.datetime.today().year
+copyright = f'2016-{year}, nc-time-axis developers'
 author = 'nc-time-axis developers'
 
 

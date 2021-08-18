@@ -70,7 +70,7 @@ _RESOLUTION_TO_FORMAT = {
 
 class AutoCFTimeFormatter(mticker.Formatter):
     """
-    Automatic formatter for cftime.datetime data.
+    Automatic formatter for :py:class:`cftime.datetime` data.
 
     Automatically chooses a date format based on the resolution set by the
     :py:class:`NetCDFDateTimeLocator`.  If no resolution is set, a default

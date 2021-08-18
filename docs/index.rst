@@ -9,13 +9,16 @@ nc-time-axis
 **nc-time-axis** is a package that enables making plots in matplotlib with axes made
 up of :py:class:`cftime.datetime` dates with any calendar type.  
 
-Contents
---------
-
 .. toctree::
+   :caption: Getting started
    :maxdepth: 1
 
    installation
    usage
+
+.. toctree::
+   :caption: Reference
+   :maxdepth: 1
+
    release-notes
    api

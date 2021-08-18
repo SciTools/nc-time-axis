@@ -43,7 +43,7 @@ positions and label format you may do so using
 
     fig, ax = plt.subplots(1, 1)
     ax.plot(times, y);
-    ax.set_xticks([cftime.datetime(2000, 1, day) for day in range(2, 19, 4)]);
+    ax.set_xticks([cftime.datetime(2000, 1, day, calendar="noleap") for day in range(2, 19, 4)]);
     formatter = nc_time_axis.CFTimeFormatter("%m-%d %H:%M", "noleap")
     ax.xaxis.set_major_formatter(formatter)
 

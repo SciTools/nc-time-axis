@@ -11,7 +11,7 @@ v1.4.0 (unreleased)
 New features
 ~~~~~~~~~~~~
 
-* Added a :py:class:`CFTimeConverter` class to enable custom formatting for
+* Added a :py:class:`CFTimeFormatter` class to enable custom formatting for
   :py:class:`cftime.datetime` ticks (:issue:`41`, :pull:`84`).  By `Spencer
   Clark <https://github.com/spencerkclark>`_.
 * Added ability to plot calendar-aware :py:class:`cftime.datetime` objects, e.g.

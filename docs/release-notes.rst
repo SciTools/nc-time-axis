@@ -18,8 +18,6 @@ New features
   ``cftime.datetime(2000, 1, 1, calendar="noleap")``, available as of cftime
   version 1.3.0 (:issue:`75`, :pull:`80`).  By `Spencer Clark
   <https://github.com/spencerkclark>`_.
-* Added an initial start on documentation of nc-time-axis (:issue:`62`,
-  :pull:`87`).  By `Spencer Clark <https://github.com/spencerkclark>`_.
 
 Bug fixes
 ~~~~~~~~~
@@ -30,13 +28,20 @@ Bug fixes
   :py:meth:`matplotlib.axes.Axes.fill_between` to work properly with cftime
   values (:issue:`47`, :issue:`74`, :pull:`78`).  By `Pascal Bourgault
   <https://github.com/aulemahal>`_.
-* Fixed bug that resulted in the resolution of tick labels being inconsistent 
+* Fixed a bug that resulted in the resolution of tick labels being inconsistent 
   with the resolution of tick values (:issue:`48`, :pull:`79`).  By `Spencer
   Clark <https://github.com/spencerkclark>`_.
 * Fixed a bug that prevented users from being able to explicitly set the ticks 
   along axes using :py:meth:`matplotlib.axes.Axes.set_xticks` or
   :py:meth:`matplotlib.axes.Axes.set_yticks` (:issue:`41`, :pull:`84`).  By
   `Spencer Clark <https://github.com/spencerkclark>`_.
+
+Documentation
+~~~~~~~~~~~~~
+
+* Added a start on Read the Docs documentation.  Added examples, release notes,
+  and NumPy-style docstrings to nc-time-axis classes (:issue:`62`, :pull:`87`).
+  By `Spencer Clark <https://github.com/spencerkclark>`_.
 
 
 v1.3.1 (June 14th, 2021)
@@ -121,11 +126,11 @@ Requirements
 Infrastructure
 ~~~~~~~~~~~~~~
 
-* Run continuous integration tests in both Python 2 and Python 3 (:pull:`33`).
-  By `Filipe Fernandes <https://github.com/ocefpaf>`_.
-* Use ``install_requires`` information to install dependencies of nc-time-axis
-  in continuous integration instead of a requirements file (:issue:`27`,
-  :pull:`28`).  By `Phil Elson <https://github.com/pelson>`_.
+* Updated continuous integration tests to be run with both Python 2 and Python 3
+  (:pull:`33`).  By `Filipe Fernandes <https://github.com/ocefpaf>`_.
+* Updated continuous integration to use ``install_requires`` information to
+  install dependencies of nc-time-axis instead of a requirements file
+  (:issue:`27`, :pull:`28`).  By `Phil Elson <https://github.com/pelson>`_.
 * Added installation and test requirements to ``setup.py`` (:pull:`26`).  By
   `Luke Carroll <https://github.com/LukeC92>`_.
 
@@ -143,8 +148,8 @@ v1.0.2 (March 7th, 2017)
 Requirements
 ~~~~~~~~~~~~
 
-* nc-time-axis requires matplotlib less than version 2.0 (:pull:`22`).  By `Mark
-  Hedley <https://github.com/marqh>`_.
+* nc-time-axis now requires matplotlib less than version 2.0 (:pull:`22`).  By
+  `Mark Hedley <https://github.com/marqh>`_.
 
 Bug fixes
 ~~~~~~~~~
@@ -159,7 +164,7 @@ v1.0.1 (November 23rd, 2016)
 Bug fixes
 ~~~~~~~~~
 
-* Fixed bug the prevented converting NumPy arrays of datetime objects.  This
+* Fixed a bug the prevented converting NumPy arrays of datetime objects.  This
   enables making Hovmoller diagrams using nc-time-axis.  By `Peter Killick
   <https://github.com/DPeterK>`_.
 

@@ -33,6 +33,10 @@ Bug fixes
 * Fixed bug that resulted in the resolution of tick labels being inconsistent 
   with the resolution of tick values (:issue:`48`, :pull:`79`).  By `Spencer
   Clark <https://github.com/spencerkclark>`_.
+* Fixed a bug that prevented users from being able to explicitly set the ticks 
+  along axes using :py:meth:`matplotlib.axes.Axes.set_xticks` or
+  :py:meth:`matplotlib.axes.Axes.set_yticks` (:issue:`41`, :pull:`84`).  By
+  `Spencer Clark <https://github.com/spencerkclark>`_.
 
 
 v1.3.1 (June 14th, 2021)

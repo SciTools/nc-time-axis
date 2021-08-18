@@ -73,3 +73,7 @@ extlinks = {
 }
 
 autosummary_generate = True
+
+html_theme_options = {
+    'navigation_depth': 2,
+}

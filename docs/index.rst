@@ -14,7 +14,7 @@ up of :py:class:`cftime.datetime` dates with any calendar type.
    :maxdepth: 1
 
    installation
-   usage
+   examples
 
 .. toctree::
    :caption: Reference

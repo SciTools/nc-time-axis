@@ -1,9 +1,9 @@
-.. _usage:
+.. _examples:
 
 .. currentmodule:: nc_time_axis
 
-Using nc-time-axis
-==================
+Examples
+========
 
 Basic usage
 -----------

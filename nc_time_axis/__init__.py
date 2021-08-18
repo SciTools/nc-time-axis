@@ -131,7 +131,7 @@ class CFTimeFormatter(mticker.Formatter):
     Parameters
     ----------
     format : str Format string that can be passed to cftime.datetime.strftime,
-        e.g. ``"%Y-%m-%d"``.  See `the Python documentation 
+        e.g. ``"%Y-%m-%d"``.  See `the Python documentation
         <https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes>`_
         for acceptable format codes.
     calendar : str

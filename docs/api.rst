@@ -2,7 +2,7 @@
 
 .. currentmodule:: nc_time_axis
 
-API Reference
+API reference
 =============
 
 This page provides a reference for the API of nc-time-axis.

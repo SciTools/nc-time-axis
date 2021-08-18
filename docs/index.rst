@@ -17,6 +17,7 @@ Contents
 
    installation
    usage
+   release-notes
    api
 
 Indices and tables

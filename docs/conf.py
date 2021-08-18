@@ -30,6 +30,7 @@ author = 'nc-time-axis developers'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
+    "sphinx.ext.extlinks",
     "sphinx.ext.intersphinx",
     'numpydoc',
     "IPython.sphinxext.ipython_directive",
@@ -62,6 +63,12 @@ intersphinx_mapping = {
     "matplotlib": ("https://matplotlib.org/stable", None),
     "numpy": ("https://numpy.org/doc/stable", None),
     "python": ("https://docs.python.org/3/", None),
+}
+
+extlinks = {
+    "discussion": ("https://github.com/SciTools/nc-time-axis/discussions/%s", "GH"),
+    "issue": ("https://github.com/SciTools/nc-time-axis/issues/%s", "GH"),
+    "pull": ("https://github.com/SciTools/nc-time-axis/pull/%s", "PR"),
 }
 
 autosummary_generate = True

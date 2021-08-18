@@ -81,7 +81,7 @@ class AutoCFTimeFormatter(mticker.Formatter):
     locator : NetCDFDateTimeLocator
         The locator to be associated with this formatter.
     calendar : str
-        The calendar type of the axis, e.g. ``"noleap"``.  See
+        The calendar type of the axis, e.g. ``"noleap"``.  See the
         :py:class:`cftime.datetime` documentation for a full list of valid
         calendar strings.
     time_units : str, optional
@@ -135,7 +135,7 @@ class CFTimeFormatter(mticker.Formatter):
         <https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes>`_
         for acceptable format codes.
     calendar : str
-        The calendar type of the axis, e.g. ``"noleap"``.  See
+        The calendar type of the axis, e.g. ``"noleap"``.  See the
         :py:class:`cftime.datetime` documentation for a full list of valid
         calendar strings.
     """
@@ -159,7 +159,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
         The maximum number of ticks along the axis.  This is passed internally
         to a :py:class:`matplotlib.ticker.MaxNLocator` class.
     calendar : str
-        The calendar type of the axis, e.g. ``"noleap"``.  See
+        The calendar type of the axis, e.g. ``"noleap"``.  See the
         :py:class:`cftime.datetime` documentation for a full list of valid
         calendar strings.
     date_unit : str

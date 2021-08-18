@@ -41,7 +41,7 @@ positions and label format you may do so using
 documentation
 <https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes>`_
 for acceptable format codes) and the calendar type of the axis (see
-:py:class:`cftime.datetime` documentation for valid calendar strings).
+the :py:class:`cftime.datetime` documentation for valid calendar strings).
 
 .. ipython:: python
     :okwarning:

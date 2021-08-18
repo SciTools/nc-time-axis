@@ -19,8 +19,22 @@ _TIME_UNITS = "days since 2000-01-01"
 
 class CalendarDateTime:
     """
-    Container for :class:`cftime.datetime` object and calendar.
+    Container for a :py:class:`cftime.datetime` object and calendar.
 
+    Parameters
+    ----------
+    datetime : :py:class:`cftime.datetime`
+        The datetime instance associated with this
+        :py:class:`CalendarDateTime` object.
+    calendar : str
+        The calendar type of the datetime object, e.g. ``"noleap"``.  See
+        :py:class:`cftime.datetime` documentation for a full list of valid
+        calendar strings.
+
+    Notes
+    -----
+    This class is no longer needed and will be deprecated in nc-time-axis
+    version 1.5.
     """
 
     def __init__(self, datetime, calendar):
@@ -56,8 +70,23 @@ _RESOLUTION_TO_FORMAT = {
 
 class AutoCFTimeFormatter(mticker.Formatter):
     """
-    Formatter for cftime.datetime data.
+    Automatic formatter for :py:class:`cftime.datetime` data.
 
+    Automatically chooses a date format based on the resolution set by the
+    :py:class:`NetCDFDateTimeLocator`.  If no resolution is set, a default
+    format of ``"%Y-%m-%d"`` is used.
+
+    Parameters
+    ----------
+    locator : NetCDFDateTimeLocator
+        The locator to be associated with this formatter.
+    calendar : str
+        The calendar type of the axis, e.g. ``"noleap"``.  See the
+        :py:class:`cftime.datetime` documentation for a full list of valid
+        calendar strings.
+    time_units : str, optional
+        The time units the numeric tick values represent.  Note this will
+        be deprecated in nc-time-axis version 1.5.
     """
 
     def __init__(self, locator, calendar, time_units=None):
@@ -96,14 +125,19 @@ class NetCDFTimeDateFormatter(AutoCFTimeFormatter):
 
 class CFTimeFormatter(mticker.Formatter):
     """
-    A formatter for explicitly setting the format of a cftime.datetime axis.
+    A formatter for explicitly setting the format of a
+    :py:class:`cftime.datetime` axis.
 
     Parameters
     ----------
-    format : str
-        Format string that can be passed to cftime.datetime.strftime, e.g. "%Y-%m-%d"
+    format : str Format string that can be passed to cftime.datetime.strftime,
+        e.g. ``"%Y-%m-%d"``.  See `the Python documentation
+        <https://docs.python.org/3/library/datetime.html#strftime-and-strptime-format-codes>`_
+        for acceptable format codes.
     calendar : str
-        Calendar type of the datetime axis
+        The calendar type of the axis, e.g. ``"noleap"``.  See the
+        :py:class:`cftime.datetime` documentation for a full list of valid
+        calendar strings.
     """
 
     def __init__(self, format, calendar):
@@ -117,8 +151,23 @@ class CFTimeFormatter(mticker.Formatter):
 
 class NetCDFTimeDateLocator(mticker.Locator):
     """
-    Determines tick locations when plotting cftime.datetime data.
+    Determines tick locations when plotting :py:class:`cftime.datetime` data.
 
+    Parameters
+    ----------
+    max_n_ticks : int
+        The maximum number of ticks along the axis.  This is passed internally
+        to a :py:class:`matplotlib.ticker.MaxNLocator` class.
+    calendar : str
+        The calendar type of the axis, e.g. ``"noleap"``.  See the
+        :py:class:`cftime.datetime` documentation for a full list of valid
+        calendar strings.
+    date_unit : str
+        The time units the numeric tick values represent.  Note this will
+        be deprecated in nc-time-axis version 1.5.
+    min_n_ticks : int, default 3
+        The minimum number of ticks along the axis. Note this is currently
+        not used.
     """
 
     real_world_calendars = (
@@ -291,7 +340,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
 class NetCDFTimeConverter(mdates.DateConverter):
     """
-    Converter for cftime.datetime data.
+    Converter for :py:class:`cftime.datetime` data.
 
     """
 
@@ -362,7 +411,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
     def convert(cls, value, unit, axis):
         """
         Converts value, if it is not already a number or sequence of numbers,
-        with :func:`cftime.date2num`.
+        with :py:func:`cftime.date2num`.
 
         """
         shape = None

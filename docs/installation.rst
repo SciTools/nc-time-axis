@@ -11,13 +11,6 @@ Minimum requirements
 * `numpy <https://numpy.org/doc/stable>`_
 * `python <https://docs.python.org/3>`_ >= 3.7
 
-Test requirements
------------------
-
-For testing, nc-time-axis also depends on pytest:
-
-* `pytest <https://docs.pytest.org/en/6.2.x>`_ >= 6.0
-
 Installation methods
 --------------------
 

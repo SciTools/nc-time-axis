@@ -172,36 +172,40 @@ Bug fixes
 v1.0.0 (July 1st, 2016)
 -----------------------
 
+This is the initial release of the nc-time-axis package.  It is based on a
+prototype written by `Phil Elson <https://github.com/pelson>`_, which was made
+production-ready by `lbdreyer <https://github.com/lbdreyer>`_.
+
 New features
 ~~~~~~~~~~~~
 
 * Added the fundamental objects of nc-time-axis, i.e.
   :py:class:`NetCDFTimeDateLocator`, :py:class:`NetCDFTimeDateFormatter`, and
-  :py:class:`NetCDFTimeConverter` (:pull:`2`).  By `lbdryer
+  :py:class:`NetCDFTimeConverter` (:pull:`2`).  By `lbdreyer
   <https://github.com/lbdreyer>`_ and `Phil Elson <https://github.com/pelson>`_.
-* Added unit and integration tests (:pull:`3`, :pull:`13`).  By `lbdryer
+* Added unit and integration tests (:pull:`3`, :pull:`13`).  By `lbdreyer
   <https://github.com/lbdreyer>`_.
-* Added a ``__version__`` attribute to nc-time-axis (:pull:`9`).  By `lbdryer
+* Added a ``__version__`` attribute to nc-time-axis (:pull:`9`).  By `lbdreyer
   <https://github.com/lbdreyer>`_.
 * Added the :py:class:`CalendarDateTime` class (:pull:`12`, :pull:`15`).  By
-  `lbdryer <https://github.com/lbdreyer>`_.
+  `lbdreyer <https://github.com/lbdreyer>`_.
 
 Infrastructure
 ~~~~~~~~~~~~~~
 
-* Added initial packaging infrastructure (:pull:`4`).  By `lbdryer
+* Added initial packaging infrastructure (:pull:`4`).  By `lbdreyer
   <https://github.com/lbdreyer>`_.
 * Configured continuous integration to be run using Travis CI (:pull:`6`).  By
-  `lbdryer <https://github.com/lbdreyer>`_.
+  `lbdreyer <https://github.com/lbdreyer>`_.
 * Added test coverage computation and reporting (:pull:`17`, :pull:`19`). By
-  `lbdryer <https://github.com/lbdreyer>`_.
+  `lbdreyer <https://github.com/lbdreyer>`_.
 
 Documentation
 ~~~~~~~~~~~~~
 
 * Added a Travis CI badge to the README and convert to reStructuredText format
-  (:pull:`11`).  By `lbdryer <https://github.com/lbdreyer>`_.
+  (:pull:`11`).  By `lbdreyer <https://github.com/lbdreyer>`_.
 * Added basic description to the README (:pull:`5`).  By `Peter Killick
   <https://github.com/DPeterK>`_.
 * Added contributing guidelines to the repository (:pull:`1`).  By
-  `lbdryer <https://github.com/lbdreyer>`_.
+  `lbdreyer <https://github.com/lbdreyer>`_.

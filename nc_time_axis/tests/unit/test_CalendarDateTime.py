@@ -3,10 +3,12 @@
 import unittest
 
 import cftime
+import pytest
 
 from nc_time_axis import CalendarDateTime
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 class Test___eq__(unittest.TestCase):
     def setUp(self):
         self.cdt = CalendarDateTime(
@@ -32,6 +34,7 @@ class Test___eq__(unittest.TestCase):
         self.assertFalse(self.cdt == "not a CalendarDateTime")
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 class Test__ne__(unittest.TestCase):
     def setUp(self):
         self.cdt = CalendarDateTime(
@@ -55,6 +58,11 @@ class Test__ne__(unittest.TestCase):
 
     def test_diff_type(self):
         self.assertTrue(self.cdt != "not a CalendarDateTime")
+
+
+def test_CalendarDateTime_deprecation_warning():
+    with pytest.warns(DeprecationWarning, match="deprecated"):
+        CalendarDateTime(cftime.datetime(2000, 1, 1), "gregorian")
 
 
 if __name__ == "__main__":

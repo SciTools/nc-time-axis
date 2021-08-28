@@ -38,6 +38,12 @@ class CalendarDateTime:
     """
 
     def __init__(self, datetime, calendar):
+        warnings.warn(
+            "CalendarDateTime is obsolete and will be deprecated in nc_time_axis "
+            "version 1.5.  Please consider switching to plotting instances or "
+            "subclasses of cftime.datetime directly.",
+            DeprecationWarning,
+        )
         self.datetime = datetime
         self.calendar = calendar
 

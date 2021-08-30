@@ -8,6 +8,15 @@ Release notes
 v1.4.0 (unreleased)
 -------------------
 
+Deprecations
+~~~~~~~~~~~~ 
+
+* The :py:class:`CalendarDateTime` class has been deprecated and will be removed
+  in nc-time-axis version 1.5.0. Please switch to plotting instances or
+  subclasses of :py:class:`cftime.datetime` directly (:issue:`62`, :pull:`87`).
+  See the :ref:`examples` for illustration.  By `Spencer Clark
+  <https://github.com/spencerkclark>`_.
+
 New features
 ~~~~~~~~~~~~
 

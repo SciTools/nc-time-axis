@@ -51,8 +51,8 @@ Documentation
 * Added a start on Read the Docs documentation.  Added examples, release notes,
   and NumPy-style docstrings to nc-time-axis classes (:issue:`62`, :pull:`87`).
   By `Spencer Clark <https://github.com/spencerkclark>`_.
-* Added some basic instructions for making a new release.  By `Spencer Clark
-  <https://github.com/spencerkclark>`_.
+* Added some basic instructions for making a new release (:pull:`94`).  By
+`Spencer Clark <https://github.com/spencerkclark>`_.
 
 
 v1.3.1 (June 14th, 2021)

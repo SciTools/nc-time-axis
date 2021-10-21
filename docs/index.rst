@@ -22,3 +22,9 @@ up of :py:class:`cftime.datetime` dates with any calendar type.
 
    release-notes
    api
+
+.. toctree::
+   :caption: Maintenance
+   :maxdepth: 1
+
+   releases

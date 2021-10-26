@@ -5,8 +5,23 @@
 Release notes
 =============
 
-v1.4.0 (unreleased)
+v1.4.1 (unreleased)
 -------------------
+
+Deprecations
+~~~~~~~~~~~~
+
+New features
+~~~~~~~~~~~~
+
+Bug fixes
+~~~~~~~~~
+
+Documentation
+~~~~~~~~~~~~~
+
+v1.4.0 (October 23rd, 2021)
+---------------------------
 
 Deprecations
 ~~~~~~~~~~~~ 

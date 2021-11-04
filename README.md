@@ -10,6 +10,9 @@
   <img src="https://api.cirrus-ci.com/github/SciTools/nc-time-axis.svg?branch=main"
        alt="cirrus-ci">
 </a>
+<a href='https://nc-time-axis.readthedocs.io/en/stable/?badge=stable'>
+    <img src='https://readthedocs.org/projects/nc-time-axis/badge/?version=stable' alt='Documentation Status' />
+</a>
 <a href="https://codecov.io/gh/SciTools/nc-time-axis">
   <img src="https://codecov.io/gh/SciTools/nc-time-axis/branch/main/graph/badge.svg?token=JicwCCHwLd"
        alt="codecov">

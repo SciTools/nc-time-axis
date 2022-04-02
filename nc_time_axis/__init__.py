@@ -2,6 +2,7 @@
 Support for cftime axis in matplotlib.
 
 """
+from numbers import Number
 import warnings
 
 import cftime
@@ -10,6 +11,7 @@ import matplotlib.ticker as mticker
 import matplotlib.transforms as mtransforms
 import matplotlib.units as munits
 import numpy as np
+from numpy import ma
 
 from ._version import version as __version__  # noqa: F401
 
@@ -429,8 +431,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
             value = value.reshape(-1)
             first_value = value[0]
         else:
-            # Don't do anything with numeric types.
-            if munits.ConversionInterface.is_numlike(value):
+            # Don't do anything with numeric types.  This check can be removed once
+            # the minimum version of matplotlib supported is at least 3.5, when
+            # convert is no longer required to support numeric or iterables of numeric
+            # types.  See GitHub issue 97 for more details.
+            if is_numlike(value):
                 return value
             # Not an array but a list of non-numerical types (thus assuming datetime types)
             elif isinstance(value, (list, tuple)):
@@ -468,6 +473,26 @@ class NetCDFTimeConverter(mdates.DateConverter):
             result = result.reshape(shape)
 
         return result
+
+
+def is_numlike(x):
+    """
+    The Matplotlib datalim, autoscaling, locators etc work with scalars
+    which are the units converted to floats given the current unit.  The
+    converter may be passed these floats, or arrays of them, even when
+    units are set.
+
+    Vendored for matplotlib.  This function will not be needed once the
+    minimum version of matplotlib supported by nc-time-axis is at least
+    3.5.  See GitHub issue 97 for more details.
+    """
+    if np.iterable(x):
+        for thisx in x:
+            if thisx is ma.masked:
+                continue
+            return isinstance(thisx, Number)
+    else:
+        return isinstance(x, Number)
 
 
 # Automatically register NetCDFTimeConverter with matplotlib.unit's converter

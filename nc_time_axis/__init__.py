@@ -2,8 +2,8 @@
 Support for cftime axis in matplotlib.
 
 """
-from numbers import Number
 import warnings
+from numbers import Number
 
 import cftime
 import matplotlib.dates as mdates

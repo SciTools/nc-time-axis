@@ -143,11 +143,15 @@ class Test_convert(unittest.TestCase):
         self.assertEqual(result.shape, shape)
 
     def test_numeric(self):
+        # This test can be removed once the minimum version of matplotlib supported
+        # is at least 3.5.  See GitHub issue 97 for more details.
         val = 4
         result = NetCDFTimeConverter().convert(val, None, None)
         np.testing.assert_array_equal(result, val)
 
     def test_numeric_iterable(self):
+        # This test can be removed once the minimum version of matplotlib supported
+        # is at least 3.5.  See GitHub issue 97 for more details.
         val = [12, 18]
         result = NetCDFTimeConverter().convert(val, None, None)
         np.testing.assert_array_equal(result, val)

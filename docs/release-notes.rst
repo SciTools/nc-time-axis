@@ -16,6 +16,14 @@ New features
 
 Bug fixes
 ~~~~~~~~~
+* As of matplotlib version 3.5, unit converters no longer need to support
+  passing numeric or iterables of numeric values to their ``convert`` method.
+  Accordingly, the :py:meth:`matplotlib.units.ConversionInterface.is_numlike`
+  method has been deprecated.  For backwards compatibility with older versions
+  of matplotlib, we have vendored this function for the time being, but will
+  remove it once the minimum version of matplotlib supported by nc-time-axis is
+  at least 3.5 (:issue:`97`, :pull:`106`).  By `Spencer Clark
+  <https://github.com/spencerkclark>`_.
 
 Documentation
 ~~~~~~~~~~~~~

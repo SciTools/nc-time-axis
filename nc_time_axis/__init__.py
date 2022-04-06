@@ -2,7 +2,116 @@
 Support for cftime axis in matplotlib.
 
 """
+
+# nc-time-axis provides datetime locator and formatter objects which are
+# analogous to matplotlib's, but are compatible with cftime.datetime objects
+# rather than standard library datetimes or np.datetime64 values. Because of
+# this correspondence, some code contained in nc-time-axis is adapted from or
+# directly copied from matplotlib.  For reference, we include a copy of
+# matplotlib's license here.
+
+# License agreement for matplotlib versions 1.3.0 and later
+# =========================================================
+
+# 1. This LICENSE AGREEMENT is between the Matplotlib Development Team
+# ("MDT"), and the Individual or Organization ("Licensee") accessing and
+# otherwise using matplotlib software in source or binary form and its
+# associated documentation.
+
+# 2. Subject to the terms and conditions of this License Agreement, MDT
+# hereby grants Licensee a nonexclusive, royalty-free, world-wide license
+# to reproduce, analyze, test, perform and/or display publicly, prepare
+# derivative works, distribute, and otherwise use matplotlib
+# alone or in any derivative version, provided, however, that MDT's
+# License Agreement and MDT's notice of copyright, i.e., "Copyright (c)
+# 2012- Matplotlib Development Team; All Rights Reserved" are retained in
+# matplotlib  alone or in any derivative version prepared by
+# Licensee.
+
+# 3. In the event Licensee prepares a derivative work that is based on or
+# incorporates matplotlib or any part thereof, and wants to
+# make the derivative work available to others as provided herein, then
+# Licensee hereby agrees to include in any such work a brief summary of
+# the changes made to matplotlib .
+
+# 4. MDT is making matplotlib available to Licensee on an "AS
+# IS" basis.  MDT MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+# IMPLIED.  BY WAY OF EXAMPLE, BUT NOT LIMITATION, MDT MAKES NO AND
+# DISCLAIMS ANY REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS
+# FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF MATPLOTLIB
+# WILL NOT INFRINGE ANY THIRD PARTY RIGHTS.
+
+# 5. MDT SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF MATPLOTLIB
+#  FOR ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR
+# LOSS AS A RESULT OF MODIFYING, DISTRIBUTING, OR OTHERWISE USING
+# MATPLOTLIB , OR ANY DERIVATIVE THEREOF, EVEN IF ADVISED OF
+# THE POSSIBILITY THEREOF.
+
+# 6. This License Agreement will automatically terminate upon a material
+# breach of its terms and conditions.
+
+# 7. Nothing in this License Agreement shall be deemed to create any
+# relationship of agency, partnership, or joint venture between MDT and
+# Licensee.  This License Agreement does not grant permission to use MDT
+# trademarks or trade name in a trademark sense to endorse or promote
+# products or services of Licensee, or any third party.
+
+# 8. By copying, installing or otherwise using matplotlib ,
+# Licensee agrees to be bound by the terms and conditions of this License
+# Agreement.
+
+# License agreement for matplotlib versions prior to 1.3.0
+# ========================================================
+
+# 1. This LICENSE AGREEMENT is between John D. Hunter ("JDH"), and the
+# Individual or Organization ("Licensee") accessing and otherwise using
+# matplotlib software in source or binary form and its associated
+# documentation.
+
+# 2. Subject to the terms and conditions of this License Agreement, JDH
+# hereby grants Licensee a nonexclusive, royalty-free, world-wide license
+# to reproduce, analyze, test, perform and/or display publicly, prepare
+# derivative works, distribute, and otherwise use matplotlib
+# alone or in any derivative version, provided, however, that JDH's
+# License Agreement and JDH's notice of copyright, i.e., "Copyright (c)
+# 2002-2011 John D. Hunter; All Rights Reserved" are retained in
+# matplotlib  alone or in any derivative version prepared by
+# Licensee.
+
+# 3. In the event Licensee prepares a derivative work that is based on or
+# incorporates matplotlib  or any part thereof, and wants to
+# make the derivative work available to others as provided herein, then
+# Licensee hereby agrees to include in any such work a brief summary of
+# the changes made to matplotlib.
+
+# 4. JDH is making matplotlib  available to Licensee on an "AS
+# IS" basis.  JDH MAKES NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR
+# IMPLIED.  BY WAY OF EXAMPLE, BUT NOT LIMITATION, JDH MAKES NO AND
+# DISCLAIMS ANY REPRESENTATION OR WARRANTY OF MERCHANTABILITY OR FITNESS
+# FOR ANY PARTICULAR PURPOSE OR THAT THE USE OF MATPLOTLIB
+# WILL NOT INFRINGE ANY THIRD PARTY RIGHTS.
+
+# 5. JDH SHALL NOT BE LIABLE TO LICENSEE OR ANY OTHER USERS OF MATPLOTLIB
+#  FOR ANY INCIDENTAL, SPECIAL, OR CONSEQUENTIAL DAMAGES OR
+# LOSS AS A RESULT OF MODIFYING, DISTRIBUTING, OR OTHERWISE USING
+# MATPLOTLIB , OR ANY DERIVATIVE THEREOF, EVEN IF ADVISED OF
+# THE POSSIBILITY THEREOF.
+
+# 6. This License Agreement will automatically terminate upon a material
+# breach of its terms and conditions.
+
+# 7. Nothing in this License Agreement shall be deemed to create any
+# relationship of agency, partnership, or joint venture between JDH and
+# Licensee.  This License Agreement does not grant permission to use JDH
+# trademarks or trade name in a trademark sense to endorse or promote
+# products or services of Licensee, or any third party.
+
+# 8. By copying, installing or otherwise using matplotlib,
+# Licensee agrees to be bound by the terms and conditions of this License
+# Agreement.
+
 import warnings
+from numbers import Number
 
 import cftime
 import matplotlib.dates as mdates
@@ -10,6 +119,7 @@ import matplotlib.ticker as mticker
 import matplotlib.transforms as mtransforms
 import matplotlib.units as munits
 import numpy as np
+from numpy import ma
 
 from ._version import version as __version__  # noqa: F401
 
@@ -429,8 +539,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
             value = value.reshape(-1)
             first_value = value[0]
         else:
-            # Don't do anything with numeric types.
-            if munits.ConversionInterface.is_numlike(value):
+            # TODO: remove this check once the minimum version of matplotlib
+            # supported is at least 3.5, which corresponds to when convert is no
+            # longer required to support numeric or iterables of numeric types.
+            # See GitHub issue 97 for more details.
+            if is_numlike(value):
                 return value
             # Not an array but a list of non-numerical types (thus assuming datetime types)
             elif isinstance(value, (list, tuple)):
@@ -468,6 +581,26 @@ class NetCDFTimeConverter(mdates.DateConverter):
             result = result.reshape(shape)
 
         return result
+
+
+def is_numlike(x):
+    """
+    The Matplotlib datalim, autoscaling, locators etc work with scalars which
+    are the units converted to floats given the current unit.  The converter may
+    be passed these floats, or arrays of them, even when units are set.
+
+    Vendored from matplotlib.units.ConversionInterface.is_numlike.
+
+    TODO: remove this function once the minimum version of matplotlib supported
+    by nc-time-axis is at least 3.5.  See GitHub issue 97 for more details.
+    """
+    if np.iterable(x):
+        for thisx in x:
+            if thisx is ma.masked:
+                continue
+            return isinstance(thisx, Number)
+    else:
+        return isinstance(x, Number)
 
 
 # Automatically register NetCDFTimeConverter with matplotlib.unit's converter

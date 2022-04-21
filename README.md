@@ -41,8 +41,8 @@
   <img src="https://img.shields.io/github/contributors/SciTools/nc-time-axis?style=plastic"
        alt="contributors">
 </a>
-<a href="https://doi.org/10.5281/zenodo.6472641">
-  <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.6472641.svg"
+<a href="https://doi.org/10.5281/zenodo.6472640">
+  <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.6472640.svg"
        alt="DOI">
 </a>
 </p>

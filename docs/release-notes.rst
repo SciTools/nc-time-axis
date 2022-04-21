@@ -5,14 +5,24 @@
 Release notes
 =============
 
-v1.4.1 (unreleased)
+v1.4.2 (unreleased)
 -------------------
-
-Deprecations
-~~~~~~~~~~~~
 
 New features
 ~~~~~~~~~~~~
+
+Bug fixes
+~~~~~~~~~
+
+v1.4.1 (April 20th, 2022)
+-------------------------
+
+New features
+~~~~~~~~~~~~
+* Starting with this release, every new releasgit re of nc-time-axis will be
+  associated with a Digital Object Identifier (DOI) through Zenodo, making it
+  easier to cite in academic articles (:issue:`104`).  By `Spencer Clark
+  <https://github.com/spencerkclark>`_.
 
 Bug fixes
 ~~~~~~~~~
@@ -25,8 +35,13 @@ Bug fixes
   at least 3.5 (:issue:`97`, :pull:`106`).  By `Spencer Clark
   <https://github.com/spencerkclark>`_.
 
-Documentation
-~~~~~~~~~~~~~
+Infrastructure
+~~~~~~~~~~~~~~
+* Update usage of ``conda-lock`` in continuous integration to continue to create
+  lockfiles that can be used to create mamba environments (:pull:`107`).  By
+  `Spencer Clark <https://github.com/spencerkclark>`_ and `Ruth Comer
+  <https://github.com/rcomer>`_.
+
 
 v1.4.0 (October 23rd, 2021)
 ---------------------------

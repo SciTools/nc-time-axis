@@ -121,7 +121,7 @@ import matplotlib.units as munits
 import numpy as np
 from numpy import ma
 
-# from ._version import version as __version__  # noqa: F401
+from ._version import version as __version__  # noqa: F401
 
 _DEFAULT_RESOLUTION = "DAILY"
 _TIME_UNITS = "days since 2000-01-01"

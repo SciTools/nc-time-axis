@@ -121,7 +121,7 @@ import matplotlib.units as munits
 import numpy as np
 from numpy import ma
 
-from ._version import version as __version__  # noqa: F401
+# from ._version import version as __version__  # noqa: F401
 
 _DEFAULT_RESOLUTION = "DAILY"
 _TIME_UNITS = "days since 2000-01-01"
@@ -452,6 +452,11 @@ class NetCDFTimeDateLocator(mticker.Locator):
         ]:
             ticks = [t for t in ticks if t.year != 0]
         return cftime.date2num(ticks, self.date_unit, calendar=self.calendar)
+
+    def set_params(self, **kwargs):
+        self._max_n_locator_days.set_params(**kwargs)
+        self._max_n_locator.set_params(**kwargs)
+        return
 
 
 class NetCDFTimeConverter(mdates.DateConverter):

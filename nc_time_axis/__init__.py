@@ -453,6 +453,11 @@ class NetCDFTimeDateLocator(mticker.Locator):
             ticks = [t for t in ticks if t.year != 0]
         return cftime.date2num(ticks, self.date_unit, calendar=self.calendar)
 
+    def set_params(self, **kwargs):
+        self._max_n_locator_days.set_params(**kwargs)
+        self._max_n_locator.set_params(**kwargs)
+        return
+
 
 class NetCDFTimeConverter(mdates.DateConverter):
     """

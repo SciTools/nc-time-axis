@@ -454,7 +454,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
         return cftime.date2num(ticks, self.date_unit, calendar=self.calendar)
 
 
-class NetCDFTimeConverter(mdates.DateConverter):
+class NetCDFTimeConverter(munits.ConversionInterface):
     """
     Converter for :py:class:`cftime.datetime` data.
 

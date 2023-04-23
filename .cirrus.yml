@@ -55,11 +55,11 @@ linux_task:
   auto_cancellation: true
   matrix:
     env:
-      PY_VER: "3.7"
-    env:
-      PY_VER: "3.8"
-    env:
       PY_VER: "3.9"
+    env:
+      PY_VER: "3.10"
+    env:
+      PY_VER: "3.11"
       COVERAGE: "codecov"
   name: "${CIRRUS_OS}: py${PY_VER}"
   container:

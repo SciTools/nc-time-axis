@@ -7,13 +7,13 @@ dependencies:
   - python 3.11
 
 # setup dependencies
-  - setuptools
-  - setuptools-scm
+  - setuptools >=61
+  - setuptools-scm >=7
 
 # core dependencies
   - cftime >=1.5
   - matplotlib
-  - numpy
+  - numpy >=1.21
 
 # test dependencies
   - codecov

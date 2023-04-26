@@ -42,7 +42,7 @@ verbose = "False"
 addopts = "-ra -v --doctest-modules"
 doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
 minversion = "6.0"
-testpaths = "nc_time_axis"
+testpaths = ["src/nc_time_axis"]
 
 [tool.setuptools_scm]
 write_to = "src/nc_time_axis/_version.py"

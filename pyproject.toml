@@ -46,6 +46,7 @@ testpaths = ["src/nc_time_axis"]
 
 [tool.setuptools_scm]
 write_to = "src/nc_time_axis/_version.py"
+local_scheme = "dirty-tag"
 
 [tool.check-manifest]
 ignore = [

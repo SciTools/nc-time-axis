@@ -1,5 +1,4 @@
 # Reference:
-#   - https://github.com/actions/cache
 #   - https://github.com/actions/checkout
 #   - https://github.com/actions/download-artifact
 #   - https://github.com/actions/upload-artifact

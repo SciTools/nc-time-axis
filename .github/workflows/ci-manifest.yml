@@ -1,5 +1,5 @@
-# Reference
-#    - https://github.com/actions/checkout
+# Checks the setuptools MANIFEST.in reconciles with the sdist.
+# See the called workflow in the "scitools/workflows" repo for more details.
 
 name: ci-manifest
 

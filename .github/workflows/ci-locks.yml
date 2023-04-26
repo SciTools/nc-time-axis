@@ -1,15 +1,13 @@
-# Updates the environment lock files. See the called workflow in the
-# scitools/workflows repo for more details.
+# Updates the environment conda lock files.
+# See the called workflow in the "scitools/workflows" repo for more details.
 
 name: ci-locks
 
 on:
-  workflow_dispatch:
   schedule:
-    # Run once a week on a Saturday night
-    # N.B. "should" be quoted, according to
-    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#onschedule
     - cron: "3 0 * * 6"
+
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

@@ -45,4 +45,9 @@ minversion = "6.0"
 testpaths = "nc_time_axis"
 
 [tool.setuptools_scm]
-write_to = "nc_time_axis/_version.py"
+write_to = "src/nc_time_axis/_version.py"
+
+[tool.check-manifest]
+ignore = [
+  "src/nc_time_axis/_version.py",
+]

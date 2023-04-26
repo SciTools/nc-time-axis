@@ -9,7 +9,7 @@ Minimum requirements
 * `cftime <https://unidata.github.io/cftime>`_ >= 1.5
 * `matplotlib <https://matplotlib.org/stable>`_
 * `numpy <https://numpy.org/doc/stable>`_
-* `python <https://docs.python.org/3>`_ >= 3.7
+* `python <https://docs.python.org/3>`_ >= 3.9
 
 Installation methods
 --------------------

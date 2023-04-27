@@ -20,35 +20,39 @@
 ## Installation
 Install `nc-time-axis` either with `conda`:
 ```shell
-    conda install -c conda-forge nc-time-axis
+conda install -c conda-forge nc-time-axis
 ```
+
 Or `pip`:
 ```shell
-    pip install nc-time-axis
+pip install nc-time-axis
 ```
 
 
 ## Example
 
-    import random
+```python
+import random
 
-    import cftime
-    import matplotlib.pyplot as plt
-    import nc_time_axis
+import cftime
+import matplotlib.pyplot as plt
+import nc_time_axis
 
-    calendar = "360_day"
-    dt = [
-        cftime.datetime(year=2017, month=2, day=day, calendar=calendar)
-        for day in range(1, 31)
-    ]
-    temperatures = [round(random.uniform(0, 12), 3) for _ in range(len(dt))]
 
-    plt.plot(dt, temperatures)
-    plt.margins(0.1)
-    plt.ylim(0, 12)
-    plt.xlabel("Date")
-    plt.ylabel("Temperature")
-    plt.show()
+calendar = "360_day"
+dt = [
+    cftime.datetime(year=2017, month=2, day=day, calendar=calendar)
+    for day in range(1, 31)
+]
+temperatures = [round(random.uniform(0, 12), 3) for _ in range(len(dt))]
+
+plt.plot(dt, temperatures)
+plt.margins(0.1)
+plt.ylim(0, 12)
+plt.xlabel("Date")
+plt.ylabel("Temperature")
+plt.show()
+```
 
 ![alt text](https://github.com/SciTools/nc-time-axis/raw/main/example_plot.png "Example plot with cftime axis")
 

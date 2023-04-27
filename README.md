@@ -1,58 +1,20 @@
 # nc-time-axis
 
 <h4 align="center">
-    Support for a cftime axis in matplotlib
+    Support for a <a href="https://github.com/Unidata/cftime">cftime</a> axis in matplotlib
 </h4>
 
-<p align="center">
 
-<a href="https://cirrus-ci.com/github/SciTools-/nc-time-axis">
-  <img src="https://api.cirrus-ci.com/github/SciTools/nc-time-axis.svg?branch=main"
-       alt="cirrus-ci">
-</a>
-
-
-
-
-
-
-
-<a href='https://nc-time-axis.readthedocs.io/en/stable/?badge=stable'>
-    <img src='https://readthedocs.org/projects/nc-time-axis/badge/?version=stable' alt='Documentation Status' />
-</a>
-<a href="https://codecov.io/gh/SciTools/nc-time-axis">
-  <img src="https://codecov.io/gh/SciTools/nc-time-axis/branch/main/graph/badge.svg?token=JicwCCHwLd"
-       alt="codecov">
-</a>
-<a href="https://results.pre-commit.ci/latest/github/SciTools/nc-time-axis/main">
-  <img src="https://results.pre-commit.ci/badge/github/SciTools/nc-time-axis/main.svg"
-       alt="pre-commit.ci">
-</a>
-<a href="https://anaconda.org/conda-forge/nc-time-axis">
-  <img src="https://img.shields.io/conda/vn/conda-forge/nc-time-axis?color=orange&label=conda-forge&logo=conda-forge&logoColor=white"
-       alt="conda-forge">
-</a>
-<a href="https://pypi.org/project/nc-time-axis/">
-  <img src="https://img.shields.io/pypi/v/nc-time-axis?color=orange&label=pypi&logo=python&logoColor=white"
-       alt="pypi">
-</a>
-<a href="https://github.com/psf/black">
-  <img src="https://img.shields.io/badge/code%20style-black-000000.svg"
-       alt="black">
-</a>
-<a href="https://github.com/SciTools/nc-time-axis/blob/main/LICENSE">
-  <img src="https://img.shields.io/github/license/SciTools/nc-time-axis?style=plastic"
-       alt="license">
-</a>
-<a href="https://github.com/SciTools/nc-time-axis/graphs/contributors">
-  <img src="https://img.shields.io/github/contributors/SciTools/nc-time-axis?style=plastic"
-       alt="contributors">
-</a>
-<a href="https://doi.org/10.5281/zenodo.6472640">
-  <img src="https://zenodo.org/badge/DOI/10.5281/zenodo.6472640.svg"
-       alt="DOI">
-</a>
-</p>
+|                  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ⚙️ CI            | [![ci-citation](https://github.com/SciTools/nc-time-axis/actions/workflows/ci-citation.yml/badge.svg)](https://github.com/SciTools/nc-time-axis/actions/workflows/ci-citation.yml) [![ci-locks](https://github.com/SciTools/nc-time-axis/actions/workflows/ci-locks.yml/badge.svg)](https://github.com/SciTools/nc-time-axis/actions/workflows/ci-locks.yml) [![ci-manifest](https://github.com/SciTools/nc-time-axis/actions/workflows/ci-manifest.yml/badge.svg)](https://github.com/SciTools/nc-time-axis/actions/workflows/ci-manifest.yml) [![ci-wheels](https://github.com/SciTools/nc-time-axis/actions/workflows/ci-wheels.yml/badge.svg)](https://github.com/SciTools/nc-time-axis/actions/workflows/ci-wheels.yml) [![pre-commit.ci status](https://results.pre-commit.ci/badge/github/SciTools/nc-time-axis/main.svg)](https://results.pre-commit.ci/latest/github/SciTools/nc-time-axis/main) |
+| 💬 Community     | [![GH Discussions](https://img.shields.io/badge/github-discussions%20%F0%9F%92%AC-yellow?logo=github&logoColor=lightgrey)](https://github.com/SciTools/nc-time-axis/discussions)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| 📖 Documentation | [![RTD Status](https://readthedocs.org/projects/nc-time-axis/badge/?version=stable)](https://nc-time-axis.readthedocs.io/en/stable/?badge=stable)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| 📈 Health        | [![codecov](https://codecov.io/gh/SciTools/nc-time-axis/branch/master/graph/badge.svg?token=JicwCCHwLd)](https://codecov.io/gh/SciTools/nc-time-axis)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| ✨ Meta           | [![code style - black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) [![license - bds-3-clause](https://img.shields.io/github/license/SciTools/nc-time-axis)](https://github.com/SciTools/nc-time-axis/blob/main/LICENSE)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| 📦 Package       | [![conda-forge](https://img.shields.io/conda/vn/conda-forge/nc-time-axis?color=orange&label=conda-forge&logo=conda-forge&logoColor=white)](https://anaconda.org/conda-forge/nc-time-axis) [![pypi](https://img.shields.io/pypi/v/nc-time-axis?color=orange&label=pypi&logo=python&logoColor=white)](https://pypi.org/project/nc-time-axis/) [![pypi - python version](https://img.shields.io/pypi/pyversions/nc-time-axis.svg?color=orange&logo=python&label=python&logoColor=white)](https://pypi.org/project/nc-time-axis/) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6472640.svg)](https://doi.org/10.5281/zenodo.6472640)                                                                                                                                                                                                                                                                   |
+| 🧰 Repo          | [![contributors](https://img.shields.io/github/contributors/SciTools/nc-time-axis)](https://github.com/SciTools/nc-time-axis/graphs/contributors)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+|                  |
 
 
 ## Installation

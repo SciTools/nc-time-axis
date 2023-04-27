@@ -1,8 +1,8 @@
 # nc-time-axis
 
-<h4 align="center">
-    Support for a <a href="https://github.com/Unidata/cftime">cftime</a> axis in matplotlib
-</h4>
+<h3 align="center">
+    Support for a <a href="https://github.com/Unidata/cftime">cftime</a> axis in <a href="http://matplotlib.org/">matplotlib</a>
+</h3>
 
 
 |                  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -51,11 +51,6 @@ Or `pip`:
     plt.show()
 
 ![alt text](https://github.com/SciTools/nc-time-axis/raw/main/example_plot.png "Example plot with cftime axis")
-
-
-## Reference
-* [cftime](https://github.com/Unidata/cftime) - Time-handling functionality from netcdf4-python.
-* [matplotlib](http://matplotlib.org/) - Plotting with Python.
 
 
 ## License

@@ -11,8 +11,6 @@ name: ci-wheels
 
 on:
   pull_request:
-    branches:
-      - "*"
 
   push:
     branches:

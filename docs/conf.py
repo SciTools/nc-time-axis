@@ -19,8 +19,8 @@ import datetime
 
 project = "nc-time-axis"
 year = datetime.datetime.today().year
-copyright = f"2016-{year}, nc-time-axis developers"
-author = "nc-time-axis developers"
+author = f"{project} contributors"
+copyright = f"2016-{year}, {author}"
 
 
 # -- General configuration ---------------------------------------------------

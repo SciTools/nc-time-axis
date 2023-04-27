@@ -1,0 +1,13 @@
+name: ci-test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  dummy:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "output"
+        run: |
+          echo "hello gha world!"

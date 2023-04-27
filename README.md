@@ -1,8 +1,8 @@
 # nc-time-axis
 
-<h3 align="center">
+<h4 align="center">
     Support for a <a href="https://github.com/Unidata/cftime">cftime</a> axis in <a href="http://matplotlib.org/">matplotlib</a>
-</h3>
+</h4>
 
 
 |                  |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |

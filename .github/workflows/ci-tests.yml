@@ -52,23 +52,23 @@ jobs:
             codecov: "codecov"
 
     steps:
-    - uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-    - name: "mambaforge setup (python ${{ matrix.python-version }})"
-      uses: conda-incubator/setup-miniconda@v2
-      with:
-        miniforge-variant: Mambaforge
-        miniforge-version: latest
-        channels: conda-forge,defaults
-        channel-priority: true
-        auto-update-conda: true
-        environment-file: "requirements/locks/py${{ matrix.python-version }}-linux-64.lock"
-        activate-environment: ${{ env.ENV_NAME }}
+      - name: "mambaforge setup (python ${{ matrix.python-version }})"
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          miniforge-variant: Mambaforge
+          miniforge-version: latest
+          channels: conda-forge,defaults
+          channel-priority: true
+          auto-update-conda: true
+          environment-file: "requirements/locks/py${{ matrix.python-version }}-linux-64.lock"
+          activate-environment: ${{ env.ENV_NAME }}
 
-    - name: "tests (py${{ matrix.python-version }})"
-      run: |
-        python -m pip install --no-deps --editable .
-        pytest ${{ matrix.cov-report }}
-        ${{ matrix.codecov }}
+      - name: "tests (py${{ matrix.python-version }})"
+        run: |
+          python -m pip install --no-deps --editable .
+          pytest ${{ matrix.cov-report }}
+          ${{ matrix.codecov }}

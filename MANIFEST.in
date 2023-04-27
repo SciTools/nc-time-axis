@@ -7,5 +7,6 @@ exclude .flake8
 exclude .gitattributes
 exclude .pre-commit-config.yaml
 exclude .readthedocs.yml
+include CITATION.cff
 exclude CONTRIBUTING.md
 include example_plot.png

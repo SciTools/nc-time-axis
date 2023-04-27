@@ -10,6 +10,13 @@
   <img src="https://api.cirrus-ci.com/github/SciTools/nc-time-axis.svg?branch=main"
        alt="cirrus-ci">
 </a>
+
+
+
+
+
+
+
 <a href='https://nc-time-axis.readthedocs.io/en/stable/?badge=stable'>
     <img src='https://readthedocs.org/projects/nc-time-axis/badge/?version=stable' alt='Documentation Status' />
 </a>
@@ -87,3 +94,8 @@ Or `pip`:
 ## Reference
 * [cftime](https://github.com/Unidata/cftime) - Time-handling functionality from netcdf4-python.
 * [matplotlib](http://matplotlib.org/) - Plotting with Python.
+
+
+## License
+
+`nc-time-axis` is distributed under the terms of the [BSD-3-Clause](https://spdx.org/licenses/BSD-3-Clause.html) license.

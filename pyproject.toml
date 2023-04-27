@@ -90,3 +90,6 @@ local_scheme = "dirty-tag"
 ignore = [
   "src/nc_time_axis/_version.py",
 ]
+
+[tool.codespell]
+skip = ".git"

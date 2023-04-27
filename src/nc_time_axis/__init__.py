@@ -368,7 +368,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
             return result
 
         if resolution == "YEARLY":
-            # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
+            # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENNIUM as
             # appropriate.
 
             years = self._max_n_locator.tick_values(lower.year, upper.year)
@@ -383,7 +383,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
                 for year in years
             ]
         elif resolution == "MONTHLY":
-            # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENIUM as
+            # TODO START AT THE BEGINNING OF A DECADE/CENTURY/MILLENNIUM as
             # appropriate.
             months_offset = self._max_n_locator.tick_values(0, n)
             ticks = []
@@ -442,7 +442,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
         else:
             emsg = f"Resolution {resolution} not implemented yet."
             raise ValueError(emsg)
-        # Some calenders do not allow a year 0.
+        # Some calendars do not allow a year 0.
         # Remove ticks to avoid raising an error.
         if self.calendar in [
             "proleptic_gregorian",
@@ -498,7 +498,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
 
         """
         if hasattr(sample_point, "__iter__"):
-            # Deal with nD `sample_point` arrays.
+            # Deal with n-D `sample_point` arrays.
             if isinstance(sample_point, np.ndarray):
                 sample_point = sample_point.reshape(-1)
             calendars = np.array([point.calendar for point in sample_point])

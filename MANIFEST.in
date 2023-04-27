@@ -8,5 +8,6 @@ exclude .gitattributes
 exclude .pre-commit-config.yaml
 exclude .readthedocs.yml
 include CITATION.cff
+exclude codecov.yml
 exclude CONTRIBUTING.md
 include example_plot.png

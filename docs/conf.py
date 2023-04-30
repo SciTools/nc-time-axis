@@ -69,10 +69,10 @@ intersphinx_mapping = {
 extlinks = {
     "discussion": (
         "https://github.com/SciTools/nc-time-axis/discussions/%s",
-        "GH",
+        "GH #%s",
     ),
-    "issue": ("https://github.com/SciTools/nc-time-axis/issues/%s", "GH"),
-    "pull": ("https://github.com/SciTools/nc-time-axis/pull/%s", "PR"),
+    "issue": ("https://github.com/SciTools/nc-time-axis/issues/%s", "GH #%s"),
+    "pull": ("https://github.com/SciTools/nc-time-axis/pull/%s", "PR #%s"),
 }
 
 autosummary_generate = True

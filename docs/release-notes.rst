@@ -30,7 +30,7 @@ Infrastructure
 ~~~~~~~~~~~~~~
 * Migrated from `cirrus-ci`_ to GitHub Actions (:pull:`129`).
   By `Bill Little`_.
-* Enabled `dependabot`_ to automatically update the versions of all third-part
+* Enabled `dependabot`_ to automatically update the versions of all third-party
   GitHub Actions (:pull:`129`).
   By `Bill Little`_.
 * Enabled the `codespell`_ pre-commit hook to automate spell checking of the codebase

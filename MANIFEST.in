@@ -1,4 +1,13 @@
-include LICENSE
-
-recursive-include nc_time_axis/tests *.py
-graft requirements
+prune .github
+prune docs
+prune requirements
+recursive-include requirements *.txt
+recursive-include src *.py
+exclude .flake8
+exclude .gitattributes
+exclude .pre-commit-config.yaml
+exclude .readthedocs.yml
+include CITATION.cff
+exclude codecov.yml
+exclude CONTRIBUTING.md
+include example_plot.png

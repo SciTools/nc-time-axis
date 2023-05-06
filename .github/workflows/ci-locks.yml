@@ -1,0 +1,19 @@
+# Updates the environment conda lock files.
+# See the called workflow in the "scitools/workflows" repo for more details.
+
+name: ci-locks
+
+on:
+  schedule:
+    - cron: "3 0 * * 6"
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  refresh_lockfiles:
+    uses: scitools/workflows/.github/workflows/refresh-lockfiles.yml@2023.04.3
+    secrets: inherit

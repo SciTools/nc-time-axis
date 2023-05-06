@@ -1,3 +1,4 @@
+.. include:: common_links.inc
 .. _examples:
 
 .. currentmodule:: nc_time_axis
@@ -5,13 +6,12 @@
 Examples
 ========
 
-Basic usage
+Basic Usage
 -----------
 
-nc-time-axis works by adding converters to matplotlib's flexible `units registry
-<https://matplotlib.org/stable/api/units_api.html>`_.  To register its
-converters, simply import nc-time-axis.  Then you will be able to make plots
-with :py:class:`cftime.datetime` axes.
+``nc-time-axis`` works by adding converters to the flexible `units registry`_ of
+`matplotlib`_.  To register its converters, simply ``import nc_time_axis``.  Then you
+will be able to make plots with :py:class:`cftime.datetime` axes.
 
 .. ipython:: python
     :okwarning:
@@ -30,11 +30,11 @@ with :py:class:`cftime.datetime` axes.
     @savefig basic.png
     fig.show()
 
-Setting the axes ticks and tick format
+Setting the Axes Ticks and Tick Format
 --------------------------------------
 
 In the first example, the ticks and tick label formats were chosen automatically
-using heuristics in nc-time-axis.  If you would like to explicitly set the tick
+using heuristics in ``nc-time-axis``.  If you would like to explicitly set the tick
 positions and label format you may do so using
 :py:meth:`matplotlib.axes.Axes.set_xticks` and :py:class:`CFTimeFormatter`.  The
 :py:class:`CFTimeFormatter` takes in a date format string (see `the Python

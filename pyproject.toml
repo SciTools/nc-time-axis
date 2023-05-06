@@ -1,35 +1,73 @@
 [build-system]
 # Defined by PEP 518
 requires = [
-  "setuptools>=42",
-  "setuptools_scm[toml]>=6.0",
+  "setuptools>=61",
+  "setuptools_scm[toml]>=7",
   "wheel",
 ]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
 
+# Defined by PEP 621
+[project]
+authors = [
+  {name = "NCTA Contributors", email = "scitools.pub@gmail.com"}
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+]
+description = "Provides support for a cftime axis in matplotlib"
+dynamic = [
+  "dependencies",
+  "optional-dependencies",
+  "readme",
+  "version",
+]
+keywords = [
+  "axis",
+  "cftime",
+  "matplotlib",
+]
+license = {text = "BSD-3-Clause"}
+name = "nc-time-axis"
+requires-python = ">=3.9"
+
+[project.urls]
+Code = "https://github.com/SciTools/nc-time-axis"
+Discussions = "https://github.com/SciTools/nc-time-axis/discussions"
+Issues = "https://github.com/SciTools/nc-time-axis/issues"
+
+[tool.setuptools]
+license-files = ["LICENSE"]
+zip-safe = false
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements/pypi-core.txt"}
+readme = {file = "README.md", content-type = "text/markdown"}
+
+[tool.setuptools.dynamic.optional-dependencies]
+docs = {file = "requirements/pypi-optional-docs.txt"}
+test = {file = "requirements/pypi-optional-test.txt"}
+
+[tool.setuptools.packages.find]
+include = ["nc_time_axis*"]
+where = ["src"]
+
 [tool.black]
 line-length = 79
 target-version = ['py39', 'py310', 'py311']
 include = '\.pyi?$'
-exclude = '''
-
-(
-  /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-    | docs
-  )/
-)
-'''
 
 [tool.isort]
 known_first_party = "nc_time_axis"
@@ -42,7 +80,16 @@ verbose = "False"
 addopts = "-ra -v --doctest-modules"
 doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
 minversion = "6.0"
-testpaths = "nc_time_axis"
+testpaths = ["src/nc_time_axis"]
 
 [tool.setuptools_scm]
-write_to = "nc_time_axis/_version.py"
+write_to = "src/nc_time_axis/_version.py"
+local_scheme = "dirty-tag"
+
+[tool.check-manifest]
+ignore = [
+  "src/nc_time_axis/_version.py",
+]
+
+[tool.codespell]
+skip = ".git"

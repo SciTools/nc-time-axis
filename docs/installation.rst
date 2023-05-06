@@ -1,23 +1,24 @@
+.. include:: common_links.inc
 .. _installation:
 
 Installation
 ============
 
-Minimum requirements
+Minimum Requirements
 --------------------
 
-* `cftime <https://unidata.github.io/cftime>`_ >= 1.5
-* `matplotlib <https://matplotlib.org/stable>`_
-* `numpy <https://numpy.org/doc/stable>`_
-* `python <https://docs.python.org/3>`_ >= 3.9
+* `cftime`_ >= 1.5
+* `matplotlib`_
+* `numpy`_ >= 1.21
+* `python`_ >= 3.9
 
-Installation methods
+Installation Methods
 --------------------
 
-nc-time-axis can be installed through `conda <https://docs.conda.io/projects/conda/en/latest/index.html>`_::
+``nc-time-axis`` can be installed through `conda`_::
 
     conda install -c conda-forge nc-time-axis
 
-or through `pip <https://pip.pypa.io/en/stable>`_::
+or through `pip`_::
 
     pip install nc-time-axis

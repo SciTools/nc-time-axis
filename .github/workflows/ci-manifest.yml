@@ -1,0 +1,28 @@
+# Checks the setuptools MANIFEST.in reconciles with the sdist.
+# See the called workflow in the "scitools/workflows" repo for more details.
+
+name: ci-manifest
+
+on:
+  pull_request:
+
+  push:
+    branches:
+      - "main"
+      - "v*x"
+      - "!auto-update-lockfiles"
+      - "!pre-commit-ci-update-config"
+      - "!dependabot/*"
+    tags:
+      - "v*"
+
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  manifest:
+    name: "check-manifest"
+    uses: scitools/workflows/.github/workflows/ci-manifest.yml@2023.04.3

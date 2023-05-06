@@ -1,6 +1,6 @@
 .. _releases:
 
-Making a new release
+Making a New Release
 ====================
 
 When making a new release of ``nc-time-axis``, it is best to follow these steps.
@@ -19,9 +19,11 @@ Note these are a trimmed-down version of the `release steps for the Iris package
 3. `Create a new tag in the GitHub
    <https://github.com/SciTools/nc-time-axis/releases/new>`_ repository for the
    new release.  This should have the same name as the release branch.
-4. Upload the release to `PyPI <https://pypi.org>`_.  A nice set of instructions
-   for this can be found in the `Iris documentation
-   <https://scitools-iris.readthedocs.io/en/stable/developers_guide/release.html#update-pypi>`_.
+4. Building, testing and publishing the ``sdist`` and binary ``wheel`` to
+   `PyPI <https://pypi.org>`_ is performed automatically when the release is
+   tagged.  Check the ``nc-time-axis``
+   `GitHub Actions <https://github.com/SciTools/nc-time-axis/actions/workflows/ci-wheels.yml>`_
+   to ensure this has completed successfully.
 5. Uploading the release to PyPI should trigger an automatic pull request to the
    `conda-forge/nc_time_axis-feedstock
    <https://github.com/conda-forge/nc_time_axis-feedstock>`_ repository.  Review

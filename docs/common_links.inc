@@ -11,6 +11,7 @@
 .. _NEP29: https://numpy.org/neps/nep-0029-deprecation_policy.html
 .. _netcdf4-python: https://github.com/Unidata/netcdf4-python
 .. _numpy: https://numpy.org/doc/stable
+.. _ORCID: https://orcid.org/
 .. _PEP621: https://peps.python.org/pep-0621/
 .. _pip: https://pip.pypa.io/en/stable
 .. _pre-commit: https://pre-commit.com/

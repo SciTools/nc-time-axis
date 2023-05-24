@@ -20,7 +20,8 @@ New Features
 ~~~~~~~~~~~~
 * ``nc-time-axis`` is now easily citable thanks to the addition of its ``CITATION.cff``
   file (:pull:`129`).  Updates to the ``CITATION.cff`` are automatically validated
-  by the new ``ci-citation`` GitHub Action.  By `Bill Little`_.
+  by the new ``ci-citation`` GitHub Action.
+  By `Bill Little`_.
 
 Bug fixes
 ~~~~~~~~~
@@ -52,6 +53,11 @@ Infrastructure
   GitHub Action (:pull:`129`).
   By `Bill Little`_.
 
+Documentation
+~~~~~~~~~~~~~
+* Populated the ``CITATION.cff`` with `ORCID`_ details of ``nc-time-axis`` contributors
+  (:issue:`135`, :pull:`136`).
+  By `Bill Little`_.
 
 
 v1.4.1 (April 20th, 2022)

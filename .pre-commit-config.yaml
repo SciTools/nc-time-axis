@@ -48,7 +48,7 @@ repos:
         args: ["--profile", "black", "--filter-files"]
 
 -   repo: https://github.com/codespell-project/codespell
-    rev: 'v2.2.4'
+    rev: 'v2.2.5'
     hooks:
     -   id: codespell
         types_or: [python, markdown, rst]

@@ -78,6 +78,16 @@ class Test(unittest.TestCase):
 
         plt.fill_between(cdt, temperatures, 0)
 
+    def test_locator_params(self):
+        times = cftime.num2date(
+            np.arange(30), nc_time_axis._TIME_UNITS, calendar="360_day"
+        )
+        plt.plot(times, np.arange(30))
+        plt.locator_params(axis="x", min_n_ticks=15)
+        plt.draw()
+        ticks = plt.xticks()[0]
+        self.assertFalse(ticks.size < 15)
+
 
 def setup_function(function):
     plt.close()

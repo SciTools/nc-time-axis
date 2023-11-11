@@ -50,7 +50,7 @@ https://conda.anaconda.org/conda-forge/linux-64/libvorbis-1.3.7-h9c3ff4c_0.tar.b
 https://conda.anaconda.org/conda-forge/linux-64/libxcb-1.13-h7f98852_1004.tar.bz2#b3653fdc58d03face9724f602218a904
 https://conda.anaconda.org/conda-forge/linux-64/mysql-common-8.0.32-h14678bc_0.conda#25af35815c0cdf5a80afc04a2fb67407
 https://conda.anaconda.org/conda-forge/linux-64/readline-8.2-h8228510_1.conda#47d31b792659ce70f470b5c82fdfb7a4
-https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-h2797004_0.conda#513336054f884f95d9fd925748f41ef3
+https://conda.anaconda.org/conda-forge/linux-64/tk-8.6.13-noxft_h4845f30_101.conda#d453b98d9c83e71da0741bb0ff4d76bc
 https://conda.anaconda.org/conda-forge/linux-64/zlib-1.2.13-hd590300_5.conda#68c34ec6149623be41a1933ab996a209
 https://conda.anaconda.org/conda-forge/linux-64/zstd-1.5.5-hfc55251_0.conda#04b88013080254850d6c01ed54810589
 https://conda.anaconda.org/conda-forge/linux-64/brotli-bin-1.1.0-hd590300_1.conda#39f910d205726805a958da408ca194ba
@@ -112,7 +112,7 @@ https://conda.anaconda.org/conda-forge/linux-64/cffi-1.14.6-py39he32792d_0.tar.b
 https://conda.anaconda.org/conda-forge/linux-64/coverage-7.3.2-py39hd1e30aa_0.conda#247a02e7fdc7049c6d1babdb7bca4aaa
 https://conda.anaconda.org/conda-forge/linux-64/dbus-1.13.6-h48d8840_2.tar.bz2#eba672c69baf366fdedd1c6f702dbb81
 https://conda.anaconda.org/conda-forge/linux-64/fonttools-4.44.0-py39hd1e30aa_0.conda#bbfd1e3ef6f66b07e025fe872e854b0d
-https://conda.anaconda.org/conda-forge/noarch/importlib_resources-6.1.0-pyhd8ed1ab_0.conda#48b0d98e0c0ec810d3ccc2a0926c8c0e
+https://conda.anaconda.org/conda-forge/noarch/importlib_resources-6.1.1-pyhd8ed1ab_0.conda#3d5fa25cf42f3f32a12b2d874ace8574
 https://conda.anaconda.org/conda-forge/noarch/nodeenv-1.8.0-pyhd8ed1ab_0.conda#2a75b296096adabbabadd5e9782e5fcc
 https://conda.anaconda.org/conda-forge/linux-64/numpy-1.26.0-py39h474f0d3_0.conda#62f1d2e05327bf62728afa448f2a9261
 https://conda.anaconda.org/conda-forge/noarch/pip-23.3.1-pyhd8ed1ab_0.conda#2400c0b86889f43aa52067161e1fb108
@@ -122,7 +122,7 @@ https://conda.anaconda.org/conda-forge/noarch/typing-extensions-4.8.0-hd8ed1ab_0
 https://conda.anaconda.org/conda-forge/noarch/urllib3-2.0.7-pyhd8ed1ab_0.conda#270e71c14d37074b1d066ee21cf0c4a6
 https://conda.anaconda.org/conda-forge/linux-64/cftime-1.6.3-py39h44dd56e_0.conda#baea2f5dfb3ab7b1c836385d2e1daca7
 https://conda.anaconda.org/conda-forge/linux-64/contourpy-1.2.0-py39h7633fee_0.conda#ed71ad3e30eb03da363fb797419cce98
-https://conda.anaconda.org/conda-forge/noarch/importlib-resources-6.1.0-pyhd8ed1ab_0.conda#6a62c2cc25376a0d050b3d1d221c3ee9
+https://conda.anaconda.org/conda-forge/noarch/importlib-resources-6.1.1-pyhd8ed1ab_0.conda#d04bd1b5bed9177dd7c3cef15e2b6710
 https://conda.anaconda.org/conda-forge/noarch/platformdirs-3.11.0-pyhd8ed1ab_0.conda#8f567c0a74aa44cf732f15773b4083b0
 https://conda.anaconda.org/conda-forge/noarch/pytest-cov-4.1.0-pyhd8ed1ab_0.conda#06eb685a3a0b146347a58dda979485da
 https://conda.anaconda.org/conda-forge/linux-64/qt-5.12.9-hda022c4_4.tar.bz2#afebab1f5049d66baaaec67d9ce893f0

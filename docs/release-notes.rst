@@ -15,6 +15,8 @@ Requirements
   By `Ruth Comer`_.
 * ``nc-time-axis`` now requires ``numpy >= 1.21`` according to `NEP29`_ (:pull:`129`).
   By `Bill Little`_.
+* ``nc-time-axis`` now requires ``numpy >= 1.23`` according to `NEP29`_ (:pull:`194`).
+  By `Bill Little`_.
 
 New Features
 ~~~~~~~~~~~~

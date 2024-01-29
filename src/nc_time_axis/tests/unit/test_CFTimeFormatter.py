@@ -1,4 +1,5 @@
 """Unit tests for the `nc_time_axis.CFTimeFormatter` class."""
+
 import pytest
 
 from nc_time_axis import CFTimeFormatter

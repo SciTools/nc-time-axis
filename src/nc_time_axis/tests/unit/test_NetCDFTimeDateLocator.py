@@ -1,6 +1,5 @@
 """Unit tests for the `nc-time-axis.NetCDFTimeDateLocator` class."""
 
-
 import unittest
 
 import cftime

@@ -58,7 +58,7 @@ https://conda.anaconda.org/conda-forge/noarch/exceptiongroup-1.2.2-pyhd8ed1ab_0.
 https://conda.anaconda.org/conda-forge/noarch/filelock-3.15.4-pyhd8ed1ab_0.conda#0e7e4388e9d5283e22b35a9443bdbcc9
 https://conda.anaconda.org/conda-forge/noarch/hpack-4.0.0-pyh9f0ad1d_0.tar.bz2#914d6646c4dbb1fd3ff539830a12fd71
 https://conda.anaconda.org/conda-forge/noarch/hyperframe-6.0.1-pyhd8ed1ab_0.tar.bz2#9f765cbfab6870c8435b9eefecd7a1f4
-https://conda.anaconda.org/conda-forge/noarch/idna-3.7-pyhd8ed1ab_0.conda#c0cc1420498b17414d8617d0b9f506ca
+https://conda.anaconda.org/conda-forge/noarch/idna-3.8-pyhd8ed1ab_0.conda#99e164522f6bdf23c177c8d9ae63f975
 https://conda.anaconda.org/conda-forge/noarch/iniconfig-2.0.0-pyhd8ed1ab_0.conda#f800d2da156d08e289b14e87e43c1ae5
 https://conda.anaconda.org/conda-forge/linux-64/kiwisolver-1.4.5-py39h7633fee_1.conda#c9f74d717e5a2847a9f8b779c54130f2
 https://conda.anaconda.org/conda-forge/linux-64/libcblas-3.9.0-23_linux64_openblas.conda#eede29b40efa878cbe5bdcb767e97310
@@ -72,7 +72,7 @@ https://conda.anaconda.org/conda-forge/noarch/pycparser-2.22-pyhd8ed1ab_0.conda#
 https://conda.anaconda.org/conda-forge/noarch/pyparsing-3.1.2-pyhd8ed1ab_0.conda#b9a4dacf97241704529131a0dfc0494f
 https://conda.anaconda.org/conda-forge/noarch/pysocks-1.7.1-pyha2e5f31_6.tar.bz2#2a7de29fb590ca14b5243c4c812c8025
 https://conda.anaconda.org/conda-forge/linux-64/pyyaml-6.0.2-py39hcd6043d_0.conda#40f1dd93ac87fff4b776d6fb8033ddb9
-https://conda.anaconda.org/conda-forge/noarch/setuptools-72.1.0-pyhd8ed1ab_0.conda#e06d4c26df4f958a8d38696f2c344d15
+https://conda.anaconda.org/conda-forge/noarch/setuptools-72.2.0-pyhd8ed1ab_0.conda#1462aa8b243aad09ef5d0841c745eb89
 https://conda.anaconda.org/conda-forge/noarch/six-1.16.0-pyh6c4a22f_0.tar.bz2#e5f25f8dbc060e9a8d912e432202afc2
 https://conda.anaconda.org/conda-forge/noarch/toml-0.10.2-pyhd8ed1ab_0.tar.bz2#f832c45a477c78bebd107098db465095
 https://conda.anaconda.org/conda-forge/noarch/tomli-2.0.1-pyhd8ed1ab_0.tar.bz2#5844808ffab9ebdb694585b50ba02a96
@@ -84,7 +84,7 @@ https://conda.anaconda.org/conda-forge/linux-64/cffi-1.14.6-py39he32792d_0.tar.b
 https://conda.anaconda.org/conda-forge/linux-64/coverage-7.6.1-py39hcd6043d_0.conda#daab0ee8e85e258281e2b2dd74ebe0bb
 https://conda.anaconda.org/conda-forge/linux-64/fonttools-4.53.1-py39hcd6043d_0.conda#297804eca6ea16a835a869699095de1c
 https://conda.anaconda.org/conda-forge/noarch/h2-4.1.0-pyhd8ed1ab_0.tar.bz2#b748fbf7060927a6e82df7cb5ee8f097
-https://conda.anaconda.org/conda-forge/noarch/importlib_resources-6.4.2-pyhd8ed1ab_0.conda#ff64113bd700cf0f892ebf4b223e56aa
+https://conda.anaconda.org/conda-forge/noarch/importlib_resources-6.4.4-pyhd8ed1ab_0.conda#99aa3edd3f452d61c305a30e78140513
 https://conda.anaconda.org/conda-forge/noarch/nodeenv-1.9.1-pyhd8ed1ab_0.conda#dfe0528d0f1c16c1f7c528ea5536ab30
 https://conda.anaconda.org/conda-forge/linux-64/numpy-2.0.1-py39h2fd3214_0.conda#2c69819400d3318cf74f831811ab066f
 https://conda.anaconda.org/conda-forge/noarch/pip-24.2-pyhd8ed1ab_0.conda#6721aef6bfe5937abe70181545dd2c51
@@ -94,7 +94,7 @@ https://conda.anaconda.org/conda-forge/noarch/typing-extensions-4.12.2-hd8ed1ab_
 https://conda.anaconda.org/conda-forge/noarch/virtualenv-20.26.3-pyhd8ed1ab_0.conda#284008712816c64c85bf2b7fa9f3b264
 https://conda.anaconda.org/conda-forge/linux-64/cftime-1.6.4-py39hd92a3bb_0.conda#4206e9db7b75547f0a3165d7cfec0b8a
 https://conda.anaconda.org/conda-forge/linux-64/contourpy-1.2.1-py39h7633fee_0.conda#bdc188e59857d6efab332714e0d01d93
-https://conda.anaconda.org/conda-forge/noarch/importlib-resources-6.4.2-pyhd8ed1ab_0.conda#af1f82a5ea4f16b1482165f93b11399d
+https://conda.anaconda.org/conda-forge/noarch/importlib-resources-6.4.4-pyhd8ed1ab_0.conda#c62e775953b6b65f2079c9ee2a62813c
 https://conda.anaconda.org/conda-forge/noarch/pytest-cov-5.0.0-pyhd8ed1ab_0.conda#c54c0107057d67ddf077751339ec2c63
 https://conda.anaconda.org/conda-forge/noarch/setuptools-scm-8.1.0-pyhd8ed1ab_0.conda#ba9f7f0ec4f2a18de3e7bce67c4a431e
 https://conda.anaconda.org/conda-forge/linux-64/ukkonen-1.0.1-py39h7633fee_4.conda#b66595fbda99771266f042f42c7457be

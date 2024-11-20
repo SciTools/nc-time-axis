@@ -1,5 +1,4 @@
-"""
-Support for cftime axis in matplotlib.
+"""Support for cftime axis in matplotlib.
 
 """
 
@@ -110,8 +109,8 @@ Support for cftime axis in matplotlib.
 # Licensee agrees to be bound by the terms and conditions of this License
 # Agreement.
 
-import warnings
 from numbers import Number
+import warnings
 
 import cftime
 import matplotlib.dates as mdates
@@ -128,8 +127,7 @@ _TIME_UNITS = "days since 2000-01-01"
 
 
 class CalendarDateTime:
-    """
-    Container for a :py:class:`cftime.datetime` object and calendar.
+    """Container for a :py:class:`cftime.datetime` object and calendar.
 
     Parameters
     ----------
@@ -185,8 +183,7 @@ _RESOLUTION_TO_FORMAT = {
 
 
 class AutoCFTimeFormatter(mticker.Formatter):
-    """
-    Automatic formatter for :py:class:`cftime.datetime` data.
+    """Automatic formatter for :py:class:`cftime.datetime` data.
 
     Automatically chooses a date format based on the resolution set by the
     :py:class:`NetCDFDateTimeLocator`.  If no resolution is set, a default
@@ -240,8 +237,7 @@ class NetCDFTimeDateFormatter(AutoCFTimeFormatter):
 
 
 class CFTimeFormatter(mticker.Formatter):
-    """
-    A formatter for explicitly setting the format of a
+    """A formatter for explicitly setting the format of a
     :py:class:`cftime.datetime` axis.
 
     Parameters
@@ -266,8 +262,7 @@ class CFTimeFormatter(mticker.Formatter):
 
 
 class NetCDFTimeDateLocator(mticker.Locator):
-    """
-    Determines tick locations when plotting :py:class:`cftime.datetime` data.
+    """Determines tick locations when plotting :py:class:`cftime.datetime` data.
 
     Parameters
     ----------
@@ -322,8 +317,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
         self._cached_resolution = {}
 
     def compute_resolution(self, num1, num2, date1, date2):
-        """
-        Returns the resolution of the dates (hourly, minutely, yearly), and
+        """Returns the resolution of the dates (hourly, minutely, yearly), and
         an **approximate** number of those units.
 
         """
@@ -455,8 +449,7 @@ class NetCDFTimeDateLocator(mticker.Locator):
 
 
 class NetCDFTimeConverter(mdates.DateConverter):
-    """
-    Converter for :py:class:`cftime.datetime` data.
+    """Converter for :py:class:`cftime.datetime` data.
 
     """
 
@@ -464,8 +457,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
 
     @staticmethod
     def axisinfo(unit, axis):
-        """
-        Returns the :class:`~matplotlib.units.AxisInfo` for *unit*.
+        """Returns the :class:`~matplotlib.units.AxisInfo` for *unit*.
 
         *unit* is a tzinfo instance or None.
         The *axis* argument is required but not used.
@@ -493,8 +485,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
 
     @classmethod
     def default_units(cls, sample_point, axis):
-        """
-        Computes some units for the given data point.
+        """Computes some units for the given data point.
 
         """
         if hasattr(sample_point, "__iter__"):
@@ -514,8 +505,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
                     "Expecting cftimes with an extra " '"calendar" attribute.'
                 )
                 raise ValueError(msg)
-            else:
-                calendar = sample_point.calendar
+            calendar = sample_point.calendar
             date_type = type(sample_point)
         if calendar == "":
             raise ValueError(
@@ -525,8 +515,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
 
     @classmethod
     def convert(cls, value, unit, axis):
-        """
-        Converts value, if it is not already a number or sequence of numbers,
+        """Converts value, if it is not already a number or sequence of numbers,
         with :py:func:`cftime.date2num`.
 
         """
@@ -546,7 +535,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
             if is_numlike(value):
                 return value
             # Not an array but a list of non-numerical types (thus assuming datetime types)
-            elif isinstance(value, (list, tuple)):
+            if isinstance(value, (list, tuple)):
                 first_value = value[0]
             else:
                 # Neither numerical, list or ndarray : must be a datetime scalar.
@@ -584,8 +573,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
 
 
 def is_numlike(x):
-    """
-    The Matplotlib datalim, autoscaling, locators etc work with scalars which
+    """The Matplotlib datalim, autoscaling, locators etc work with scalars which
     are the units converted to floats given the current unit.  The converter may
     be passed these floats, or arrays of them, even when units are set.
 

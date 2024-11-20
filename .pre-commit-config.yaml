@@ -84,3 +84,9 @@ repos:
         args: [--fix, --show-fixes]
     -   id: ruff-format
         types: [file, python]
+
+-   repo: https://github.com/aio-libs/sort-all
+    rev: v1.3.0
+    hooks:
+    -   id: sort-all
+        types: [file, python]

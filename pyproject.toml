@@ -103,8 +103,56 @@ ignore = [
 
     # TODO: exceptions that still need investigating are below.
     # Might be fixable, or might become permanent (above):
-    "PLR5501" # collapsible-else-if; Preserve readability of TODO block in
-              # `convert` method
+    "PLR5501", # collapsible-else-if; Preserve readability of TODO block in
+               # `convert` method
+
+    "A001",
+    "A002",
+    "ANN001",
+    "ANN002",
+    "ANN003",
+    "ANN201",
+    "ANN202",
+    "ANN204",
+    "ANN205",
+    "ANN206",
+    "ARG001",
+    "ARG002",
+    "ARG003",
+    "ARG004",
+    "B028",
+    "C408",
+    "C901",
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D105",
+    "D200",
+    "D205",
+    "D401",
+    "DTZ002",
+    "E501",
+    "EM101",
+    "ERA001",
+    "FIX002",
+    "ICN001",
+    "N801",
+    "N802",
+    "NPY002",
+    "PLR0912",
+    "PT009",
+    "PT027",
+    "RET503",
+    "S101",
+    "SIM102",
+    "SIM108",
+    "TD002",
+    "TD003",
+    "TD004",
+    "TRY003",
+    "TRY004",
+    "UP008",
 ]
 
 preview = false
@@ -121,6 +169,14 @@ known-first-party = ["nc_time_axis"]
 
 [tool.ruff.lint.per-file-ignores]
 # All test scripts
+"src/nc_time_axis/tests/*.py" = [
+  "D104",  # Missing docstring in public package
+  "N999",  # Invalid module name
+]
+
+"docs/conf.py" = [
+  "INP001", # implicit namespace
+]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"

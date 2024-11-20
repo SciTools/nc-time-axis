@@ -24,10 +24,11 @@ will be able to make plots with :py:class:`cftime.datetime` axes.
     fig, ax = plt.subplots(1, 1)
     x = np.linspace(0, 6 * np.pi)
     y = 0.5 * x + np.sin(x)
-    times = cftime.num2date(x, units="days since 2000-01-01", calendar="noleap")
-    ax.plot(times, y);
-
+    times = cftime.num2date(x, units="day:s since 2000-01-01", calendar="noleap")
+    ax.plot(times, y)
+..blacken-docs:off
     @savefig basic.png
+..blacken-docs:on
     fig.show()
 
 Setting the Axes Ticks and Tick Format
@@ -47,10 +48,13 @@ the :py:class:`cftime.datetime` documentation for valid calendar strings).
     :okwarning:
 
     fig, ax = plt.subplots(1, 1)
-    ax.plot(times, y);
-    ax.set_xticks([cftime.datetime(2000, 1, day, calendar="noleap") for day in range(2, 19, 4)]);
+    ax.plot(times, y)
+    ax.set_xticks(
+        [cftime.datetime(2000, 1, day, calendar="noleap") for day in range(2, 19, 4)]
+    )
     formatter = nc_time_axis.CFTimeFormatter("%m-%d %H:%M", "noleap")
     ax.xaxis.set_major_formatter(formatter)
-
+..blacken-docs:off
     @savefig set_ticks.png
+..blacken-docs:on
     fig.show()

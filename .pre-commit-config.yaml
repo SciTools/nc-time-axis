@@ -10,7 +10,7 @@ ci:
 # Alphabetised, for lack of a better order.
 files: |
     (?x)(
-        docs\/.+\.py|
+        docs\/.+\.(py|rst)|
         pyproject\.toml|
         setup\.py|
         src\/.+\.py
@@ -50,6 +50,12 @@ repos:
 
 # Hooks for all other repos.
 # Keep these alphabetised by hook (aka 'id') order.
+
+-   repo: https://github.com/adamchainz/blacken-docs
+    rev: 1.19.1
+    hooks:
+    -   id: blacken-docs
+        types: [file, rst]
 
 -   repo: https://github.com/codespell-project/codespell
     rev: 'v2.3.0'

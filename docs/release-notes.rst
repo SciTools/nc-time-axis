@@ -94,7 +94,7 @@ v1.4.0 (October 23rd, 2021)
 ---------------------------
 
 Deprecations
-~~~~~~~~~~~~ 
+~~~~~~~~~~~~
 
 * The :py:class:`CalendarDateTime` class has been deprecated and will be removed
   in ``nc-time-axis`` version 1.5.0. Please switch to plotting instances or
@@ -122,10 +122,10 @@ Bug Fixes
   :py:meth:`matplotlib.axes.Axes.fill_between` to work properly with `cftime`_
   values (:issue:`47`, :issue:`74`, :pull:`78`).
   By `Pascal Bourgault`_.
-* Fixed a bug that resulted in the resolution of tick labels being inconsistent 
+* Fixed a bug that resulted in the resolution of tick labels being inconsistent
   with the resolution of tick values (:issue:`48`, :pull:`79`).
   By `Spencer Clark`_.
-* Fixed a bug that prevented users from being able to explicitly set the ticks 
+* Fixed a bug that prevented users from being able to explicitly set the ticks
   along axes using :py:meth:`matplotlib.axes.Axes.set_xticks` or
   :py:meth:`matplotlib.axes.Axes.set_yticks` (:issue:`41`, :pull:`84`).
   By `Spencer Clark`_.

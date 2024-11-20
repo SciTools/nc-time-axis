@@ -1,7 +1,25 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+# See https://pre-commit.ci/#configuration
+# See https://github.com/scientific-python/cookie#sp-repo-review
+
+ci:
+    autofix_prs: false
+    autoupdate_commit_msg: "chore: update pre-commit hooks"
+
+# Alphabetised, for lack of a better order.
+files: |
+    (?x)(
+        docs\/.+\.py|
+        pyproject\.toml|
+        setup\.py|
+        src\/.+\.py
+    )
+minimum_pre_commit_version: 1.21.0
 
 repos:
+
+# Hook for pre-commit's built-in checks:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 'v5.0.0'
     hooks:
@@ -19,13 +37,28 @@ repos:
     -   id: check-toml
         # Check YAML file syntax.
     -   id: check-yaml
-        # Makes sure files end in a newline and only a newline
+        # Makes sure files end in a newline and only a newline.
+        # Duplicates Ruff W292 but also works on non-Python files.
     -   id: end-of-file-fixer
         # Replaces or checks mixed line ending
     -   id: mixed-line-ending
         # Don't commit to main branch.
     -   id: no-commit-to-branch
+        # Trims trailing whitespace.
+        # Duplicates Ruff W291 but also works on non-Python files.
+    -   id: trailing-whitespace
 
+# Hooks for all other repos.
+# Keep these alphabetised by hook (aka 'id') order.
+
+-   repo: https://github.com/codespell-project/codespell
+    rev: 'v2.3.0'
+    hooks:
+    -   id: codespell
+        types_or: [python, markdown, rst]
+        additional_dependencies: [tomli]
+
+# TODO: To be replaced by Ruff:
 -   repo: https://github.com/psf/black
     rev: '24.10.0'
     hooks:
@@ -33,6 +66,7 @@ repos:
         types: [file, python]
         args: [--config=./pyproject.toml, .]
 
+# TODO: To be replaced by Ruff:
 -   repo: https://github.com/PyCQA/flake8
     rev: '7.1.1'
     hooks:
@@ -46,10 +80,3 @@ repos:
     -   id: isort
         types: [file, python]
         args: ["--profile", "black", "--filter-files"]
-
--   repo: https://github.com/codespell-project/codespell
-    rev: 'v2.3.0'
-    hooks:
-    -   id: codespell
-        types_or: [python, markdown, rst]
-        additional_dependencies: [tomli]

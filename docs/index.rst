@@ -8,7 +8,7 @@ nc-time-axis
 ============
 
 ``nc-time-axis`` is a package that enables making plots in `matplotlib`_ with axes made
-up of :py:class:`cftime.datetime` dates with any calendar type.  
+up of :py:class:`cftime.datetime` dates with any calendar type.
 
 .. toctree::
    :caption: Getting started

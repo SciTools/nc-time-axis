@@ -13,6 +13,6 @@ We would love to hear from you!
   - [View/discuss existing pull requests](https://github.com/SciTools/nc-time-axis/pulls)
   - [Raise a new pull request](https://github.com/SciTools/nc-time-axis/compare)
 
-Note that all authors on pull requests will automatically be asked to sign the 
+Note that all authors on pull requests will automatically be asked to sign the
 [SciTools Contributor Licence Agreement](https://cla-assistant.io/SciTools/)
-(CLA), if they have not already done so. 
+(CLA), if they have not already done so.

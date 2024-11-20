@@ -83,6 +83,20 @@ ignore = [
 ignore-words-list = "assertIn"
 skip = ".git,./docs/_build"
 
+[tool.mypy]
+disable_error_code = [
+    # TODO: exceptions that still need investigating are below.
+    # Might be fixable, or might become permanent (above):
+    "attr-defined",
+    "misc",
+    "no-untyped-call",
+    "no-untyped-def",
+    "unreachable",
+]
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+strict = true
+warn_unreachable = true
+
 [tool.ruff]
 line-length = 88
 

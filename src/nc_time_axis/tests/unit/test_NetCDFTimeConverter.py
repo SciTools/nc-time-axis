@@ -221,9 +221,7 @@ class Test_convert(unittest.TestCase):
         self.assertEqual(result, np.array([4473.0]))
 
     def test_cftime_np_array_raw_universal_date(self):
-        val = np.array(
-            [cftime.datetime(2012, 6, 4, calendar="360_day")], dtype=object
-        )
+        val = np.array([cftime.datetime(2012, 6, 4, calendar="360_day")], dtype=object)
         result = NetCDFTimeConverter().convert(val, None, None)
         self.assertEqual(result, np.array([4473.0]))
 

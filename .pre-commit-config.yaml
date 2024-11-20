@@ -78,3 +78,9 @@ repos:
     hooks:
     -   id: mypy
         exclude: 'noxfile\.py|docs/conf\.py'
+
+-   repo: https://github.com/numpy/numpydoc
+    rev: v1.8.0
+    hooks:
+      - id: numpydoc-validation
+        types: [file, python]

@@ -61,7 +61,7 @@ repos:
     rev: 'v2.3.0'
     hooks:
     -   id: codespell
-        types_or: [python, markdown, rst]
+        types_or: [asciidoc, python, markdown, rst]
         additional_dependencies: [tomli]
 
 # TODO: To be replaced by Ruff:

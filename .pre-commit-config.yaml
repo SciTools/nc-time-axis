@@ -64,15 +64,6 @@ repos:
         types_or: [asciidoc, python, markdown, rst]
         additional_dependencies: [tomli]
 
--   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.7.4"
-    hooks:
-    -   id: ruff
-        types: [file, python]
-        args: [--fix, --show-fixes]
-    -   id: ruff-format
-        types: [file, python]
-
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: 'v1.13.0'
     hooks:
@@ -83,4 +74,13 @@ repos:
     rev: v1.8.0
     hooks:
       - id: numpydoc-validation
+        types: [file, python]
+
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.7.4"
+    hooks:
+    -   id: ruff
+        types: [file, python]
+        args: [--fix, --show-fixes]
+    -   id: ruff-format
         types: [file, python]

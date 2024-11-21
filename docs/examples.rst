@@ -26,9 +26,9 @@ will be able to make plots with :py:class:`cftime.datetime` axes.
     y = 0.5 * x + np.sin(x)
     times = cftime.num2date(x, units="day:s since 2000-01-01", calendar="noleap")
     ax.plot(times, y)
-..blacken-docs:off
+.. blacken-docs:off
     @savefig basic.png
-..blacken-docs:on
+.. blacken-docs:on
     fig.show()
 
 Setting the Axes Ticks and Tick Format
@@ -54,7 +54,7 @@ the :py:class:`cftime.datetime` documentation for valid calendar strings).
     )
     formatter = nc_time_axis.CFTimeFormatter("%m-%d %H:%M", "noleap")
     ax.xaxis.set_major_formatter(formatter)
-..blacken-docs:off
+.. blacken-docs:off
     @savefig set_ticks.png
-..blacken-docs:on
+.. blacken-docs:on
     fig.show()

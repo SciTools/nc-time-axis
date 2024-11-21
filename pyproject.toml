@@ -239,7 +239,6 @@ ignore = [
     "PY007", # Supports an easy task runner (nox or tox)
     "PP003", # Does not list wheel as a build-dep
     "PP309", # Filter warnings specified
-    "GH212", # Require GHA update grouping
     "PC170", # Uses PyGrep hooks (only needed if rST present)
 ]
 

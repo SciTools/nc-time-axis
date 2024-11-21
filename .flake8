@@ -23,7 +23,7 @@ ignore =
     W503,
     # W504: line break after binary operator
     W504
-exclude = 
+exclude =
     .eggs
     build
     docs/conf.py

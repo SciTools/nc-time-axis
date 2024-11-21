@@ -1,9 +1,10 @@
+# See https://github.com/SciTools/.github/wiki/Linting for common linter rules
+
 [build-system]
 # Defined by PEP 518
 requires = [
   "setuptools>=61",
   "setuptools_scm[toml]>=7",
-  "wheel",
 ]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
@@ -48,6 +49,240 @@ Code = "https://github.com/SciTools/nc-time-axis"
 Discussions = "https://github.com/SciTools/nc-time-axis/discussions"
 Issues = "https://github.com/SciTools/nc-time-axis/issues"
 
+[tool.check-manifest]
+ignore = [
+  "src/nc_time_axis/_version.py",
+]
+
+[tool.codespell]
+ignore-words-list = "assertIn"
+skip = ".git,./docs/_build"
+
+[tool.mypy]
+disable_error_code = [
+    # TODO: exceptions that still need investigating are below.
+    # Might be fixable, or might become permanent (above):
+    "attr-defined",
+    "misc",
+    "no-untyped-call",
+    "no-untyped-def",
+    "unreachable",
+]
+enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
+strict = true
+warn_unreachable = true
+
+[tool.numpydoc_validation]
+checks = [
+    "all",  # Enable all numpydoc validation rules, apart from the following:
+
+    # -> Docstring text (summary) should start in the line immediately
+    #    after the opening quotes (not in the same line, or leaving a
+    #    blank line in between)
+    "GL01",  # Permit summary line on same line as docstring opening quotes.
+
+    # -> Closing quotes should be placed in the line after the last text
+    #    in the docstring (do not close the quotes in the same line as
+    #    the text, or leave a blank line between the last text and the
+    #    quotes)
+    "GL02",  # Permit a blank line before docstring closing quotes.
+
+    # -> Double line break found; please use only one blank line to
+    #    separate sections or paragraphs, and do not leave blank lines
+    #    at the end of docstrings
+    "GL03",  # Ignoring.
+
+    # -> See Also section not found
+    "SA01",  # Not all docstrings require a "See Also" section.
+
+    # -> No extended summary found
+    "ES01",  # Not all docstrings require an "Extended Summary" section.
+
+    # -> No examples section found
+    "EX01",  # Not all docstrings require an "Examples" section.
+
+    # -> No Yields section found
+    "YD01",  # Not all docstrings require a "Yields" section.
+
+    # TODO: exceptions that still need investigating are below.
+    # Might be fixable, or might become permanent (above):
+    "GL08",  # No docstring
+    "SS05",  # Summary must start with infinitive verb
+    "SS06",  # Summary should fit on one line
+    "PR01",  # Parameters not documented
+    "PR06",  # Wrong type used
+    "PR08",  # Description should start with capitol letter
+    "RT01",  # No Returns section found
+]
+exclude = [
+    '\.__eq__$',
+    '\.__ne__$',
+    '\.__repr__$',
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra -v --doctest-modules --strict-config --strict-markers"
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
+#filterwarnings = ["error"] # TODO - PP309; enable once all warnings are fixed
+log_cli_level = "INFO"
+minversion = "6.0"
+testpaths = ["src/nc_time_axis"]
+xfail_strict = true
+
+[tool.repo-review]
+ignore = [
+    # https://learn.scientific-python.org/development/guides/style/#PC180
+    "PC180",  # Uses prettier
+
+    # TODO: exceptions that still need investigating are below.
+    # Might be fixable, or might become permanent (above):
+    "PY007", # Supports an easy task runner (nox or tox)
+    "PP309", # Filter warnings specified
+    "PC170", # Uses PyGrep hooks (only needed if rST present)
+]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.format]
+preview = false
+
+[tool.ruff.lint]
+ignore = [
+    # flake8-commas (COM)
+    # https://docs.astral.sh/ruff/rules/#flake8-commas-com
+    "COM812",  # Trailing comma missing.
+    "COM819",  # Trailing comma prohibited.
+
+    # flake8-implicit-str-concat (ISC)
+    # https://docs.astral.sh/ruff/rules/single-line-implicit-string-concatenation/
+    # NOTE: This rule may cause conflicts when used with "ruff format".
+    "ISC001",  # Implicitly concatenate string literals on one line.
+
+    # TODO: exceptions that still need investigating are below.
+    # Might be fixable, or might become permanent (above):
+    "PLR5501", # collapsible-else-if; Preserve readability of TODO block in
+               # `convert` method
+
+    # Flake8-builtins
+    "A001",  # builtin-variable-shadowing
+    "A002",  # undocumented-public-method
+
+    # Flake8-annotations
+    "ANN001",  # missing-type-function-argument
+    "ANN002",  # missing-type-args
+    "ANN003",  # missing type annotation for `**kwargs`
+    "ANN201",  # missing-return-type-undocumented-public-function
+    "ANN202",  # missing-return-type-private-function
+    "ANN204",  # missing-return-type-special-method
+    "ANN205",  # missing-return-type-static-method
+    "ANN206",  # missing-return-type-class-method
+
+    # Flake8-unused-arguments
+    "ARG001",  # unused-function-argument
+    "ARG002",  # Unused method argument
+    "ARG003",  # unused-class-method-argument
+    "ARG004",  # unused-static-method-argument
+
+    # Flake8-bugbear
+    "B028",  # no-explicit-stacklevel
+
+    # Flake8-comprehensions
+    "C408",  # unnecessary-collection-call
+    "C901",  # complex-structure
+
+    # pydocstyle
+    "D100",  # undocumented-public-module
+    "D101",  # undocumented-public-class
+    "D102",  # undocumented-public-method
+    "D103",  # undocumented-public-function
+    "D105",  # undocumented-magic-method
+    "D200",  # fits-on-one-line
+    "D205",  # blank-line-after-summary
+    "D401",  # non-imperative-mood
+
+     # Flake8-datetimez
+    "DTZ002",  # call-datetime-today
+
+    # pycodestyle
+    "E501",  # line-too-long
+
+    # Flake8-errmsg
+    "EM101",  # raw-string-in-exception
+
+    # Eradicate
+    "ERA001",  # commented-out-code
+
+    # Flake8-fixme
+    "FIX002",  # Line contains TODO, consider resolving the issue
+
+    # flake8-import-conventions
+    "ICN001",  # unconventional-import-alias
+
+    # pep8-naming
+    "N801",  # invalid-class-name
+    "N802",  # invalid-function-name
+
+    # numpy
+    "NPY002",  # numpy-legacy-random
+
+    # pylint
+    "PLR0912",  # Too many branches
+
+    # flake8-pytest-style
+    "PT009",  # pytest-unittest-assertion
+    "PT027",  # pytest-unittest-raises-assertion
+
+    # flake8-return
+    "RET503",  # implicit-return
+
+    # flake8-bandit
+    "S101",  # Assert used
+
+    # flake8-simplify
+    "SIM102",  # collapsible-if
+    "SIM108",  # if-else-block-instead-of-if-exp
+
+    # flake8-todos
+    "TD002",  # Missing author in TODO; try
+    "TD003",  # Missing issue link on the line following this TODO
+    "TD004",  # Missing colon in TODO
+
+    # tryceratops
+    "TRY003",  # raise-vanilla-args
+    "TRY004",  # type-check-without-type-error
+
+    # pyupgrade
+    "UP008",  # super-call-with-parameter
+]
+
+preview = false
+select = [
+    "ALL",
+    # Note: the above "all" disables conflicting rules; if you want a specific
+    # rule that is skipped then it needs to be enabled explicitly below:
+    "D212",  # Multi-line docstring summary should start at the first line
+]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+# Change to match specific package name:
+known-first-party = ["nc_time_axis"]
+
+[tool.ruff.lint.per-file-ignores]
+# All test scripts
+"src/nc_time_axis/tests/*.py" = [
+  "D104",  # Missing docstring in public package
+  "N999",  # Invalid module name
+]
+
+"docs/conf.py" = [
+  "INP001", # implicit namespace
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
 [tool.setuptools]
 license-files = ["LICENSE"]
 zip-safe = false
@@ -64,33 +299,6 @@ test = {file = "requirements/pypi-optional-test.txt"}
 include = ["nc_time_axis*"]
 where = ["src"]
 
-[tool.black]
-line-length = 79
-target-version = ['py39', 'py310', 'py311']
-include = '\.pyi?$'
-
-[tool.isort]
-known_first_party = "nc_time_axis"
-line_length = 79
-profile = "black"
-skip_gitignore = "True"
-verbose = "False"
-
-[tool.pytest.ini_options]
-addopts = "-ra -v --doctest-modules"
-doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
-minversion = "6.0"
-testpaths = ["src/nc_time_axis"]
-
 [tool.setuptools_scm]
 write_to = "src/nc_time_axis/_version.py"
 local_scheme = "dirty-tag"
-
-[tool.check-manifest]
-ignore = [
-  "src/nc_time_axis/_version.py",
-]
-
-[tool.codespell]
-ignore-words-list = "assertIn"
-skip = ".git,./docs/_build"

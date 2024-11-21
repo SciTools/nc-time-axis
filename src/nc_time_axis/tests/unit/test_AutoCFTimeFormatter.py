@@ -1,7 +1,7 @@
 """Unit tests for the `nc_time_axis.AutoCFTimeFormatter` class."""
 
 import unittest
-import unittest.mock as mock
+from unittest import mock
 
 import pytest
 

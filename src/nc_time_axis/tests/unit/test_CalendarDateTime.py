@@ -11,23 +11,17 @@ from nc_time_axis import CalendarDateTime
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 class Test___eq__(unittest.TestCase):
     def setUp(self):
-        self.cdt = CalendarDateTime(
-            cftime.datetime(1967, 7, 22, 3, 6), "360_day"
-        )
+        self.cdt = CalendarDateTime(cftime.datetime(1967, 7, 22, 3, 6), "360_day")
 
     def test_equal(self):
         self.assertTrue(self.cdt == self.cdt)
 
     def test_diff_cal(self):
-        other_cdt = CalendarDateTime(
-            cftime.datetime(1967, 7, 22, 3, 6), "365_day"
-        )
+        other_cdt = CalendarDateTime(cftime.datetime(1967, 7, 22, 3, 6), "365_day")
         self.assertFalse(self.cdt == other_cdt)
 
     def test_diff_datetime(self):
-        other_cdt = CalendarDateTime(
-            cftime.datetime(1992, 11, 23, 3, 6), "360_day"
-        )
+        other_cdt = CalendarDateTime(cftime.datetime(1992, 11, 23, 3, 6), "360_day")
         self.assertFalse(self.cdt == other_cdt)
 
     def test_diff_type(self):
@@ -37,23 +31,17 @@ class Test___eq__(unittest.TestCase):
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 class Test__ne__(unittest.TestCase):
     def setUp(self):
-        self.cdt = CalendarDateTime(
-            cftime.datetime(1967, 7, 22, 3, 6), "360_day"
-        )
+        self.cdt = CalendarDateTime(cftime.datetime(1967, 7, 22, 3, 6), "360_day")
 
     def test_equal(self):
         self.assertFalse(self.cdt != self.cdt)
 
     def test_diff_cal(self):
-        other_cdt = CalendarDateTime(
-            cftime.datetime(1967, 7, 22, 3, 6), "365_day"
-        )
+        other_cdt = CalendarDateTime(cftime.datetime(1967, 7, 22, 3, 6), "365_day")
         self.assertTrue(self.cdt != other_cdt)
 
     def test_diff_datetime(self):
-        other_cdt = CalendarDateTime(
-            cftime.datetime(1992, 11, 23, 3, 6), "360_day"
-        )
+        other_cdt = CalendarDateTime(cftime.datetime(1992, 11, 23, 3, 6), "360_day")
         self.assertTrue(self.cdt != other_cdt)
 
     def test_diff_type(self):

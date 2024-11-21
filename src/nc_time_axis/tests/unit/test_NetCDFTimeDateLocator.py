@@ -18,9 +18,7 @@ class Test_compute_resolution(unittest.TestCase):
         self.calendar = "365_day"
 
     def check(self, max_n_ticks, num1, num2):
-        locator = NetCDFTimeDateLocator(
-            max_n_ticks=max_n_ticks, calendar=self.calendar
-        )
+        locator = NetCDFTimeDateLocator(max_n_ticks=max_n_ticks, calendar=self.calendar)
         return locator.compute_resolution(
             num1,
             num2,
@@ -29,12 +27,8 @@ class Test_compute_resolution(unittest.TestCase):
         )
 
     def test_one_minute(self):
-        self.assertEqual(
-            self.check(20, 0, 0.0003), ("SECONDLY", mdates.SEC_PER_DAY)
-        )
-        self.assertEqual(
-            self.check(10, 0.0003, 0), ("SECONDLY", mdates.SEC_PER_DAY)
-        )
+        self.assertEqual(self.check(20, 0, 0.0003), ("SECONDLY", mdates.SEC_PER_DAY))
+        self.assertEqual(self.check(10, 0.0003, 0), ("SECONDLY", mdates.SEC_PER_DAY))
 
     def test_one_hour(self):
         self.assertEqual(self.check(1, 0, 0.02), ("MINUTELY", 0))
@@ -45,9 +39,7 @@ class Test_compute_resolution(unittest.TestCase):
     def test_one_day(self):
         self.assertEqual(self.check(1, 0, 1), ("HOURLY", 0))
         self.assertEqual(self.check(24, 0, 1), ("MINUTELY", 0))
-        self.assertEqual(
-            self.check(86400, 0, 1), ("SECONDLY", mdates.SEC_PER_DAY)
-        )
+        self.assertEqual(self.check(86400, 0, 1), ("SECONDLY", mdates.SEC_PER_DAY))
 
     def test_30_days(self):
         self.assertEqual(self.check(1, 0, 30), ("DAILY", 30))
@@ -71,9 +63,7 @@ class Test_compute_resolution(unittest.TestCase):
         self.assertEqual(self.check(10, 0, 10 * 365), ("MONTHLY", 121))
         self.assertEqual(self.check(122, 0, 10 * 365), ("DAILY", 10 * 365))
         self.assertEqual(self.check(10 * 365, 0, 10 * 365), ("HOURLY", 152))
-        self.assertEqual(
-            self.check(10 * 365 * 24, 0, 10 * 365), ("MINUTELY", 2)
-        )
+        self.assertEqual(self.check(10 * 365 * 24, 0, 10 * 365), ("MINUTELY", 2))
         self.assertEqual(
             self.check(10 * 365 * 86400, 0, 10 * 365),
             ("SECONDLY", mdates.SEC_PER_DAY),
@@ -102,9 +92,7 @@ class Test_tick_values(unittest.TestCase):
         self.calendar = "365_day"
 
     def check(self, max_n_ticks, num1, num2):
-        locator = NetCDFTimeDateLocator(
-            max_n_ticks=max_n_ticks, calendar=self.calendar
-        )
+        locator = NetCDFTimeDateLocator(max_n_ticks=max_n_ticks, calendar=self.calendar)
         return locator.tick_values(num1, num2)
 
     def test_secondly(self):
@@ -160,9 +148,7 @@ class Test_tick_values_yr0(unittest.TestCase):
         ]
 
     def check(self, max_n_ticks, num1, num2, calendar):
-        locator = NetCDFTimeDateLocator(
-            max_n_ticks=max_n_ticks, calendar=calendar
-        )
+        locator = NetCDFTimeDateLocator(max_n_ticks=max_n_ticks, calendar=calendar)
         return locator.tick_values(num1, num2)
 
     def test_yearly_yr0_remove(self):
@@ -170,8 +156,7 @@ class Test_tick_values_yr0(unittest.TestCase):
             # convert values to dates, check that none of them has year 0
             ticks = self.check(5, -2001 * 365, -1901 * 365, calendar)
             year_ticks = [
-                cftime.num2date(t, _TIME_UNITS, calendar=calendar).year
-                for t in ticks
+                cftime.num2date(t, _TIME_UNITS, calendar=calendar).year for t in ticks
             ]
             if calendar in self.yr0_remove_calendars:
                 self.assertNotIn(0, year_ticks)

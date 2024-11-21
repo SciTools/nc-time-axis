@@ -29,8 +29,7 @@ class Test(unittest.TestCase):
     def test_360_day_calendar_CalendarDateTime(self):
         calendar = "360_day"
         datetimes = [
-            cftime.datetime(1986, month, 30, calendar=calendar)
-            for month in range(1, 6)
+            cftime.datetime(1986, month, 30, calendar=calendar) for month in range(1, 6)
         ]
         cal_datetimes = [
             nc_time_axis.CalendarDateTime(dt, calendar) for dt in datetimes
@@ -40,9 +39,7 @@ class Test(unittest.TestCase):
         np.testing.assert_array_equal(result_ydata, cal_datetimes)
 
     def test_360_day_calendar_raw_dates(self):
-        datetimes = [
-            cftime.Datetime360Day(1986, month, 30) for month in range(1, 6)
-        ]
+        datetimes = [cftime.Datetime360Day(1986, month, 30) for month in range(1, 6)]
         (line1,) = plt.plot(datetimes)
         result_ydata = line1.get_ydata()
         np.testing.assert_array_equal(result_ydata, datetimes)
@@ -58,8 +55,7 @@ class Test(unittest.TestCase):
 
     def test_no_calendar_raw_universal_dates(self):
         datetimes = [
-            cftime.datetime(1986, month, 30, calendar=None)
-            for month in range(1, 6)
+            cftime.datetime(1986, month, 30, calendar=None) for month in range(1, 6)
         ]
         with self.assertRaisesRegex(ValueError, "defined"):
             plt.plot(datetimes)
@@ -72,9 +68,7 @@ class Test(unittest.TestCase):
             for day in range(1, 31)
         ]
         cdt = [nc_time_axis.CalendarDateTime(item, calendar) for item in dt]
-        temperatures = [
-            np.round(np.random.uniform(0, 12), 3) for _ in range(len(cdt))
-        ]
+        temperatures = [np.round(np.random.uniform(0, 12), 3) for _ in range(len(cdt))]
 
         plt.fill_between(cdt, temperatures, 0)
 
@@ -92,9 +86,7 @@ with warnings.catch_warnings():
     TICKS = {
         "List[cftime.datetime]": [cftime.Datetime360Day(1986, 2, 1)],
         "List[CalendarDateTime]": [
-            nc_time_axis.CalendarDateTime(
-                cftime.Datetime360Day(1986, 2, 1), "360_day"
-            )
+            nc_time_axis.CalendarDateTime(cftime.Datetime360Day(1986, 2, 1), "360_day")
         ],
     }
 

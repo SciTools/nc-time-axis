@@ -13,6 +13,11 @@ Basic Usage
 `matplotlib`_.  To register its converters, simply ``import nc_time_axis``.  Then you
 will be able to make plots with :py:class:`cftime.datetime` axes.
 
+..
+    comment: @savefig causes blacken-docs to fail
+
+.. blacken-docs:off
+
 .. ipython:: python
     :okwarning:
 
@@ -30,6 +35,8 @@ will be able to make plots with :py:class:`cftime.datetime` axes.
     @savefig basic.png
     fig.show()
 
+.. blacken-docs:on
+
 Setting the Axes Ticks and Tick Format
 --------------------------------------
 
@@ -43,14 +50,22 @@ documentation
 for acceptable format codes) and the calendar type of the axis (see
 the :py:class:`cftime.datetime` documentation for valid calendar strings).
 
+..
+    @savefig causes blacken-docs to fail
+
+.. blacken-docs:off
+
 .. ipython:: python
     :okwarning:
 
     fig, ax = plt.subplots(1, 1)
-    ax.plot(times, y);
-    ax.set_xticks([cftime.datetime(2000, 1, day, calendar="noleap") for day in range(2, 19, 4)]);
+    ax.plot(times, y)
+    ax.set_xticks(
+        [cftime.datetime(2000, 1, day, calendar="noleap") for day in range(2, 19, 4)]
+    )
     formatter = nc_time_axis.CFTimeFormatter("%m-%d %H:%M", "noleap")
     ax.xaxis.set_major_formatter(formatter)
-
     @savefig set_ticks.png
     fig.show()
+
+.. blacken-docs:on

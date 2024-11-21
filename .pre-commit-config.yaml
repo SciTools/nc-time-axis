@@ -1,7 +1,26 @@
 # See https://pre-commit.com for more information
 # See https://pre-commit.com/hooks.html for more hooks
+# See https://pre-commit.ci/#configuration
+# See https://github.com/scientific-python/cookie#sp-repo-review
+# See https://github.com/SciTools/.github/wiki/Linting for common linter rules
+
+ci:
+    autofix_prs: false
+    autoupdate_commit_msg: "chore: update pre-commit hooks"
+
+# Alphabetised, for lack of a better order.
+files: |
+    (?x)(
+        docs\/.+\.(py|rst)|
+        pyproject\.toml|
+        setup\.py|
+        src\/.+\.py
+    )
+minimum_pre_commit_version: 1.21.0
 
 repos:
+
+# Hook for pre-commit's built-in checks:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: 'v5.0.0'
     hooks:
@@ -19,37 +38,69 @@ repos:
     -   id: check-toml
         # Check YAML file syntax.
     -   id: check-yaml
-        # Makes sure files end in a newline and only a newline
+        # Makes sure files end in a newline and only a newline.
+        # Duplicates Ruff W292 but also works on non-Python files.
     -   id: end-of-file-fixer
         # Replaces or checks mixed line ending
     -   id: mixed-line-ending
         # Don't commit to main branch.
     -   id: no-commit-to-branch
+        # Trims trailing whitespace.
+        # Duplicates Ruff W291 but also works on non-Python files.
+    -   id: trailing-whitespace
 
--   repo: https://github.com/psf/black
-    rev: '24.10.0'
-    hooks:
-    -   id: black
-        types: [file, python]
-        args: [--config=./pyproject.toml, .]
+# Hooks for all other repos.
+# Keep these alphabetised by hook (aka 'id') order.
 
--   repo: https://github.com/PyCQA/flake8
-    rev: '7.1.1'
+-   repo: https://github.com/adamchainz/blacken-docs
+    rev: 1.19.1
     hooks:
-    -   id: flake8
-        types: [file, python]
-        args: [--config=./.flake8]
-
--   repo: https://github.com/pycqa/isort
-    rev: '5.13.2'
-    hooks:
-    -   id: isort
-        types: [file, python]
-        args: ["--profile", "black", "--filter-files"]
+    -   id: blacken-docs
+        types: [file, rst]
 
 -   repo: https://github.com/codespell-project/codespell
     rev: 'v2.3.0'
     hooks:
     -   id: codespell
-        types_or: [python, markdown, rst]
+        types_or: [asciidoc, python, markdown, rst]
         additional_dependencies: [tomli]
+
+-   repo: https://github.com/pre-commit/mirrors-mypy
+    rev: 'v1.13.0'
+    hooks:
+    -   id: mypy
+        exclude: 'noxfile\.py|docs/conf\.py'
+
+-   repo: https://github.com/numpy/numpydoc
+    rev: v1.8.0
+    hooks:
+      - id: numpydoc-validation
+        types: [file, python]
+
+-   repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: "v0.7.4"
+    hooks:
+    -   id: ruff
+        types: [file, python]
+        args: [--fix, --show-fixes]
+    -   id: ruff-format
+        types: [file, python]
+
+-   repo: https://github.com/aio-libs/sort-all
+    rev: v1.3.0
+    hooks:
+    -   id: sort-all
+        types: [file, python]
+
+-   repo: https://github.com/scientific-python/cookie
+    rev: 2024.08.19
+    hooks:
+    - id: sp-repo-review
+      additional_dependencies: ["repo-review[cli]"]
+      args: ["--show=errskip"]
+
+-   repo: https://github.com/abravalheri/validate-pyproject
+    # More exhaustive than Ruff RUF200.
+    rev: "v0.23"
+    hooks:
+    - id: validate-pyproject

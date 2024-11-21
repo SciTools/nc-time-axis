@@ -69,7 +69,8 @@ where = ["src"]
 [tool.pytest.ini_options]
 addopts = "-ra -v --doctest-modules --strict-config --strict-markers"
 doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
-#filterwarnings = ["error"] # TODO - enable this once all warnings are fixed
+#filterwarnings = ["error"] # TODO - PP309; enable once all warnings are fixed
+log_cli_level = "INFO"
 minversion = "6.0"
 testpaths = ["src/nc_time_axis"]
 xfail_strict = true
@@ -237,7 +238,6 @@ ignore = [
     # Might be fixable, or might become permanent (above):
     "PY007", # Supports an easy task runner (nox or tox)
     "PP003", # Does not list wheel as a build-dep
-    "PP304", # Sets the log level in pytest
     "PP309", # Filter warnings specified
     "GH212", # Require GHA update grouping
     "PC170", # Uses PyGrep hooks (only needed if rST present)

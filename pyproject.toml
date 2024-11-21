@@ -164,53 +164,96 @@ ignore = [
     "PLR5501", # collapsible-else-if; Preserve readability of TODO block in
                # `convert` method
 
-    "A001",
-    "A002",
-    "ANN001",
-    "ANN002",
-    "ANN003",
-    "ANN201",
-    "ANN202",
-    "ANN204",
-    "ANN205",
-    "ANN206",
-    "ARG001",
-    "ARG002",
-    "ARG003",
-    "ARG004",
-    "B028",
-    "C408",
-    "C901",
-    "D100",
-    "D101",
-    "D102",
-    "D103",
-    "D105",
-    "D200",
-    "D205",
-    "D401",
-    "DTZ002",
-    "E501",
-    "EM101",
-    "ERA001",
-    "FIX002",
-    "ICN001",
-    "N801",
-    "N802",
-    "NPY002",
-    "PLR0912",
-    "PT009",
-    "PT027",
-    "RET503",
-    "S101",
-    "SIM102",
-    "SIM108",
-    "TD002",
-    "TD003",
-    "TD004",
-    "TRY003",
-    "TRY004",
-    "UP008",
+    # Flake8-builtins
+    "A001",  # builtin-variable-shadowing
+    "A002",  # undocumented-public-method
+
+    # Flake8-annotations
+    "ANN001",  # missing-type-function-argument
+    "ANN002",  # missing-type-args
+    "ANN003",  # missing type annotation for `**kwargs`
+    "ANN201",  # missing-return-type-undocumented-public-function
+    "ANN202",  # missing-return-type-private-function
+    "ANN204",  # missing-return-type-special-method
+    "ANN205",  # missing-return-type-static-method
+    "ANN206",  # missing-return-type-class-method
+
+    # Flake8-unused-arguments
+    "ARG001",  # unused-function-argument
+    "ARG002",  # Unused method argument
+    "ARG003",  # unused-class-method-argument
+    "ARG004",  # unused-static-method-argument
+
+    # Flake8-bugbear
+    "B028",  # no-explicit-stacklevel
+
+    # Flake8-comprehensions
+    "C408",  # unnecessary-collection-call
+    "C901",  # complex-structure
+
+    # pydocstyle
+    "D100",  # undocumented-public-module
+    "D101",  # undocumented-public-class
+    "D102",  # undocumented-public-method
+    "D103",  # undocumented-public-function
+    "D105",  # undocumented-magic-method
+    "D200",  # fits-on-one-line
+    "D205",  # blank-line-after-summary
+    "D401",  # non-imperative-mood
+
+     # Flake8-datetimez
+    "DTZ002",  # call-datetime-today
+
+    # pycodestyle
+    "E501",  # line-too-long
+
+    # Flake8-errmsg
+    "EM101",  # raw-string-in-exception
+
+    # Eradicate
+    "ERA001",  # commented-out-code
+
+    # Flake8-fixme
+    "FIX002",  # Line contains TODO, consider resolving the issue
+
+    # flake8-import-conventions
+    "ICN001",  # unconventional-import-alias
+
+    # pep8-naming
+    "N801",  # invalid-class-name
+    "N802",  # invalid-function-name
+
+    # numpy
+    "NPY002",  # numpy-legacy-random
+
+    # pylint
+    "PLR0912",  # Too many branches
+
+    # flake8-pytest-style
+    "PT009",  # pytest-unittest-assertion
+    "PT027",  # pytest-unittest-raises-assertion
+
+    # flake8-return
+    "RET503",  # implicit-return
+
+    # flake8-bandit
+    "S101",  # Assert used
+
+    # flake8-simplify
+    "SIM102",  # collapsible-if
+    "SIM108",  # if-else-block-instead-of-if-exp
+
+    # flake8-todos
+    "TD002",  # Missing author in TODO; try
+    "TD003",  # Missing issue link on the line following this TODO
+    "TD004",  # Missing colon in TODO
+
+    # tryceratops
+    "TRY003",  # raise-vanilla-args
+    "TRY004",  # type-check-without-type-error
+
+    # pyupgrade
+    "UP008",  # super-call-with-parameter
 ]
 
 preview = false

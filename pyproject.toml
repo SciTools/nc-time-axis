@@ -66,11 +66,11 @@ disable_error_code = [
     "misc",
     "no-untyped-call",
     "no-untyped-def",
-    "unreachable",
+    "unreachable",  # TODO: Uncomment `warn_unreachable` below when fixed
 ]
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 strict = true
-warn_unreachable = true
+# warn_unreachable = true  # TODO: Enable once all unreachable code is fixed
 
 [tool.numpydoc_validation]
 checks = [
@@ -136,6 +136,7 @@ ignore = [
 
     # TODO: exceptions that still need investigating are below.
     # Might be fixable, or might become permanent (above):
+    "MY103", # Must have warn_unreachable enabled in mypy
     "PY007", # Supports an easy task runner (nox or tox)
     "PP309", # Filter warnings specified
     "PC170", # Uses PyGrep hooks (only needed if rST present)

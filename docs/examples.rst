@@ -13,6 +13,11 @@ Basic Usage
 `matplotlib`_.  To register its converters, simply ``import nc_time_axis``.  Then you
 will be able to make plots with :py:class:`cftime.datetime` axes.
 
+..
+    comment: @savefig causes blacken-docs to fail
+
+.. blacken-docs:off
+
 .. ipython:: python
     :okwarning:
 
@@ -24,12 +29,13 @@ will be able to make plots with :py:class:`cftime.datetime` axes.
     fig, ax = plt.subplots(1, 1)
     x = np.linspace(0, 6 * np.pi)
     y = 0.5 * x + np.sin(x)
-    times = cftime.num2date(x, units="day:s since 2000-01-01", calendar="noleap")
-    ax.plot(times, y)
-.. blacken-docs:off
+    times = cftime.num2date(x, units="days since 2000-01-01", calendar="noleap")
+    ax.plot(times, y);
+
     @savefig basic.png
-.. blacken-docs:on
     fig.show()
+
+.. blacken-docs:on
 
 Setting the Axes Ticks and Tick Format
 --------------------------------------
@@ -44,6 +50,11 @@ documentation
 for acceptable format codes) and the calendar type of the axis (see
 the :py:class:`cftime.datetime` documentation for valid calendar strings).
 
+..
+    @savefig causes blacken-docs to fail
+
+.. blacken-docs:off
+
 .. ipython:: python
     :okwarning:
 
@@ -54,7 +65,7 @@ the :py:class:`cftime.datetime` documentation for valid calendar strings).
     )
     formatter = nc_time_axis.CFTimeFormatter("%m-%d %H:%M", "noleap")
     ax.xaxis.set_major_formatter(formatter)
-.. blacken-docs:off
     @savefig set_ticks.png
-.. blacken-docs:on
     fig.show()
+
+.. blacken-docs:on

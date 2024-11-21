@@ -49,35 +49,6 @@ Code = "https://github.com/SciTools/nc-time-axis"
 Discussions = "https://github.com/SciTools/nc-time-axis/discussions"
 Issues = "https://github.com/SciTools/nc-time-axis/issues"
 
-[tool.setuptools]
-license-files = ["LICENSE"]
-zip-safe = false
-
-[tool.setuptools.dynamic]
-dependencies = {file = "requirements/pypi-core.txt"}
-readme = {file = "README.md", content-type = "text/markdown"}
-
-[tool.setuptools.dynamic.optional-dependencies]
-docs = {file = "requirements/pypi-optional-docs.txt"}
-test = {file = "requirements/pypi-optional-test.txt"}
-
-[tool.setuptools.packages.find]
-include = ["nc_time_axis*"]
-where = ["src"]
-
-[tool.pytest.ini_options]
-addopts = "-ra -v --doctest-modules --strict-config --strict-markers"
-doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
-#filterwarnings = ["error"] # TODO - PP309; enable once all warnings are fixed
-log_cli_level = "INFO"
-minversion = "6.0"
-testpaths = ["src/nc_time_axis"]
-xfail_strict = true
-
-[tool.setuptools_scm]
-write_to = "src/nc_time_axis/_version.py"
-local_scheme = "dirty-tag"
-
 [tool.check-manifest]
 ignore = [
   "src/nc_time_axis/_version.py",
@@ -100,6 +71,75 @@ disable_error_code = [
 enable_error_code = ["ignore-without-code", "redundant-expr", "truthy-bool"]
 strict = true
 warn_unreachable = true
+
+[tool.numpydoc_validation]
+checks = [
+    "all",  # Enable all numpydoc validation rules, apart from the following:
+
+    # -> Docstring text (summary) should start in the line immediately
+    #    after the opening quotes (not in the same line, or leaving a
+    #    blank line in between)
+    "GL01",  # Permit summary line on same line as docstring opening quotes.
+
+    # -> Closing quotes should be placed in the line after the last text
+    #    in the docstring (do not close the quotes in the same line as
+    #    the text, or leave a blank line between the last text and the
+    #    quotes)
+    "GL02",  # Permit a blank line before docstring closing quotes.
+
+    # -> Double line break found; please use only one blank line to
+    #    separate sections or paragraphs, and do not leave blank lines
+    #    at the end of docstrings
+    "GL03",  # Ignoring.
+
+    # -> See Also section not found
+    "SA01",  # Not all docstrings require a "See Also" section.
+
+    # -> No extended summary found
+    "ES01",  # Not all docstrings require an "Extended Summary" section.
+
+    # -> No examples section found
+    "EX01",  # Not all docstrings require an "Examples" section.
+
+    # -> No Yields section found
+    "YD01",  # Not all docstrings require a "Yields" section.
+
+    # TODO: exceptions that still need investigating are below.
+    # Might be fixable, or might become permanent (above):
+    "GL08",  # No docstring
+    "SS05",  # Summary must start with infinitive verb
+    "SS06",  # Summary should fit on one line
+    "PR01",  # Parameters not documented
+    "PR06",  # Wrong type used
+    "PR08",  # Description should start with capitol letter
+    "RT01",  # No Returns section found
+]
+exclude = [
+    '\.__eq__$',
+    '\.__ne__$',
+    '\.__repr__$',
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra -v --doctest-modules --strict-config --strict-markers"
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS NUMBER"
+#filterwarnings = ["error"] # TODO - PP309; enable once all warnings are fixed
+log_cli_level = "INFO"
+minversion = "6.0"
+testpaths = ["src/nc_time_axis"]
+xfail_strict = true
+
+[tool.repo-review]
+ignore = [
+    # https://learn.scientific-python.org/development/guides/style/#PC180
+    "PC180",  # Uses prettier
+
+    # TODO: exceptions that still need investigating are below.
+    # Might be fixable, or might become permanent (above):
+    "PY007", # Supports an easy task runner (nox or tox)
+    "PP309", # Filter warnings specified
+    "PC170", # Uses PyGrep hooks (only needed if rST present)
+]
 
 [tool.ruff]
 line-length = 88
@@ -180,66 +220,6 @@ select = [
     "D212",  # Multi-line docstring summary should start at the first line
 ]
 
-[tool.numpydoc_validation]
-checks = [
-    "all",  # Enable all numpydoc validation rules, apart from the following:
-
-    # -> Docstring text (summary) should start in the line immediately
-    #    after the opening quotes (not in the same line, or leaving a
-    #    blank line in between)
-    "GL01",  # Permit summary line on same line as docstring opening quotes.
-
-    # -> Closing quotes should be placed in the line after the last text
-    #    in the docstring (do not close the quotes in the same line as
-    #    the text, or leave a blank line between the last text and the
-    #    quotes)
-    "GL02",  # Permit a blank line before docstring closing quotes.
-
-    # -> Double line break found; please use only one blank line to
-    #    separate sections or paragraphs, and do not leave blank lines
-    #    at the end of docstrings
-    "GL03",  # Ignoring.
-
-    # -> See Also section not found
-    "SA01",  # Not all docstrings require a "See Also" section.
-
-    # -> No extended summary found
-    "ES01",  # Not all docstrings require an "Extended Summary" section.
-
-    # -> No examples section found
-    "EX01",  # Not all docstrings require an "Examples" section.
-
-    # -> No Yields section found
-    "YD01",  # Not all docstrings require a "Yields" section.
-
-    # TODO: exceptions that still need investigating are below.
-    # Might be fixable, or might become permanent (above):
-    "GL08",  # No docstring
-    "SS05",  # Summary must start with infinitive verb
-    "SS06",  # Summary should fit on one line
-    "PR01",  # Parameters not documented
-    "PR06",  # Wrong type used
-    "PR08",  # Description should start with capitol letter
-    "RT01",  # No Returns section found
-]
-exclude = [
-    '\.__eq__$',
-    '\.__ne__$',
-    '\.__repr__$',
-]
-
-[tool.repo-review]
-ignore = [
-    # https://learn.scientific-python.org/development/guides/style/#PC180
-    "PC180",  # Uses prettier
-
-    # TODO: exceptions that still need investigating are below.
-    # Might be fixable, or might become permanent (above):
-    "PY007", # Supports an easy task runner (nox or tox)
-    "PP309", # Filter warnings specified
-    "PC170", # Uses PyGrep hooks (only needed if rST present)
-]
-
 [tool.ruff.lint.isort]
 force-sort-within-sections = true
 # Change to match specific package name:
@@ -258,3 +238,23 @@ known-first-party = ["nc_time_axis"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[tool.setuptools]
+license-files = ["LICENSE"]
+zip-safe = false
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements/pypi-core.txt"}
+readme = {file = "README.md", content-type = "text/markdown"}
+
+[tool.setuptools.dynamic.optional-dependencies]
+docs = {file = "requirements/pypi-optional-docs.txt"}
+test = {file = "requirements/pypi-optional-test.txt"}
+
+[tool.setuptools.packages.find]
+include = ["nc_time_axis*"]
+where = ["src"]
+
+[tool.setuptools_scm]
+write_to = "src/nc_time_axis/_version.py"
+local_scheme = "dirty-tag"

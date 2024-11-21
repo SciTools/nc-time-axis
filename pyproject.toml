@@ -216,7 +216,8 @@ ignore = [
 preview = false
 select = [
     "ALL",
-    # list specific rules to include that is skipped using numpy convention.
+    # Note: the above "all" disables conflicting rules; if you want a specific
+    # rule that is skipped then it needs to be enabled explicitly below:
     "D212",  # Multi-line docstring summary should start at the first line
 ]
 

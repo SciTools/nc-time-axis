@@ -78,7 +78,7 @@ repos:
         types: [file, python]
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.8.1"
+    rev: "v0.8.3"
     hooks:
     -   id: ruff
         types: [file, python]

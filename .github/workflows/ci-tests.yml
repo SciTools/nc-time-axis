@@ -57,9 +57,9 @@ jobs:
       - name: "mambaforge setup (python ${{ matrix.python-version }})"
         uses: conda-incubator/setup-miniconda@v3
         with:
-          miniforge-variant: Mambaforge
+          miniforge-variant: Miniforge3
           miniforge-version: latest
-          channels: conda-forge,defaults
+          channels: conda-forge
           channel-priority: true
           auto-update-conda: true
           environment-file: "requirements/locks/py${{ matrix.python-version }}-linux-64.lock"

@@ -207,8 +207,7 @@ class AutoCFTimeFormatter(mticker.Formatter):
         self.calendar = calendar
         if time_units is not None:
             warnings.warn(
-                "The time_units argument will be removed in nc_time_axis "
-                "version 1.5",
+                "The time_units argument will be removed in nc_time_axis version 1.5",
                 DeprecationWarning,
             )
             self.time_units = time_units
@@ -298,14 +297,14 @@ class NetCDFTimeDateLocator(mticker.Locator):
         self.calendar = calendar
         if date_unit is not None:
             warnings.warn(
-                "The date_unit argument will be removed in " "nc_time_axis version 1.5",
+                "The date_unit argument will be removed in nc_time_axis version 1.5",
                 DeprecationWarning,
             )
             self.date_unit = date_unit
         else:
             self.date_unit = _TIME_UNITS
         if not self.date_unit.lower().startswith("days since"):
-            emsg = "The date unit must be days since for a NetCDF " "time locator."
+            emsg = "The date unit must be days since for a NetCDF time locator."
             raise ValueError(emsg)
         self.resolution = _DEFAULT_RESOLUTION
         self._cached_resolution = {}
@@ -480,7 +479,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
         else:
             # Deal with a single `sample_point` value.
             if not hasattr(sample_point, "calendar"):
-                msg = "Expecting cftimes with an extra " '"calendar" attribute.'
+                msg = 'Expecting cftimes with an extra "calendar" attribute.'
                 raise ValueError(msg)
             calendar = sample_point.calendar
             date_type = type(sample_point)

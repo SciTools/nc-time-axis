@@ -78,7 +78,7 @@ repos:
         types: [file, python]
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.11.0"
+    rev: "v0.11.2"
     hooks:
     -   id: ruff
         types: [file, python]
@@ -101,6 +101,6 @@ repos:
 
 -   repo: https://github.com/abravalheri/validate-pyproject
     # More exhaustive than Ruff RUF200.
-    rev: "v0.24"
+    rev: "v0.24.1"
     hooks:
     - id: validate-pyproject

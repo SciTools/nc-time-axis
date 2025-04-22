@@ -6,7 +6,7 @@ build:
         python: "mambaforge-23.11"
 
 conda:
-    environment: requirements/docs.yml
+    environment: requirements/ncta.yml
 
 sphinx:
     configuration: docs/conf.py

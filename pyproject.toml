@@ -139,7 +139,6 @@ ignore = [
     "MY103", # Must have warn_unreachable enabled in mypy
     "PY007", # Supports an easy task runner (nox or tox)
     "PP309", # Filter warnings specified
-    "PC170", # Uses PyGrep hooks (only needed if rST present)
 ]
 
 [tool.ruff]

@@ -43,9 +43,9 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest"]
-        python-version: ["311"]
+        python-version: ["311", "312", "313"]
         include:
-          - python-version: "311"
+          - python-version: "313"
             cov-report: "--cov-report=xml --cov"
             codecov: "codecov"
 

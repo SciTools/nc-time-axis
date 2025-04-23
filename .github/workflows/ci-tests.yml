@@ -38,7 +38,6 @@ jobs:
     env:
       ENV_NAME: "ci-tests"
       PY_COLORS: "1"
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     strategy:
       fail-fast: false
@@ -47,8 +46,7 @@ jobs:
         python-version: ["311", "312", "313"]
         include:
           - python-version: "313"
-            cov-report: "--cov-report=xml --cov"
-            codecov: "codecov"
+            coverage: "--cov-report=xml --cov=nc_time_axis"
 
     steps:
       - uses: actions/checkout@v4
@@ -69,5 +67,10 @@ jobs:
       - name: "tests (py${{ matrix.python-version }})"
         run: |
           python -m pip install --no-deps --editable .
-          pytest ${{ matrix.cov-report }}
-          ${{ matrix.codecov }}
+          pytest ${{ matrix.coverage }}
+
+      - name: "upload coverage report"
+        if: ${{ matrix.coverage }}
+        uses: codecov/codecov-action@ad3126e916f78f00edff4ed0317cf185271ccc2d
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

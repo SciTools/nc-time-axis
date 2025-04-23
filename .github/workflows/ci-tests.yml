@@ -37,6 +37,7 @@ jobs:
 
     env:
       ENV_NAME: "ci-tests"
+      PY_COLORS: "1"
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
     strategy:

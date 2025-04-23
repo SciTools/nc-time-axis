@@ -107,7 +107,6 @@
 # Licensee agrees to be bound by the terms and conditions of this License
 # Agreement.
 
-from numbers import Number
 import warnings
 
 import cftime
@@ -116,7 +115,6 @@ import matplotlib.ticker as mticker
 import matplotlib.transforms as mtransforms
 import matplotlib.units as munits
 import numpy as np
-from numpy import ma
 
 from ._version import version as __version__  # noqa: F401
 

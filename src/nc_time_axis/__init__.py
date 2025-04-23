@@ -504,12 +504,6 @@ class NetCDFTimeConverter(mdates.DateConverter):
             value = value.reshape(-1)
             first_value = value[0]
         else:
-            # TODO: remove this check once the minimum version of matplotlib
-            # supported is at least 3.5, which corresponds to when convert is no
-            # longer required to support numeric or iterables of numeric types.
-            # See GitHub issue 97 for more details.
-            if is_numlike(value):
-                return value
             # Not an array but a list of non-numerical types (thus assuming datetime types)
             if isinstance(value, (list, tuple)):
                 first_value = value[0]
@@ -544,25 +538,6 @@ class NetCDFTimeConverter(mdates.DateConverter):
             result = result.reshape(shape)
 
         return result
-
-
-def is_numlike(x):
-    """The Matplotlib datalim, autoscaling, locators etc work with scalars which
-    are the units converted to floats given the current unit.  The converter may
-    be passed these floats, or arrays of them, even when units are set.
-
-    Vendored from matplotlib.units.ConversionInterface.is_numlike.
-
-    TODO: remove this function once the minimum version of matplotlib supported
-    by nc-time-axis is at least 3.5.  See GitHub issue 97 for more details.
-    """
-    if np.iterable(x):
-        for thisx in x:
-            if thisx is ma.masked:
-                continue
-            return isinstance(thisx, Number)
-    else:
-        return isinstance(x, Number)
 
 
 # Automatically register NetCDFTimeConverter with matplotlib.unit's converter

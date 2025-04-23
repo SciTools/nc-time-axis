@@ -142,20 +142,6 @@ class Test_convert(unittest.TestCase):
         np.testing.assert_array_equal(result, val)
         self.assertEqual(result.shape, shape)
 
-    def test_numeric(self):
-        # TODO: remove this test once the minimum version of matplotlib
-        # supported is at least 3.5.  See GitHub issue 97 for more details.
-        val = 4
-        result = NetCDFTimeConverter().convert(val, None, None)
-        np.testing.assert_array_equal(result, val)
-
-    def test_numeric_iterable(self):
-        # TODO: remove this test once the minimum version of matplotlib
-        # supported is at least 3.5.  See GitHub issue 97 for more details.
-        val = [12, 18]
-        result = NetCDFTimeConverter().convert(val, None, None)
-        np.testing.assert_array_equal(result, val)
-
     @pytest.mark.filterwarnings("ignore::DeprecationWarning")
     def test_cftime_CalendarDateTime(self):
         val = CalendarDateTime(cftime.datetime(2014, 8, 12), "365_day")

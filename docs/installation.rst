@@ -8,9 +8,9 @@ Minimum Requirements
 --------------------
 
 * `cftime`_ >= 1.5
-* `matplotlib`_
-* `numpy`_ >= 1.21
-* `python`_ >= 3.9
+* `matplotlib`_ >= 3.8.0
+* `numpy`_ >= 1.25
+* `python`_ >= 3.11
 
 Installation Methods
 --------------------

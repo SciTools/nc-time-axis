@@ -143,6 +143,7 @@ ignore = [
 
 [tool.ruff]
 line-length = 88
+src = ["docs/src", "src"]
 
 [tool.ruff.format]
 preview = false
@@ -270,10 +271,6 @@ known-first-party = ["nc_time_axis"]
 "src/nc_time_axis/tests/*.py" = [
   "D104",  # Missing docstring in public package
   "N999",  # Invalid module name
-]
-
-"docs/conf.py" = [
-  "INP001", # implicit namespace
 ]
 
 [tool.ruff.lint.pydocstyle]

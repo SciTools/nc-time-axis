@@ -15,7 +15,7 @@ FORMATS = {
 
 
 @pytest.mark.parametrize(("format", "expected"), FORMATS.items())
-def test_CFTimeFormatter(format, expected):
+def test_CFTimeFormatter(format, expected):  # noqa: A002
     days = 3661 / 86400
     calendar = "360_day"
     formatter = CFTimeFormatter(format, calendar)

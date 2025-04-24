@@ -247,7 +247,7 @@ class CFTimeFormatter(mticker.Formatter):
         calendar strings.
     """
 
-    def __init__(self, format, calendar):
+    def __init__(self, format, calendar):  #  noqa: A002
         self.format = format
         self.calendar = calendar
 

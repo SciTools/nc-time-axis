@@ -164,9 +164,6 @@ ignore = [
     "PLR5501", # collapsible-else-if; Preserve readability of TODO block in
                # `convert` method
 
-    # Flake8-builtins
-    "A002",  # undocumented-public-method
-
     # Flake8-annotations
     "ANN001",  # missing-type-function-argument
     "ANN002",  # missing-type-args

@@ -20,7 +20,7 @@ import datetime
 project = "nc-time-axis"
 year = datetime.datetime.today().year
 author = f"{project} contributors"
-copyright = f"2016-{year}, {author}"
+copyright = f"2016-{year}, {author}"  # noqa: A001
 
 
 # -- General configuration ---------------------------------------------------

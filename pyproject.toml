@@ -165,7 +165,6 @@ ignore = [
                # `convert` method
 
     # Flake8-builtins
-    "A001",  # builtin-variable-shadowing
     "A002",  # undocumented-public-method
 
     # Flake8-annotations

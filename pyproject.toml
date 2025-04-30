@@ -3,8 +3,8 @@
 [build-system]
 # Defined by PEP 518
 requires = [
-  "setuptools>=61",
-  "setuptools_scm[toml]>=7",
+  "setuptools>=77.0.3",
+  "setuptools_scm[toml]>=8",
 ]
 # Defined by PEP 517
 build-backend = "setuptools.build_meta"
@@ -17,7 +17,6 @@ authors = [
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: BSD License",
     "Operating System :: MacOS",
     "Operating System :: Microsoft :: Windows",
     "Operating System :: POSIX :: Linux",
@@ -40,7 +39,8 @@ keywords = [
   "cftime",
   "matplotlib",
 ]
-license = {text = "BSD-3-Clause"}
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
 name = "nc-time-axis"
 requires-python = ">=3.11"
 
@@ -277,7 +277,6 @@ known-first-party = ["nc_time_axis"]
 convention = "numpy"
 
 [tool.setuptools]
-license-files = ["LICENSE"]
 zip-safe = false
 
 [tool.setuptools.dynamic]

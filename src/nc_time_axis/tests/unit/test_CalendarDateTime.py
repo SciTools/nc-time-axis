@@ -29,6 +29,17 @@ class Test___eq__(unittest.TestCase):
 
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
+class Test__hash__(unittest.TestCase):
+    def test(self):
+        expected_datetime = cftime.datetime(1967, 7, 22, 3, 6)
+        expected_calendar = "360_day"
+        cdt = CalendarDateTime(expected_datetime, expected_calendar)
+        expected = hash((expected_datetime, expected_calendar))
+        actual = hash(cdt)
+        self.assertEqual(actual, expected)
+
+
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 class Test__ne__(unittest.TestCase):
     def setUp(self):
         self.cdt = CalendarDateTime(cftime.datetime(1967, 7, 22, 3, 6), "360_day")

@@ -158,6 +158,9 @@ class CalendarDateTime:
             and self.calendar == other.calendar
         )
 
+    def __hash__(self) -> int:
+        return hash((self.datetime, self.calendar))
+
     def __ne__(self, other):
         return not self.__eq__(other)
 

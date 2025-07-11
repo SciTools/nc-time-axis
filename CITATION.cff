@@ -1,5 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
+title: "nc-time-axis"
 authors:
 - family-names: "Dreyer"
   given-names: "Laura"
@@ -28,7 +29,7 @@ authors:
 - family-names: "Yeo"
   given-names: "Martin"
   orcid: "https://orcid.org/0009-0000-6857-560X"
-title: "nc-time-axis"
+- name: "nc-time-axis contributors"
 abstract: "Provides support for a cftime axis in matplotlib"
 repository-code: "https://github.com/SciTools/nc-time-axis"
 license: "BSD-3-Clause"

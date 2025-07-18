@@ -98,6 +98,6 @@ global-exclude __pycache__
 
 #
 #=================================
-# Local Iris-specific settings
+# Local nc-time-axis-specific settings
 #
 include example_plot.png

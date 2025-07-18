@@ -94,3 +94,10 @@ global-exclude __pycache__
     #        previous sections -- such as python compiler cache files
     #    - can include this section as **boilerplate** :
     #        - won't all exist in every repo, but including them all does no harm
+
+
+#
+#=================================
+# Local Iris-specific settings
+#
+include example_plot.png

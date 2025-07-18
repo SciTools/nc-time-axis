@@ -12,7 +12,7 @@
 #---------
 # SECTION: main code sources
 #
-recursive-include src *.c *.pp *.py *.pyx *.so
+recursive-include src *.py
     # principles:
     #    - *no* "prune" command is used
     #    - use "include-recursive", by relevant file extensions

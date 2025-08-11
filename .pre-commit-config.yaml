@@ -22,7 +22,7 @@ repos:
 
 # Hook for pre-commit's built-in checks:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: 'v5.0.0'
+    rev: 'v6.0.0'
     hooks:
         # Prevent giant files from being committed.
     -   id: check-added-large-files
@@ -78,7 +78,7 @@ repos:
         types: [file, python]
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.12.7"
+    rev: "v0.12.8"
     hooks:
     -   id: ruff
         types: [file, python]

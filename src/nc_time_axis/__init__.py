@@ -447,7 +447,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
         *unit* is a tzinfo instance or None.
         The *axis* argument is required but not used.
         """
-        calendar, date_unit, date_type = unit
+        calendar, _, date_type = unit
 
         majloc = NetCDFTimeDateLocator(4, calendar=calendar)
         majfmt = AutoCFTimeFormatter(majloc, calendar=calendar)

@@ -133,6 +133,8 @@ xfail_strict = true
 ignore = [
     # https://learn.scientific-python.org/development/guides/style/#PC180
     "PC180",  # Uses prettier
+    # https://learn.scientific-python.org/development/guides/packaging-simple#PP006
+    "PP006",  # Uses dev dependency group
 
     # TODO: exceptions that still need investigating are below.
     # Might be fixable, or might become permanent (above):

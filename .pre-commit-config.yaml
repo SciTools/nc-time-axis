@@ -68,7 +68,7 @@ repos:
         additional_dependencies: [tomli]
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: 'v1.18.2'
+    rev: 'v1.19.0'
     hooks:
     -   id: mypy
         exclude: 'noxfile\.py|docs/conf\.py'
@@ -80,7 +80,7 @@ repos:
         types: [file, python]
 
 -   repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: "v0.14.6"
+    rev: "v0.14.7"
     hooks:
     -   id: ruff-check
         types: [file, python]

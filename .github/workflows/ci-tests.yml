@@ -54,7 +54,7 @@ jobs:
           fetch-depth: 0
 
       - name: "mambaforge setup (python ${{ matrix.python-version }})"
-        uses: conda-incubator/setup-miniconda@v3
+        uses: conda-incubator/setup-miniconda@v4
         with:
           miniforge-variant: Miniforge3
           miniforge-version: latest
@@ -71,6 +71,6 @@ jobs:
 
       - name: "upload coverage report"
         if: ${{ matrix.coverage }}
-        uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de
+        uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}

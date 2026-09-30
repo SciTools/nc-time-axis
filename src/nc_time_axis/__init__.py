@@ -142,6 +142,7 @@ _TIME_FORMATS = (
     "%Y%m%dT%H%M%S.%f",
 )
 
+
 def _parse_date_string(value, calendar):
 
     for fmt in _TIME_FORMATS:
@@ -152,6 +153,7 @@ def _parse_date_string(value, calendar):
 
     msg = f"no ISO-8601 or cftime-string-like match for string: {value}"
     raise ValueError(msg)
+
 
 class CalendarDateTime:
     """Container for a :py:class:`cftime.datetime` object and calendar.
@@ -565,7 +567,6 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 value = value.datetime
 
         if isinstance(first_value, str):
-
             calendar, __, __ = unit
             value = _parse_date_string(value, calendar)
             result = cftime.date2num(value, _TIME_UNITS, calendar=calendar)

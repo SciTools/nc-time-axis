@@ -120,6 +120,40 @@ from ._version import version as __version__  # noqa: F401
 
 _DEFAULT_RESOLUTION = "DAILY"
 _TIME_UNITS = "days since 2000-01-01"
+_TIME_FORMATS = (
+    "%Y",
+    "%Y-%m",
+    "%Y-%m-%d",
+    "%Y-%m-%d %H",
+    "%Y-%m-%d %H:%M",
+    "%Y-%m-%d %H:%M:%S",
+    "%Y-%m-%d %H:%M:%S.%f",
+    # variants with T
+    # year-month-day is the same
+    "%Y-%m-%dT%H",
+    "%Y-%m-%dT%H:%M",
+    "%Y-%m-%dT%H:%M:%S",
+    "%Y-%m-%dT%H:%M:%S.%f",
+    # variants with T and no sep
+    "%Y%m",
+    "%Y%m%d",
+    "%Y%m%dT%H",
+    "%Y%m%dT%H%M",
+    "%Y%m%dT%H%M%S",
+    "%Y%m%dT%H%M%S.%f",
+)
+
+
+def _parse_date_string(value, calendar):
+
+    for fmt in _TIME_FORMATS:
+        try:
+            return cftime.datetime.strptime(value, fmt, calendar=calendar)
+        except ValueError:
+            pass
+
+    msg = f"no ISO-8601 or cftime-string-like match for string: {value}"
+    raise ValueError(msg)
 
 
 class CalendarDateTime:
@@ -512,11 +546,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 # Neither numerical, list or ndarray : must be a datetime scalar.
                 first_value = value
 
-        if not isinstance(first_value, (CalendarDateTime, cftime.datetime)):
+        if not isinstance(first_value, (CalendarDateTime, cftime.datetime, str)):
             raise ValueError(
                 "The values must be numbers or instances of "
-                '"nc_time_axis.CalendarDateTime" or '
-                '"cftime.datetime".'
+                '"nc_time_axis.CalendarDateTime", '
+                '"cftime.datetime" or str.'
             )
 
         if isinstance(first_value, CalendarDateTime):
@@ -533,7 +567,13 @@ class NetCDFTimeConverter(mdates.DateConverter):
             else:
                 value = value.datetime
 
-        result = cftime.date2num(value, _TIME_UNITS, calendar=first_value.calendar)
+        if isinstance(first_value, str):
+            calendar, __, __ = unit
+            value = _parse_date_string(value, calendar)
+            result = cftime.date2num(value, _TIME_UNITS, calendar=calendar)
+
+        else:
+            result = cftime.date2num(value, _TIME_UNITS, calendar=first_value.calendar)
 
         if shape is not None:
             result = result.reshape(shape)

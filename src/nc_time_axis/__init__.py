@@ -535,7 +535,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
 
         if isinstance(first_value, str):
             try:
-                import xarray as xr
+                import xarray as xr  # noqa: PLC0415
             except ModuleNotFoundError as err:
                 raise ModuleNotFoundError(
                     "xarray is required when passing a string"

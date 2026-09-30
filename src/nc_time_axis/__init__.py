@@ -127,6 +127,8 @@ _TIME_FORMATS = (
     "%Y-%m-%d %H",
     "%Y-%m-%d %H",
     "%Y-%m-%d %H:%M:%S",
+    "%Y-%m-%d %H:%M:%S.%f",
+
 )
 
 def _parse_date_string(value, calendar):

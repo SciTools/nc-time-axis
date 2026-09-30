@@ -146,12 +146,12 @@ def _parse_date_string(value, calendar):
 
     for fmt in _TIME_FORMATS:
         try:
-            value = cftime.datetime.strptime(value, fmt, calendar=calendar)
-            return value
+            return cftime.datetime.strptime(value, fmt, calendar=calendar)
         except ValueError:
             pass
 
-    raise ValueError(f"no ISO-8601 or cftime-string-like match for string: {value}")
+    msg = f"no ISO-8601 or cftime-string-like match for string: {value}"
+    raise ValueError(msg)
 
 class CalendarDateTime:
     """Container for a :py:class:`cftime.datetime` object and calendar.

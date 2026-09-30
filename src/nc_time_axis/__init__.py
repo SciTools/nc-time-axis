@@ -512,11 +512,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 # Neither numerical, list or ndarray : must be a datetime scalar.
                 first_value = value
 
-        if not isinstance(first_value, (CalendarDateTime, cftime.datetime)):
+        if not isinstance(first_value, (CalendarDateTime, cftime.datetime, str)):
             raise ValueError(
                 "The values must be numbers or instances of "
-                '"nc_time_axis.CalendarDateTime" or '
-                '"cftime.datetime".'
+                '"nc_time_axis.CalendarDateTime", '
+                '"cftime.datetime" or str.'
             )
 
         if isinstance(first_value, CalendarDateTime):
@@ -533,7 +533,25 @@ class NetCDFTimeConverter(mdates.DateConverter):
             else:
                 value = value.datetime
 
-        result = cftime.date2num(value, _TIME_UNITS, calendar=first_value.calendar)
+
+        if isinstance(first_value, str):
+
+            try:
+                import xarray as xr
+            except ModuleNotFoundError as err:
+                raise ModuleNotFoundError(
+                    "xarray is required when passing a string"
+                ) from err
+
+            calendar, __, __ = unit
+            value = xr.date_range(
+                first_value, periods=1, use_cftime=True, calendar=calendar
+            ).item()
+
+            result = cftime.date2num(value, _TIME_UNITS, calendar=calendar)
+
+        else:
+            result = cftime.date2num(value, _TIME_UNITS, calendar=first_value.calendar)
 
         if shape is not None:
             result = result.reshape(shape)

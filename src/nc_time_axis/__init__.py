@@ -125,19 +125,20 @@ _TIME_FORMATS = (
     "%Y-%m",
     "%Y-%m-%d",
     "%Y-%m-%d %H",
-    "%Y-%m-%d %H",
+    "%Y-%m-%d %H:%M",
     "%Y-%m-%d %H:%M:%S",
     "%Y-%m-%d %H:%M:%S.%f",
     # variants with T
+    # year-month-day is the same
     "%Y-%m-%dT%H",
-    "%Y-%m-%dT%H",
+    "%Y-%m-%dT%H:%M",
     "%Y-%m-%dT%H:%M:%S",
     "%Y-%m-%dT%H:%M:%S.%f",
     # variants with T and no sep
     "%Y%m",
     "%Y%m%d",
     "%Y%m%dT%H",
-    "%Y%m%dT%H",
+    "%Y%m%dT%H%M",
     "%Y%m%dT%H%M%S",
     "%Y%m%dT%H%M%S.%f",
 )

@@ -533,9 +533,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
             else:
                 value = value.datetime
 
-
         if isinstance(first_value, str):
-
             try:
                 import xarray as xr
             except ModuleNotFoundError as err:

@@ -120,7 +120,14 @@ from ._version import version as __version__  # noqa: F401
 
 _DEFAULT_RESOLUTION = "DAILY"
 _TIME_UNITS = "days since 2000-01-01"
-
+_TIME_FORMATS = (
+    "%Y",
+    "%Y-%m",
+    "%Y-%m-%d",
+    "%Y-%m-%d %H",
+    "%Y-%m-%d %H",
+    "%Y-%m-%d %H:%M:%S",
+)
 
 class CalendarDateTime:
     """Container for a :py:class:`cftime.datetime` object and calendar.
@@ -512,11 +519,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 # Neither numerical, list or ndarray : must be a datetime scalar.
                 first_value = value
 
-        if not isinstance(first_value, (CalendarDateTime, cftime.datetime)):
+        if not isinstance(first_value, (CalendarDateTime, cftime.datetime, str)):
             raise ValueError(
                 "The values must be numbers or instances of "
-                '"nc_time_axis.CalendarDateTime" or '
-                '"cftime.datetime".'
+                '"nc_time_axis.CalendarDateTime", '
+                '"cftime.datetime" or str.'
             )
 
         if isinstance(first_value, CalendarDateTime):
@@ -533,7 +540,27 @@ class NetCDFTimeConverter(mdates.DateConverter):
             else:
                 value = value.datetime
 
-        result = cftime.date2num(value, _TIME_UNITS, calendar=first_value.calendar)
+        if isinstance(first_value, str):
+
+            calendar, __, __ = unit
+
+            valid = False
+            for fmt in _TIME_FORMATS:
+                try:
+                    value = cftime.datetime.strptime(value, fmt, calendar=calendar)
+                except ValueError:
+                    pass
+                else:
+                    valid = True
+                    break
+
+            if not valid:
+                raise ValueError(f"no ISO-8601 or cftime-string-like match for string: {value}")
+
+            result = cftime.date2num(value, _TIME_UNITS, calendar=calendar)
+
+        else:
+            result = cftime.date2num(value, _TIME_UNITS, calendar=first_value.calendar)
 
         if shape is not None:
             result = result.reshape(shape)

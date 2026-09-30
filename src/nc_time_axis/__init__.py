@@ -129,6 +129,17 @@ _TIME_FORMATS = (
     "%Y-%m-%d %H:%M:%S",
 )
 
+def _parse_date_string(value, calendar):
+
+    for fmt in _TIME_FORMATS:
+        try:
+            value = cftime.datetime.strptime(value, fmt, calendar=calendar)
+            return value
+        except ValueError:
+            pass
+
+    raise ValueError(f"no ISO-8601 or cftime-string-like match for string: {value}")
+
 class CalendarDateTime:
     """Container for a :py:class:`cftime.datetime` object and calendar.
 
@@ -543,20 +554,7 @@ class NetCDFTimeConverter(mdates.DateConverter):
         if isinstance(first_value, str):
 
             calendar, __, __ = unit
-
-            valid = False
-            for fmt in _TIME_FORMATS:
-                try:
-                    value = cftime.datetime.strptime(value, fmt, calendar=calendar)
-                except ValueError:
-                    pass
-                else:
-                    valid = True
-                    break
-
-            if not valid:
-                raise ValueError(f"no ISO-8601 or cftime-string-like match for string: {value}")
-
+            value = _parse_date_string(value, calendar)
             result = cftime.date2num(value, _TIME_UNITS, calendar=calendar)
 
         else:

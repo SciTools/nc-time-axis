@@ -222,7 +222,7 @@ class Test_convert(unittest.TestCase):
             _ = NetCDFTimeConverter().convert(val, None, None)
 
     def test_non_CalendarDateTime(self):
-        val = "test"
+        val = object
         msg = (
             "The values must be numbers or instances of "
             '"nc_time_axis.CalendarDateTime".'

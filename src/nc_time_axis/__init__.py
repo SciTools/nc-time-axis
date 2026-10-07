@@ -587,7 +587,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 value = value.datetime
 
         if isinstance(first_value, str):
-            calendar, __, __ = unit
+            try:
+                calendar, __, __ = unit
+            except (TypeError, ValueError) as err:
+                msg = "unit must have 3 elements to unpack and the first must be the calendar"
+                raise ValueError(msg) from err
             value = _parse_date_string(value, calendar)
             result = cftime.date2num(value, _TIME_UNITS, calendar=calendar)
 

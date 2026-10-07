@@ -142,9 +142,28 @@ _TIME_FORMATS = (
     "%Y%m%dT%H%M%S",
     "%Y%m%dT%H%M%S.%f",
 )
+# see https://github.com/Unidata/cftime/issues/422
+_CALENDARS = (
+    "standard",
+    "gregorian",
+    "proleptic_gregorian",
+    "tai",
+    "noleap",
+    "julian",
+    "all_leap",
+    "365_day",
+    "366_day",
+    "360_day",
+)
 
 
 def _parse_date_string(value, calendar):
+
+    # see https://github.com/Unidata/cftime/issues/423
+    if calendar not in _CALENDARS:
+        calendars = "', '".join(_CALENDARS)
+        msg = f"calendar must be one of '{calendars}', got '{calendar}'"
+        raise ValueError(msg)
 
     for fmt in _TIME_FORMATS:
         try:

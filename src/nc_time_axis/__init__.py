@@ -159,7 +159,11 @@ _CALENDARS = (
 
 def _parse_date_string(value, calendar):
 
+    # NOTE: cftime checks the calendar after the format string and raises a ValueError
+    # in both cases - therefore we cannot differentiate between an invalid calendar and
+    # datetime string - ensure the calendar is valid first
     # see https://github.com/Unidata/cftime/issues/423
+
     if calendar not in _CALENDARS:
         calendars = "', '".join(_CALENDARS)
         msg = f"calendar must be one of '{calendars}', got '{calendar}'"

@@ -1,12 +1,13 @@
 """Unit tests for the `nc-time-axis.NetCDFTimeConverter` class."""
 
+import re
 import unittest
 
 import cftime
 import numpy as np
 import pytest
 
-from nc_time_axis import CalendarDateTime, NetCDFTimeConverter
+from nc_time_axis import _CALENDARS, CalendarDateTime, NetCDFTimeConverter
 
 
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
@@ -229,6 +230,85 @@ class Test_convert(unittest.TestCase):
         )
         with self.assertRaisesRegex(ValueError, msg):
             _ = NetCDFTimeConverter().convert(val, None, None)
+
+
+DATETIME_STR_TEST_CASES = (
+    ("2014", (2014, 1, 1)),
+    ("2014-02", (2014, 2, 1)),
+    ("2015-03-07", (2015, 3, 7)),
+    ("2015-03-07 12", (2015, 3, 7, 12)),
+    ("2015-03-07 12:11", (2015, 3, 7, 12, 11)),
+    ("2015-03-07 12:11:05", (2015, 3, 7, 12, 11, 5)),
+    ("2015-03-07 12:11:05.111", (2015, 3, 7, 12, 11, 5, 111000)),
+    ("2015-03-07 12:11:05.111456", (2015, 3, 7, 12, 11, 5, 111456)),
+    # # variants with T
+    # # year-month-day is the same
+    ("2015-03-07T12", (2015, 3, 7, 12)),
+    ("2015-03-07T12:11", (2015, 3, 7, 12, 11)),
+    ("2015-03-07T12:11:05", (2015, 3, 7, 12, 11, 5)),
+    ("2015-03-07T12:11:05.111", (2015, 3, 7, 12, 11, 5, 111000)),
+    ("2015-03-07T12:11:05.111456", (2015, 3, 7, 12, 11, 5, 111456)),
+    # variants with T and no sep
+    ("201402", (2014, 2, 1)),
+    ("20150307", (2015, 3, 7)),
+    ("20150307T12", (2015, 3, 7, 12)),
+    ("20150307T1211", (2015, 3, 7, 12, 11)),
+    ("20150307T121105", (2015, 3, 7, 12, 11, 5)),
+    ("20150307T121105.111", (2015, 3, 7, 12, 11, 5, 111000)),
+    ("20150307T121105.111456", (2015, 3, 7, 12, 11, 5, 111456)),
+)
+
+
+class Test_convert_str_value:
+
+    def test_wrong_units(self):
+
+        # NOTE: 'convert' is unlikely to be called manually
+        # units must be a tuple with 3 elements the first of which is the calendar
+
+        msg = "unit must have 3 elements to unpack and the first must be the calendar"
+
+        with pytest.raises(ValueError, match=msg):
+            NetCDFTimeConverter().convert("str", None, None)
+
+        with pytest.raises(ValueError, match=msg):
+            NetCDFTimeConverter().convert("str", "noleap", None)
+
+        with pytest.raises(ValueError, match=msg):
+            NetCDFTimeConverter().convert("str", ("noleap",), None)
+
+        with pytest.raises(ValueError, match=msg):
+            NetCDFTimeConverter().convert("str", (None, None, None, None), None)
+
+    def test_wrong_calendar(self):
+
+        msg = "calendar must be one of 'standard',.* got 'invalid'"
+        with pytest.raises(ValueError, match=msg):
+            NetCDFTimeConverter().convert("str", ("invalid", None, None), None)
+
+    @pytest.mark.parametrize("value", ["a", "2014+1", "2014-13"])
+    def test_wrong_datetime(self, value):
+
+        msg = f"no ISO-8601 or cftime-string-like match for string: {value}"
+        with pytest.raises(ValueError, match=re.escape(msg)):
+            NetCDFTimeConverter().convert(value, ("standard", None, None), None)
+
+    @pytest.mark.parametrize(("date_str", "date_tuple"), DATETIME_STR_TEST_CASES)
+    def test_convert(self, date_str, date_tuple):
+
+        # do not parametrize to avoid an explosion of the number of test cases
+        for calendar in _CALENDARS:
+            datetime = cftime.datetime(*date_tuple, calendar=calendar)
+
+            expected = cftime.date2num(
+                datetime, NetCDFTimeConverter.standard_unit, calendar
+            )
+
+            result = NetCDFTimeConverter().convert(
+                date_str, (calendar, None, None), None
+            )
+
+            assert expected == result, calendar
 
 
 if __name__ == "__main__":

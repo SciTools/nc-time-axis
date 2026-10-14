@@ -260,7 +260,6 @@ DATETIME_STR_TEST_CASES = (
 
 
 class Test_convert_str_value:
-
     def test_wrong_units(self):
 
         # NOTE: 'convert' is unlikely to be called manually

@@ -115,6 +115,7 @@ import matplotlib.ticker as mticker
 import matplotlib.transforms as mtransforms
 import matplotlib.units as munits
 import numpy as np
+from packaging.version import Version
 
 from ._version import version as __version__  # noqa: F401
 
@@ -147,7 +148,6 @@ _CALENDARS = (
     "standard",
     "gregorian",
     "proleptic_gregorian",
-    "tai",
     "noleap",
     "julian",
     "all_leap",
@@ -155,6 +155,9 @@ _CALENDARS = (
     "366_day",
     "360_day",
 )
+
+if Version(cftime.__version__) >= Version("1.6.6"):
+    _CALENDARS += ("tai",)
 
 
 def _parse_date_string(value, calendar):

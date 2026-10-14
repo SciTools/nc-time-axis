@@ -115,11 +115,71 @@ import matplotlib.ticker as mticker
 import matplotlib.transforms as mtransforms
 import matplotlib.units as munits
 import numpy as np
+from packaging.version import Version
 
 from ._version import version as __version__  # noqa: F401
 
 _DEFAULT_RESOLUTION = "DAILY"
 _TIME_UNITS = "days since 2000-01-01"
+_TIME_FORMATS = (
+    "%Y",
+    "%Y-%m",
+    "%Y-%m-%d",
+    "%Y-%m-%d %H",
+    "%Y-%m-%d %H:%M",
+    "%Y-%m-%d %H:%M:%S",
+    "%Y-%m-%d %H:%M:%S.%f",
+    # variants with T
+    # year-month-day is the same
+    "%Y-%m-%dT%H",
+    "%Y-%m-%dT%H:%M",
+    "%Y-%m-%dT%H:%M:%S",
+    "%Y-%m-%dT%H:%M:%S.%f",
+    # variants with T and no sep
+    "%Y%m",
+    "%Y%m%d",
+    "%Y%m%dT%H",
+    "%Y%m%dT%H%M",
+    "%Y%m%dT%H%M%S",
+    "%Y%m%dT%H%M%S.%f",
+)
+# see https://github.com/Unidata/cftime/issues/422
+_CALENDARS = [
+    "standard",
+    "gregorian",
+    "proleptic_gregorian",
+    "noleap",
+    "julian",
+    "all_leap",
+    "365_day",
+    "366_day",
+    "360_day",
+]
+
+if Version(cftime.__version__) >= Version("1.6.6"):
+    _CALENDARS.append("tai")
+
+
+def _parse_date_string(value, calendar):
+
+    # NOTE: cftime checks the calendar after the format string and raises a ValueError
+    # in both cases - therefore we cannot differentiate between an invalid calendar and
+    # datetime string - ensure the calendar is valid first
+    # see https://github.com/Unidata/cftime/issues/423
+
+    if calendar not in _CALENDARS:
+        calendars = "', '".join(_CALENDARS)
+        msg = f"calendar must be one of '{calendars}', got '{calendar}'"
+        raise ValueError(msg)
+
+    for fmt in _TIME_FORMATS:
+        try:
+            return cftime.datetime.strptime(value, fmt, calendar=calendar)
+        except ValueError:
+            pass
+
+    msg = f"no ISO-8601 or cftime-string-like match for string: {value}"
+    raise ValueError(msg)
 
 
 class CalendarDateTime:
@@ -512,11 +572,11 @@ class NetCDFTimeConverter(mdates.DateConverter):
                 # Neither numerical, list or ndarray : must be a datetime scalar.
                 first_value = value
 
-        if not isinstance(first_value, (CalendarDateTime, cftime.datetime)):
+        if not isinstance(first_value, (CalendarDateTime, cftime.datetime, str)):
             raise ValueError(
                 "The values must be numbers or instances of "
-                '"nc_time_axis.CalendarDateTime" or '
-                '"cftime.datetime".'
+                '"nc_time_axis.CalendarDateTime", '
+                '"cftime.datetime" or str.'
             )
 
         if isinstance(first_value, CalendarDateTime):
@@ -533,7 +593,17 @@ class NetCDFTimeConverter(mdates.DateConverter):
             else:
                 value = value.datetime
 
-        result = cftime.date2num(value, _TIME_UNITS, calendar=first_value.calendar)
+        if isinstance(first_value, str):
+            try:
+                calendar, __, __ = unit
+            except (TypeError, ValueError) as err:
+                msg = "unit must have 3 elements to unpack and the first must be the calendar"
+                raise ValueError(msg) from err
+            value = _parse_date_string(value, calendar)
+            result = cftime.date2num(value, _TIME_UNITS, calendar=calendar)
+
+        else:
+            result = cftime.date2num(value, _TIME_UNITS, calendar=first_value.calendar)
 
         if shape is not None:
             result = result.reshape(shape)

@@ -1,3 +1,4 @@
 cftime>=1.5
 matplotlib>=3.8.0
 numpy>=1.25
+packaging>=25.0

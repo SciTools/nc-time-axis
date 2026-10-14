@@ -15,6 +15,7 @@ dependencies:
   - cftime >=1.5
   - matplotlib-base >= 3.8.0
   - numpy >=1.25
+  - packaging >=25.0
 
 # test dependencies
   - codecov

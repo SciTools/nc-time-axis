@@ -144,7 +144,7 @@ _TIME_FORMATS = (
     "%Y%m%dT%H%M%S.%f",
 )
 # see https://github.com/Unidata/cftime/issues/422
-_CALENDARS = (
+_CALENDARS = [
     "standard",
     "gregorian",
     "proleptic_gregorian",
@@ -154,10 +154,10 @@ _CALENDARS = (
     "365_day",
     "366_day",
     "360_day",
-)
+]
 
 if Version(cftime.__version__) >= Version("1.6.6"):
-    _CALENDARS += ("tai",)
+    _CALENDARS.append("tai")
 
 
 def _parse_date_string(value, calendar):
